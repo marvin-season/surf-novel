@@ -1,10 +1,11 @@
 "use client"
 
 import { MainLayout } from "@/components/layout/main-layout"
-import { BookMarked, Clock, Star } from "lucide-react"
+import { BookMarked, Clock, LogOut, Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { useSelectedLayoutSegment } from "next/navigation"
+import { useRouter, useSelectedLayoutSegment } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 const sidebarNavItems = [
   {
@@ -30,6 +31,14 @@ export default function MainAppLayout({
   children: React.ReactNode
 }) {
   const segment = useSelectedLayoutSegment()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    // 清除登录状态
+    document.cookie = "isLoggedIn=false; path=/; max-age=0"
+    // 跳转到登录页
+    router.push("/login")
+  }
 
   return (
     <MainLayout
@@ -72,6 +81,20 @@ export default function MainAppLayout({
               })}
             </ul>
           </nav>
+          {/* 退出登录按钮 */}
+          <div className="p-2 border-t">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full justify-start gap-3",
+                !expanded && "justify-center"
+              )}
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
+              {expanded && <span>退出登录</span>}
+            </Button>
+          </div>
         </div>
       )}
     >
