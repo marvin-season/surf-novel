@@ -4,6 +4,7 @@ import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { cn } from '@/lib/utils'
 import { EditorContextMenu } from './editor-context-menu'
+import { EditorToolbar } from './editor-toolbar'
 
 const initialValue: Descendant[] = [
   {
@@ -69,17 +70,20 @@ export function RichEditor({ className }: RichEditorProps) {
   )
 
   return (
-    <div className={cn("h-full w-full px-8 py-6", className)}>
+    <div className={cn("h-full w-full flex flex-col", className)}>
       <Slate editor={editor} initialValue={initialValue}>
-        <EditorContextMenu editor={editor}>
-          <Editable
-            className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            placeholder="开始写作..."
-            onKeyDown={handleKeyDown}
-          />
-        </EditorContextMenu>
+        <EditorToolbar editor={editor} />
+        <div className="flex-1 px-8 py-6 min-h-0">
+          <EditorContextMenu editor={editor}>
+            <Editable
+              className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              placeholder="开始写作..."
+              onKeyDown={handleKeyDown}
+            />
+          </EditorContextMenu>
+        </div>
       </Slate>
     </div>
   )
