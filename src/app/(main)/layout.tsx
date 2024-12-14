@@ -1,11 +1,12 @@
 "use client"
 
 import { MainLayout } from "@/components/layout/main-layout"
-import { BookMarked, Clock, LogOut, Star } from "lucide-react"
+import { BookMarked, Clock, LogOut, Settings, Star, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { useRouter, useSelectedLayoutSegment } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 
 const sidebarNavItems = [
   {
@@ -25,6 +26,19 @@ const sidebarNavItems = [
   },
 ] as const
 
+const profileNavItems = [
+  {
+    title: "个人信息",
+    href: "/profile",
+    icon: <User className="h-4 w-4" />,
+  },
+  {
+    title: "设置",
+    href: "/settings",
+    icon: <Settings className="h-4 w-4" />,
+  },
+] as const
+
 export default function MainAppLayout({
   children,
 }: {
@@ -40,10 +54,36 @@ export default function MainAppLayout({
     router.push("/login")
   }
 
+  const renderNavItems = (items: typeof sidebarNavItems, expanded: boolean) => {
+    return items.map((item) => {
+      const isActive = segment === item.href.split("/")[1]
+      return (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className={cn(
+              "flex items-center rounded-lg px-3 py-2",
+              "text-muted-foreground hover:text-foreground hover:bg-accent transition-colors",
+              isActive && "bg-accent text-accent-foreground"
+            )}
+          >
+            {item.icon}
+            {expanded && (
+              <span className="ml-3 truncate">
+                {item.title}
+              </span>
+            )}
+          </Link>
+        </li>
+      )
+    })
+  }
+
   return (
     <MainLayout
       sidebar={({ expanded }) => (
         <div className="flex h-full flex-col">
+          {/* 标题 */}
           <div className={cn(
             "flex h-14 items-center border-b",
             expanded ? "px-4" : "justify-center"
@@ -55,32 +95,27 @@ export default function MainAppLayout({
               </h2>
             )}
           </div>
+
+          {/* 主导航 */}
           <nav className="flex-1 overflow-auto py-4">
             <ul className="space-y-1 px-2">
-              {sidebarNavItems.map((item) => {
-                const isActive = segment === item.href.split("/")[1]
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "flex items-center rounded-lg px-3 py-2",
-                        "text-muted-foreground hover:text-foreground hover:bg-accent transition-colors",
-                        isActive && "bg-accent text-accent-foreground"
-                      )}
-                    >
-                      {item.icon}
-                      {expanded && (
-                        <span className="ml-3 truncate">
-                          {item.title}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                )
-              })}
+              {renderNavItems(sidebarNavItems, expanded)}
             </ul>
+
+            {/* 个人导航 */}
+            <div className="mt-6">
+              <div className={cn(
+                "px-2 pb-2",
+                expanded && "text-xs font-medium text-muted-foreground"
+              )}>
+                {expanded ? "个人" : <Separator />}
+              </div>
+              <ul className="space-y-1 px-2">
+                {renderNavItems(profileNavItems, expanded)}
+              </ul>
+            </div>
           </nav>
+
           {/* 退出登录按钮 */}
           <div className="p-2 border-t">
             <Button
