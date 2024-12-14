@@ -7,6 +7,7 @@ import { EditorContextMenu } from './editor-context-menu'
 import { EditorToolbar } from './editor-toolbar'
 import { isKeyHotkey } from 'is-hotkey'
 import { CommandPalette } from './command-palette'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 
 // 定义快捷键常量
 const FORMATTING_HOTKEYS = {
@@ -53,6 +54,7 @@ const toggleFormat = (editor: Editor, format: keyof typeof FORMATTING_HOTKEYS) =
 export function RichEditor({ className }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
   const [showCommandPalette, setShowCommandPalette] = useState(false)
+  const [showToolbar, setShowToolbar] = useState(true)
 
   const renderElement = useCallback(({ attributes, children, element }: ElementProps) => {
     const style = { textAlign: element.align }
@@ -154,12 +156,31 @@ export function RichEditor({ className }: RichEditorProps) {
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
       <Slate editor={editor} initialValue={INITIAL_EDITOR_VALUE}>
-        <div className="relative min-h-[200px] w-full rounded-md border border-input bg-background">
-          <EditorToolbar editor={editor} className="sticky top-0 z-50 bg-background px-3 py-2" />
-          <div className="px-3 py-2">
+        <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
+          {/* 工具栏控制按钮 */}
+          <div className="">
+            <button
+              type="button"
+              onClick={() => setShowToolbar(!showToolbar)}
+              className="p-1.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
+            >
+              {showToolbar ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+          </div>
+
+          {/* 工具栏 */}
+          {showToolbar && (
+            <EditorToolbar 
+              editor={editor} 
+              className="sticky top-0 z-40 bg-background px-3 py-2 border-b border-input" 
+            />
+          )}
+
+          {/* 编辑区 */}
+          <div className="flex-1 px-3 py-2 overflow-auto">
             <EditorContextMenu editor={editor}>
               <Editable
-                className="min-h-[150px] prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
+                className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 placeholder="开始写作..."
