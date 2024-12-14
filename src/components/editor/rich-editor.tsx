@@ -69,11 +69,11 @@ export function RichEditor({ className }: RichEditorProps) {
   )
 
   return (
-    <div className={cn("h-full w-full", className)}>
+    <div className={cn("h-full w-full px-8 py-6", className)}>
       <Slate editor={editor} initialValue={initialValue}>
         <EditorContextMenu editor={editor}>
           <Editable
-            className="h-full w-full px-8 py-6 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
+            className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             placeholder="开始写作..."
