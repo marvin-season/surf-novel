@@ -1,8 +1,10 @@
 "use client"
 
 import { MainLayout } from "@/components/layout/main-layout"
-import { SidebarNav } from "@/components/layout/sidebar-nav"
 import { BookMarked, Clock, Star } from "lucide-react"
+import { cn } from "@/lib/utils"
+import Link from "next/link"
+import { useSelectedLayoutSegment } from "next/navigation"
 
 const sidebarNavItems = [
   {
@@ -20,25 +22,58 @@ const sidebarNavItems = [
     href: "/favorites",
     icon: <Star className="h-4 w-4" />,
   },
-]
+] as const
 
 export default function MainAppLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const segment = useSelectedLayoutSegment()
+
   return (
     <MainLayout
-      sidebar={
+      sidebar={({ expanded }) => (
         <div className="flex h-full flex-col">
-          <div className="flex h-14 items-center border-b px-6">
-            <h2 className="text-lg font-semibold">Surf Novel</h2>
+          <div className={cn(
+            "flex h-14 items-center border-b",
+            expanded ? "px-4" : "justify-center"
+          )}>
+            <BookMarked className="h-6 w-6" />
+            {expanded && (
+              <h2 className="ml-3 text-lg font-semibold truncate">
+                Surf Novel
+              </h2>
+            )}
           </div>
-          <div className="flex-1 overflow-auto py-4">
-            <SidebarNav items={sidebarNavItems} />
-          </div>
+          <nav className="flex-1 overflow-auto py-4">
+            <ul className="space-y-1 px-2">
+              {sidebarNavItems.map((item) => {
+                const isActive = segment === item.href.split("/")[1]
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center rounded-lg px-3 py-2",
+                        "text-muted-foreground hover:text-foreground hover:bg-accent transition-colors",
+                        isActive && "bg-accent text-accent-foreground"
+                      )}
+                    >
+                      {item.icon}
+                      {expanded && (
+                        <span className="ml-3 truncate">
+                          {item.title}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
         </div>
-      }
+      )}
     >
       {children}
     </MainLayout>
