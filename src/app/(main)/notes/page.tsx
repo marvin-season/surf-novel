@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { RichEditor } from "@/components/editor/rich-editor"
 import { cn } from "@/lib/utils"
+import { Descendant } from "slate"
 
 interface Note {
   id: string
@@ -16,6 +17,12 @@ interface Note {
 export default function NotesPage() {
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new")
   const [notes, setNotes] = useState<Note[]>([])
+  const [value, setValue] = useState<Descendant[]>([
+    {
+      type: "paragraph",
+      children: [{ text: "" }],
+    },
+  ])
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
@@ -67,7 +74,11 @@ export default function NotesPage() {
           />
         </div>
         <div className="flex-1 relative min-h-0">
-          <RichEditor className="absolute inset-0" />
+          <RichEditor 
+            className="absolute inset-0" 
+            value={value} 
+            onChange={setValue}
+          />
         </div>
       </div>
     </div>
