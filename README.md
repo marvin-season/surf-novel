@@ -5,6 +5,7 @@
 
 ## 技术栈
 ### 前端
+- pnpm
 - React 19
 - Next.js 15
 - TailwindCSS
@@ -12,7 +13,7 @@
 - Slate.js
 
 ### 后端
-- PostgreSQL
+- SqlLite
 - Prisma ORM
 
 ## 功能规划
@@ -67,7 +68,6 @@ surf-novel/
 
 ## 开发规范
 - 使用TypeScript进行开发
-- 遵循ESLint规范
 - 组件采用Shadcn UI设计系统
 - 样式使用TailwindCSS
 - 提交遵循约定式提交规范
