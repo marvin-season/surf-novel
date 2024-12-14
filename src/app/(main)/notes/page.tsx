@@ -18,13 +18,13 @@ export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([])
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
       {/* 笔记列表 */}
-      <div className="w-80 border-r flex flex-col">
-        <div className="p-4 border-b">
+      <div className="w-80 flex-shrink-0 border-r flex flex-col bg-muted/5">
+        <div className="p-4 border-b bg-background">
           <h2 className="text-lg font-semibold">我的笔记</h2>
         </div>
-        <div className="flex-1 overflow-auto p-2">
+        <div className="flex-1 overflow-y-auto p-2">
           <Button
             variant={selectedNoteId === "new" ? "secondary" : "ghost"}
             className={cn(
@@ -58,16 +58,16 @@ export default function NotesPage() {
       </div>
 
       {/* 编辑区 */}
-      <div className="flex-1 flex flex-col">
-        <div className="border-b p-4">
+      <div className="flex-1 min-w-0 flex flex-col bg-background">
+        <div className="flex-shrink-0 border-b px-8 py-4">
           <input
             type="text"
             placeholder="笔记标题"
-            className="w-full text-xl font-medium bg-transparent border-none outline-none"
+            className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
           />
         </div>
-        <div className="flex-1 overflow-auto">
-          <RichEditor />
+        <div className="flex-1 relative min-h-0">
+          <RichEditor className="absolute inset-0" />
         </div>
       </div>
     </div>

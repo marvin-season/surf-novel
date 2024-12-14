@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { createEditor, Descendant } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
+import { cn } from '@/lib/utils'
 
 const initialValue: Descendant[] = [
   {
@@ -10,7 +11,11 @@ const initialValue: Descendant[] = [
   },
 ]
 
-export function RichEditor() {
+interface RichEditorProps {
+  className?: string
+}
+
+export function RichEditor({ className }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
   const renderElement = useCallback((props: any) => {
@@ -38,10 +43,10 @@ export function RichEditor() {
   }, [])
 
   return (
-    <div className="min-h-[500px] w-full max-w-4xl mx-auto p-4 bg-white rounded-lg shadow">
+    <div className={cn("h-full w-full", className)}>
       <Slate editor={editor} initialValue={initialValue}>
         <Editable
-          className="prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none"
+          className="h-full w-full px-8 py-6 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           placeholder="开始写作..."
