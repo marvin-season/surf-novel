@@ -1,10 +1,12 @@
-import { useCallback, useMemo } from 'react'
-import { createEditor, Descendant, Element as SlateElement } from 'slate'
+import { useCallback, useMemo, useState } from 'react'
+import { createEditor, Descendant, Element as SlateElement, Editor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { cn } from '@/lib/utils'
 import { EditorContextMenu } from './editor-context-menu'
 import { EditorToolbar } from './editor-toolbar'
+import { isKeyHotkey } from 'is-hotkey'
+import { CommandPalette } from './command-palette'
 
 const initialValue: Descendant[] = [
   {
@@ -95,29 +97,38 @@ export function RichEditor({ className }: RichEditorProps) {
     )
   }, [])
 
+  const [showCommandPalette, setShowCommandPalette] = useState(false)
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
-      if (!event.ctrlKey && !event.metaKey) return
+      const { nativeEvent } = event
 
-      switch (event.key) {
-        case 'b': {
-          event.preventDefault()
-          const marks = editor.marks() || {}
-          editor.addMark('bold', !marks['bold'])
-          break
-        }
-        case 'i': {
-          event.preventDefault()
-          const marks = editor.marks() || {}
-          editor.addMark('italic', !marks['italic'])
-          break
-        }
-        case 'u': {
-          event.preventDefault()
-          const marks = editor.marks() || {}
-          editor.addMark('underline', !marks['underline'])
-          break
-        }
+      if (event.key === '/') {
+        console.log('Slash key pressed')
+        event.preventDefault()
+        setShowCommandPalette(true)
+        return
+      }
+
+      if (isKeyHotkey('mod+b', nativeEvent)) {
+        event.preventDefault()
+        const marks = Editor.marks(editor) || {}
+        editor.addMark('bold', !marks['bold'])
+        return
+      }
+
+      if (isKeyHotkey('mod+i', nativeEvent)) {
+        event.preventDefault()
+        const marks = Editor.marks(editor) || {}
+        editor.addMark('italic', !marks['italic'])
+        return
+      }
+
+      if (isKeyHotkey('mod+u', nativeEvent)) {
+        event.preventDefault()
+        const marks = Editor.marks(editor) || {}
+        editor.addMark('underline', !marks['underline'])
+        return
       }
     },
     [editor]
@@ -126,19 +137,26 @@ export function RichEditor({ className }: RichEditorProps) {
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
       <Slate editor={editor} initialValue={initialValue}>
-        <EditorToolbar editor={editor} />
-        <div className="flex-1 px-8 py-6 min-h-0 overflow-auto">
-          <EditorContextMenu editor={editor}>
-            <Editable
-              className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
-              renderElement={renderElement}
-              renderLeaf={renderLeaf}
-              placeholder="开始写作..."
-              onKeyDown={handleKeyDown}
-            />
-          </EditorContextMenu>
+        <div className="relative min-h-[200px] w-full rounded-md border border-input bg-background">
+          <EditorToolbar editor={editor} className="sticky top-0 z-50 bg-background px-3 py-2" />
+          <div className="px-3 py-2">
+            <EditorContextMenu editor={editor}>
+              <Editable
+                className="min-h-[150px] prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
+                renderElement={renderElement}
+                renderLeaf={renderLeaf}
+                placeholder="开始写作..."
+                onKeyDown={handleKeyDown}
+              />
+            </EditorContextMenu>
+          </div>
         </div>
       </Slate>
+      <CommandPalette
+        editor={editor}
+        open={showCommandPalette}
+        onOpenChange={setShowCommandPalette}
+      />
     </div>
   )
 }
