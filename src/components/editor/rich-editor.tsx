@@ -8,22 +8,53 @@ import { EditorToolbar } from './editor-toolbar'
 import { isKeyHotkey } from 'is-hotkey'
 import { CommandPalette } from './command-palette'
 
-const initialValue: Descendant[] = [
+// 定义快捷键常量
+const FORMATTING_HOTKEYS = {
+  bold: 'mod+b',
+  italic: 'mod+i',
+  underline: 'mod+u',
+} as const
+
+// 定义编辑器初始值
+const INITIAL_EDITOR_VALUE: Descendant[] = [
   {
     type: 'paragraph',
     children: [{ text: '' }],
   },
 ]
 
+// 定义类型
 interface RichEditorProps {
   className?: string
 }
 
+interface ElementProps {
+  attributes: any
+  children: React.ReactNode
+  element: any
+}
+
+interface LeafProps {
+  attributes: any
+  children: React.ReactNode
+  leaf: {
+    bold?: boolean
+    italic?: boolean
+    underline?: boolean
+  }
+}
+
+// 格式化处理函数
+const toggleFormat = (editor: Editor, format: keyof typeof FORMATTING_HOTKEYS) => {
+  const marks = Editor.marks(editor) || {}
+  editor.addMark(format, !marks[format])
+}
+
 export function RichEditor({ className }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+  const [showCommandPalette, setShowCommandPalette] = useState(false)
 
-  const renderElement = useCallback((props: any) => {
-    const { attributes, children, element } = props
+  const renderElement = useCallback(({ attributes, children, element }: ElementProps) => {
     const style = { textAlign: element.align }
 
     switch (element.type) {
@@ -82,53 +113,39 @@ export function RichEditor({ className }: RichEditorProps) {
     }
   }, [])
 
-  const renderLeaf = useCallback((props: any) => {
+  const renderLeaf = useCallback(({ attributes, children, leaf }: LeafProps) => {
     return (
       <span
-        {...props.attributes}
+        {...attributes}
         style={{
-          fontWeight: props.leaf.bold ? 'bold' : 'normal',
-          fontStyle: props.leaf.italic ? 'italic' : 'normal',
-          textDecoration: props.leaf.underline ? 'underline' : 'none',
+          fontWeight: leaf.bold ? 'bold' : 'normal',
+          fontStyle: leaf.italic ? 'italic' : 'normal',
+          textDecoration: leaf.underline ? 'underline' : 'none',
         }}
       >
-        {props.children}
+        {children}
       </span>
     )
   }, [])
-
-  const [showCommandPalette, setShowCommandPalette] = useState(false)
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       const { nativeEvent } = event
 
+      // 处理命令面板快捷键
       if (event.key === '/') {
-        console.log('Slash key pressed')
         event.preventDefault()
         setShowCommandPalette(true)
         return
       }
 
-      if (isKeyHotkey('mod+b', nativeEvent)) {
-        event.preventDefault()
-        const marks = Editor.marks(editor) || {}
-        editor.addMark('bold', !marks['bold'])
-        return
-      }
-
-      if (isKeyHotkey('mod+i', nativeEvent)) {
-        event.preventDefault()
-        const marks = Editor.marks(editor) || {}
-        editor.addMark('italic', !marks['italic'])
-        return
-      }
-
-      if (isKeyHotkey('mod+u', nativeEvent)) {
-        event.preventDefault()
-        const marks = Editor.marks(editor) || {}
-        editor.addMark('underline', !marks['underline'])
-        return
+      // 处理格式化快捷键
+      for (const [format, hotkey] of Object.entries(FORMATTING_HOTKEYS)) {
+        if (isKeyHotkey(hotkey, nativeEvent)) {
+          event.preventDefault()
+          toggleFormat(editor, format as keyof typeof FORMATTING_HOTKEYS)
+          return
+        }
       }
     },
     [editor]
@@ -136,7 +153,7 @@ export function RichEditor({ className }: RichEditorProps) {
 
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
-      <Slate editor={editor} initialValue={initialValue}>
+      <Slate editor={editor} initialValue={INITIAL_EDITOR_VALUE}>
         <div className="relative min-h-[200px] w-full rounded-md border border-input bg-background">
           <EditorToolbar editor={editor} className="sticky top-0 z-50 bg-background px-3 py-2" />
           <div className="px-3 py-2">
