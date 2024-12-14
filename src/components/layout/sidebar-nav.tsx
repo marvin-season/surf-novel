@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -19,28 +20,42 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+        "flex flex-col space-y-1 px-2",
         className
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            pathname === item.href
-              ? "bg-muted hover:bg-muted"
-              : "hover:bg-transparent hover:underline",
-            "justify-start",
-            "w-full"
-          )}
-        >
-          {item.icon && <span className="mr-2">{item.icon}</span>}
-          {item.title}
-        </Link>
-      ))}
+      {items.map((item) => {
+        const isActive = pathname === item.href
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "relative flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-all",
+              "hover:bg-accent/50 hover:text-accent-foreground",
+              isActive ? "text-primary" : "text-muted-foreground",
+            )}
+          >
+            {isActive && (
+              <motion.div
+                layoutId="activeNav"
+                className="absolute inset-0 rounded-lg bg-accent/50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            )}
+            {item.icon && (
+              <span className="mr-2 h-4 w-4">
+                {item.icon}
+              </span>
+            )}
+            <span className="relative">{item.title}</span>
+          </Link>
+        )
+      })}
     </nav>
   )
 }
