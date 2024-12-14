@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { React, useState, useEffect } from 'react';
 
 interface EditorToolbarProps {
   editor: Editor
@@ -39,6 +40,26 @@ const LIST_TYPES = ["bulleted-list", "numbered-list"] as const
 type ListType = typeof LIST_TYPES[number]
 
 export function EditorToolbar({ editor, className }: EditorToolbarProps) {
+  const [blockType, setBlockType] = useState<HeadingLevel>("normal")
+
+  useEffect(() => {
+    const { selection } = editor
+    if (!selection) return
+
+    const [match] = Array.from(
+      Editor.nodes(editor, {
+        at: Editor.unhangRange(editor, selection),
+        match: (n) =>
+          !Editor.isEditor(n) &&
+          SlateElement.isElement(n) &&
+          ["paragraph", "h1", "h2", "h3"].includes(n.type),
+      })
+    )
+
+    const type = match ? (match[0] as any).type : "paragraph"
+    setBlockType(type === "paragraph" ? "normal" : type)
+  }, [editor.selection])
+
   const isMarkActive = (format: string) => {
     const marks = Editor.marks(editor)
     return marks ? marks[format] === true : false
@@ -93,33 +114,17 @@ export function EditorToolbar({ editor, className }: EditorToolbarProps) {
     }
   }
 
-  const getCurrentBlockType = () => {
-    const { selection } = editor
-    if (!selection) return "normal"
-
-    const [match] = Array.from(
-      Editor.nodes(editor, {
-        at: Editor.unhangRange(editor, selection),
-        match: (n) =>
-          !Editor.isEditor(n) &&
-          SlateElement.isElement(n) &&
-          ["paragraph", "h1", "h2", "h3"].includes(n.type),
-      })
-    )
-
-    return match ? (match[0] as any).type : "normal"
-  }
-
   return (
     <div className={cn("flex items-center gap-1 p-1 border-b", className)}>
       <Select
-        value={getCurrentBlockType()}
+        value={blockType}
         onValueChange={(value) => {
           if (value === "normal") {
             toggleBlock("paragraph")
           } else {
             toggleBlock(value)
           }
+          setBlockType(value as HeadingLevel)
         }}
       >
         <SelectTrigger className="h-8 w-[120px]">
