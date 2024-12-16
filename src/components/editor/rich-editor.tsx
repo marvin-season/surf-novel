@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { createEditor, Descendant, Element as SlateElement, Editor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { withHistory } from 'slate-history'
@@ -17,7 +17,7 @@ const FORMATTING_HOTKEYS = {
 } as const
 
 // 定义编辑器初始值
-const INITIAL_EDITOR_VALUE: Descendant[] = [
+export const INITIAL_EDITOR_VALUE: Descendant[] = [
   {
     type: 'paragraph',
     children: [{ text: '' }],
@@ -26,13 +26,15 @@ const INITIAL_EDITOR_VALUE: Descendant[] = [
 
 // 定义类型
 interface RichEditorProps {
-  className?: string
+  className?: string;
+  value: Descendant[];
+  onChange: (value: Descendant[]) => void;
 }
 
 interface ElementProps {
-  attributes: any
-  children: React.ReactNode
-  element: any
+  attributes: any;
+  children: React.ReactNode;
+  element: any;
 }
 
 interface LeafProps {
@@ -51,7 +53,7 @@ const toggleFormat = (editor: Editor, format: keyof typeof FORMATTING_HOTKEYS) =
   editor.addMark(format, !marks[format])
 }
 
-export function RichEditor({ className }: RichEditorProps) {
+export function RichEditor({ className, value, onChange }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
   const [showCommandPalette, setShowCommandPalette] = useState(false)
   const [showToolbar, setShowToolbar] = useState(true)
@@ -153,9 +155,14 @@ export function RichEditor({ className }: RichEditorProps) {
     [editor]
   )
 
+  useEffect(() => {
+    // 清除久的editor的内容，内容更新为新的 value
+    console.log(value)
+  }, [value])
+
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
-      <Slate editor={editor} initialValue={INITIAL_EDITOR_VALUE}>
+      <Slate key={JSON.stringify(value)} editor={editor} initialValue={value}>
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
           {/* 工具栏控制按钮 */}
           <div className="">

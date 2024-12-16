@@ -5,13 +5,23 @@ export const GET = () => {
     {
       id: "1",
       title: "笔记 1",
-      content: "这是笔记 1 的内容",
+      content: [
+        {
+          type: "paragraph",
+          children: [{ text: "笔记 1" }],
+        },
+      ],
       updatedAt: "2023-08-01",
     },
     {
       id: "2",
       title: "笔记 2",
-      content: "这是笔记 2 的内容",
+      content: [
+        {
+          type: "paragraph",
+          children: [{ text: "笔记 2" }],
+        },
+      ],
       updatedAt: "2023-08-02",
     },
   ];

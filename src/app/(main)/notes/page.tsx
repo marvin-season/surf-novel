@@ -1,30 +1,35 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { RichEditor } from "@/components/editor/rich-editor"
-import { cn } from "@/lib/utils"
-import { Descendant } from "slate"
-import api from "@/lib/api"
-import { Note, NotesResponse } from "@/types/notes"
+import { useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import {
+  INITIAL_EDITOR_VALUE,
+  RichEditor,
+} from "@/components/editor/rich-editor";
+import { cn } from "@/lib/utils";
+import { Descendant } from "slate";
+import api from "@/lib/api";
+import { Note, NotesResponse } from "@/types/notes";
 
 export default function NotesPage() {
-  const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new")
-  const [notes, setNotes] = useState<Note[]>([])
-  const [value, setValue] = useState<Descendant[]>([
-    {
-      type: "paragraph",
-      children: [{ text: "" }],
-    },
-  ])
+  const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new");
+  const [notes, setNotes] = useState<Note[]>([]);
 
   useEffect(() => {
     (async () => {
-      const data = await api.notes.list<NotesResponse>()
-      setNotes(data.notes)
-    })()
-  }, [])
+      const data = await api.notes.list<NotesResponse>();
+      setNotes(data.notes);
+    })();
+  }, []);
+
+  const value = useMemo(() => {
+    if (selectedNoteId === "new") {
+      return INITIAL_EDITOR_VALUE as Descendant[];
+    }
+    const note = notes.find((note) => note.id === selectedNoteId);
+    return note?.content || (INITIAL_EDITOR_VALUE as Descendant[]);
+  }, [selectedNoteId, notes]);
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
@@ -56,7 +61,9 @@ export default function NotesPage() {
               onClick={() => setSelectedNoteId(note.id)}
             >
               <div className="flex flex-col items-start gap-1">
-                <span className="font-medium line-clamp-1">{note.title || "无标题"}</span>
+                <span className="font-medium line-clamp-1">
+                  {note.title || "无标题"}
+                </span>
                 <span className="text-xs text-muted-foreground">
                   {new Date(note.updatedAt).toLocaleDateString()}
                 </span>
@@ -76,13 +83,13 @@ export default function NotesPage() {
           />
         </div>
         <div className="flex-1 relative min-h-0">
-          <RichEditor 
-            className="absolute inset-0" 
-            value={value} 
-            onChange={setValue}
+          <RichEditor
+            className="absolute inset-0"
+            value={value}
+            onChange={console.log}
           />
         </div>
       </div>
     </div>
-  )
+  );
 }
