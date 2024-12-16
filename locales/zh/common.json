@@ -33,5 +33,27 @@
     "settings": "设置",
     "profile_info": "个人信息",
     "logout": "退出登录"
+  },
+  "Profile": {
+    "profileInfo": "管理个人信息",
+    "basicInfo": "基本信息",
+    "changeAvatar": "更改头像",
+    "username": "用户名",
+    "nickname": "昵称",
+    "personalized": "个性化",
+    "enterNickname": "请输入昵称",
+    "enterUsername": "请输入用户名",
+    "enterEmail": "请输入邮箱",
+    "enterBio": "请输入简介",
+    "manageInfo": "管理您的个人信息",
+    "avatar": "头像",
+    "avatarInfo": "在个人信息页面和侧边栏中显示的头像",
+    "name": "姓名",
+    "nameInfo": "在个人信息页面和侧边栏中显示的姓名",
+    "email": "邮箱",
+    "emailInfo": "在个人信息页面和侧边栏中显示的邮箱",
+    "bio": "简介",
+    "bioInfo": "在个人信息页面和侧边栏中显示的简介",
+    "save_changes": "保存更改"
   }
 }

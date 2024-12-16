@@ -9,7 +9,7 @@ import { Camera, Mail, User } from "lucide-react"
 import { useTranslations } from 'next-intl';
 
 export default function ProfilePage() {
-  const t = useTranslations('common');
+  const t = useTranslations('Profile');
 
   return (
     <div className="space-y-8 p-10">
@@ -102,7 +102,7 @@ export default function ProfilePage() {
         {/* 保存按钮 */}
         <div className="flex justify-end">
           <Button size="lg" className="min-w-[120px]">
-            {t('saveChanges')}
+            {t('save_changes')}
           </Button>
         </div>
       </div>

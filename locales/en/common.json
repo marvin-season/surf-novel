@@ -33,5 +33,27 @@
     "profile_info": "Profile Info",
     "favorites": "Favorites",
     "logout": "Logout"
+  },
+  "Profile": {
+    "profileInfo": "Manage your profile information",
+    "basicInfo": "Basic Information",
+    "changeAvatar": "Change Avatar",
+    "username": "Username",
+    "nickname": "Nickname",
+    "personalized": "Personalized",
+    "enterNickname": "Enter your nickname",
+    "enterUsername": "Enter your username",
+    "enterEmail": "Enter your email",
+    "enterBio": "Enter your bio",
+    "manageInfo": "Manage your profile information",
+    "avatar": "Avatar",
+    "avatarInfo": "Your avatar is displayed on your profile page and in the sidebar",
+    "name": "Name",
+    "nameInfo": "Your name is displayed on your profile page and in the sidebar",
+    "email": "Email",
+    "emailInfo": "Your email is displayed on your profile page and in the sidebar",
+    "bio": "Bio",
+    "bioInfo": "Your bio is displayed on your profile page and in the sidebar",
+    "save_changes": "Save Changes"
   }
 }

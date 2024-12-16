@@ -33,5 +33,27 @@
     "settings": "設定",
     "profile_info": "プロフィール情報",
     "logout": "ログアウト"
+  },
+  "Profile": {
+    "profileInfo": "プロフィール情報を管理する",
+    "basicInfo": "基本情報",
+    "changeAvatar": "アバターを変更する",
+    "username": "ユーザー名",
+    "nickname": "ニックネーム",
+    "personalized": "個性化",
+    "enterNickname": "ニックネームを入力してください",
+    "enterUsername": "ユーザー名を入力してください",
+    "enterEmail": "メールを入力してください",
+    "enterBio": "自己紹介を入力してください",
+    "manageInfo": "プロフィール情報を管理する",
+    "avatar": "アバター",
+    "avatarInfo": "プロフィールページとサイドバーで表示されるアバター",
+    "name": "名前",
+    "nameInfo": "プロフィールページとサイドバーで表示される名前",
+    "email": "メール",
+    "emailInfo": "プロフィールページとサイドバーで表示されるメール",
+    "bio": "自己紹介",
+    "bioInfo": "プロフィールページとサイドバーで表示される自己紹介",
+    "save_changes": "変更を保存"
   }
 }
