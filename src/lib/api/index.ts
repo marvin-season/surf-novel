@@ -1,6 +1,6 @@
 const api = {
-  auth: import("./auth"),
-  notes: import("./notes"),
+  auth: (await import("./auth")).default,
+  notes: (await import("./notes")).default,
   //   recent: import("./recent"),
   //   favorites: import("./favorites"),
 };

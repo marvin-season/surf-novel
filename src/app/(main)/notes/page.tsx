@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { RichEditor } from "@/components/editor/rich-editor"
 import { cn } from "@/lib/utils"
 import { Descendant } from "slate"
+import api from "@/lib/api"
 
 interface Note {
   id: string
@@ -24,10 +25,18 @@ export default function NotesPage() {
     },
   ])
 
+  useEffect(() => {
+    (async () => {
+      const data = await api.notes.list()
+      console.log(data)
+      setNotes(data.notes)
+    })()
+  }, [])
+
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
       {/* 笔记列表 */}
-      <div className="w-80 flex-shrink-0 border-r flex flex-col bg-muted/5">
+      <div className="w-60 flex-shrink-0 border-r flex flex-col bg-muted/5">
         <div className="p-4 border-b bg-background">
           <h2 className="text-lg font-semibold">我的笔记</h2>
         </div>
