@@ -6,8 +6,11 @@ import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
 import { Bell, Moon, Save, Smartphone, Zap } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useTheme } from '@/lib/ThemeContext';
 
 export default function SettingsPage() {
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <div className="space-y-8 p-10">
       {/* 页面标题 */}
@@ -42,7 +45,7 @@ export default function SettingsPage() {
                   </p>
                 </div>
               </div>
-              <Switch id="dark-mode" />
+              <Switch id="dark-mode" checked={theme === 'dark'} onCheckedChange={toggleTheme} />
             </div>
 
             <div className="flex items-center justify-between space-x-2">
