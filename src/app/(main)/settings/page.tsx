@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { Bell, Moon, Save, Smartphone, Zap } from "lucide-react";
+import { Bell, Languages, Moon, Save, Smartphone, Zap } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -67,28 +67,7 @@ export default function SettingsPage() {
 
             <div className="flex items-center justify-between space-x-2">
               <div className="flex items-center space-x-4">
-                <Smartphone className="h-5 w-5" />
-                <div className="space-y-0.5">
-                  <Label>{t("theme_mode")}</Label>
-                  <p className="text-[0.8rem] text-muted-foreground">
-                    {t("choose_theme_mode")}
-                  </p>
-                </div>
-              </div>
-              <Select defaultValue="system">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={t("theme_mode_placeholder")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">{t("light")}</SelectItem>
-                  <SelectItem value="dark">{t("dark")}</SelectItem>
-                  <SelectItem value="system">{t("follow_system")}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex items-center justify-between space-x-2">
-              <div className="flex items-center space-x-4">
+                <Languages className="h-5 w-5" />
                 <Label>{t("language")}</Label>
               </div>
               <Select value={locale} onValueChange={handleLocaleChange}>
@@ -159,14 +138,6 @@ export default function SettingsPage() {
               <Switch id="auto-save" defaultChecked />
             </div>
           </div>
-        </div>
-
-        {/* 保存按钮 */}
-        <div className="flex justify-end">
-          <Button size="lg" className="gap-2 min-w-[120px]">
-            <Save className="h-4 w-4" />
-            {t("save_settings")}
-          </Button>
         </div>
       </div>
     </div>
