@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import {
@@ -16,13 +16,6 @@ export default function NotesPage() {
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new");
   const [notes, setNotes] = useState<Note[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const data = await api.notes.list<NotesResponse>();
-      setNotes(data.notes);
-    })();
-  }, []);
-
   const value = useMemo(() => {
     if (selectedNoteId === "new") {
       return INITIAL_EDITOR_VALUE as Descendant[];
@@ -30,6 +23,20 @@ export default function NotesPage() {
     const note = notes.find((note) => note.id === selectedNoteId);
     return note?.content || (INITIAL_EDITOR_VALUE as Descendant[]);
   }, [selectedNoteId, notes]);
+
+  const handleUpdate = useCallback(async (content: Descendant[]) => {
+    selectedNoteId &&
+      (await api.notes.update(selectedNoteId, {
+        content,
+      }));
+  }, [selectedNoteId]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await api.notes.list<NotesResponse>();
+      setNotes(data.notes);
+    })();
+  }, []);
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
@@ -86,7 +93,7 @@ export default function NotesPage() {
           <RichEditor
             className="absolute inset-0"
             value={value}
-            onChange={console.log}
+            onChange={handleUpdate}
           />
         </div>
       </div>

@@ -192,6 +192,9 @@ export function RichEditor({ className, value, onChange }: RichEditorProps) {
                 renderLeaf={renderLeaf}
                 placeholder="开始写作..."
                 onKeyDown={handleKeyDown}
+                onBlur={() => {
+                  onChange(editor.children)
+                }}
               />
             </EditorContextMenu>
           </div>
