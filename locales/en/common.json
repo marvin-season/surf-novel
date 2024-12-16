@@ -1,0 +1,23 @@
+{
+  "welcome": "Welcome",
+  "settings": "Settings",
+  "customize_experience": "Customize your application experience",
+  "appearance": "Appearance",
+  "customize_appearance": "Customize the appearance and theme of the application",
+  "dark_mode": "Dark Mode",
+  "comfortable_coloring": "Use a more comfortable color scheme in dark environments",
+  "theme_mode": "Theme Mode",
+  "choose_theme_mode": "Choose your preferred theme mode",
+  "light": "Light",
+  "dark": "Dark",
+  "follow_system": "Follow System",
+  "notifications": "Notifications",
+  "configure_notifications": "Configure how the application notifies you",
+  "notification_reminders": "Notification Reminders",
+  "receive_updates": "Receive important updates and reminders",
+  "performance": "Performance",
+  "optimize_performance": "Optimize the performance and experience of the application",
+  "auto_save": "Auto Save",
+  "auto_save_changes": "Automatically save your changes",
+  "save_settings": "Save Settings"
+}

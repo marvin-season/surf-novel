@@ -1,0 +1,23 @@
+{
+  "welcome": "欢迎",
+  "settings": "设置",
+  "customize_experience": "自定义您的应用程序体验",
+  "appearance": "外观",
+  "customize_appearance": "自定义应用程序的外观和主题",
+  "dark_mode": "深色模式",
+  "comfortable_coloring": "在深色环境下使用更舒适的配色",
+  "theme_mode": "主题模式",
+  "choose_theme_mode": "选择您喜欢的主题模式",
+  "light": "浅色",
+  "dark": "深色",
+  "follow_system": "跟随系统",
+  "notifications": "通知",
+  "configure_notifications": "配置应用程序的通知方式",
+  "notification_reminders": "通知提醒",
+  "receive_updates": "接收重要更新和提醒",
+  "performance": "性能",
+  "optimize_performance": "优化应用程序的性能和体验",
+  "auto_save": "自动保存",
+  "auto_save_changes": "自动保存您的更改",
+  "save_settings": "保存设置"
+}
