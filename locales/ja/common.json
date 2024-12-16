@@ -24,5 +24,13 @@
     "auto_save": "自動保存",
     "auto_save_changes": "変更を自動的に保存する",
     "save_settings": "設定を保存"
+  },
+  "SideBar": {
+    "my_notes": "私のメモ",
+    "recent_edits": "最近の編集",
+    "favorites": "お気に入り",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "profile_info": "プロフィール情報"
   }
 }

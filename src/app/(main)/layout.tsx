@@ -1,62 +1,67 @@
-"use client"
+"use client";
 
-import { MainLayout } from "@/components/layout/main-layout"
-import { BookMarked, Clock, LogOut, Settings, Star, User } from "lucide-react"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { useRouter, useSelectedLayoutSegment } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import { MainLayout } from "@/components/layout/main-layout";
+import { BookMarked, Clock, LogOut, Settings, Star, User } from "lucide-react";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
 
 const sidebarNavItems = [
   {
-    title: "我的笔记",
+    title: "my_notes",
     href: "/notes",
     icon: <BookMarked className="h-4 w-4" />,
   },
   {
-    title: "最近编辑",
+    title: "recent_edits",
     href: "/recent",
     icon: <Clock className="h-4 w-4" />,
   },
   {
-    title: "收藏夹",
+    title: "favorites",
     href: "/favorites",
     icon: <Star className="h-4 w-4" />,
   },
-] as const
+] as const;
 
 const profileNavItems = [
   {
-    title: "个人信息",
+    title: "profile",
     href: "/profile",
     icon: <User className="h-4 w-4" />,
   },
   {
-    title: "设置",
+    title: "settings",
     href: "/settings",
     icon: <Settings className="h-4 w-4" />,
   },
-] as const
+] as const;
 
 export default function MainAppLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const segment = useSelectedLayoutSegment()
-  const router = useRouter()
+  const segment = useSelectedLayoutSegment();
+  const router = useRouter();
+  const t = useTranslations("SideBar");
 
   const handleLogout = () => {
     // 清除登录状态
-    document.cookie = "isLoggedIn=false; path=/; max-age=0"
+    document.cookie = "isLoggedIn=false; path=/; max-age=0";
     // 跳转到登录页
-    router.push("/login")
-  }
+    router.push("/login");
+  };
 
-  const renderNavItems = (items: typeof sidebarNavItems | typeof profileNavItems, expanded: boolean) => {
+  const renderNavItems = (
+    items: typeof sidebarNavItems | typeof profileNavItems,
+    expanded: boolean
+  ) => {
     return items.map((item) => {
-      const isActive = segment === item.href.split("/")[1]
+      const isActive = segment === item.href.split("/")[1];
       return (
         <li key={item.href}>
           <Link
@@ -68,26 +73,24 @@ export default function MainAppLayout({
             )}
           >
             {item.icon}
-            {expanded && (
-              <span className="ml-3 truncate">
-                {item.title}
-              </span>
-            )}
+            {expanded && <span className="ml-3 truncate">{t(item.title)}</span>}
           </Link>
         </li>
-      )
-    })
-  }
+      );
+    });
+  };
 
   return (
     <MainLayout
       sidebar={({ expanded }) => (
         <div className="flex h-full flex-col">
           {/* 标题 */}
-          <div className={cn(
-            "flex h-14 items-center border-b",
-            expanded ? "px-4" : "justify-center"
-          )}>
+          <div
+            className={cn(
+              "flex h-14 items-center border-b",
+              expanded ? "px-4" : "justify-center"
+            )}
+          >
             <BookMarked className="h-6 w-6" />
             {expanded && (
               <h2 className="ml-3 text-lg font-semibold truncate">
@@ -104,10 +107,12 @@ export default function MainAppLayout({
 
             {/* 个人导航 */}
             <div className="mt-6">
-              <div className={cn(
-                "px-2 pb-2",
-                expanded && "text-xs font-medium text-muted-foreground"
-              )}>
+              <div
+                className={cn(
+                  "px-2 pb-2",
+                  expanded && "text-xs font-medium text-muted-foreground"
+                )}
+              >
                 {expanded ? "个人" : <Separator />}
               </div>
               <ul className="space-y-1 px-2">
@@ -135,5 +140,5 @@ export default function MainAppLayout({
     >
       {children}
     </MainLayout>
-  )
+  );
 }

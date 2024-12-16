@@ -24,5 +24,13 @@
     "auto_save": "Auto Save",
     "auto_save_changes": "Automatically save your changes",
     "save_settings": "Save Settings"
+  },
+  "SideBar": {
+    "my_notes": "My Notes",
+    "recent_edits": "Recent Edits",
+    "profile": "Profile",
+    "settings": "Settings",
+    "profile_info": "Profile Info",
+    "favorites": "Favorites"
   }
 }

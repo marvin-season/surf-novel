@@ -24,5 +24,13 @@
     "auto_save": "自动保存",
     "auto_save_changes": "自动保存您的更改",
     "save_settings": "保存设置"
+  },
+  "SideBar": {
+    "my_notes": "我的笔记",
+    "recent_edits": "最近编辑",
+    "favorites": "收藏夹",
+    "profile": "个人信息",
+    "settings": "设置",
+    "profile_info": "个人信息"
   }
 }
