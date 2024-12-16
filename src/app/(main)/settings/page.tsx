@@ -7,17 +7,23 @@ import { Separator } from "@/components/ui/separator"
 import { Bell, Moon, Save, Smartphone, Zap } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useTheme } from '@/lib/ThemeContext';
+import { useTranslations } from "next-intl"
 
 export default function SettingsPage() {
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme } = useTheme();
+  const t = useTranslations('Settings')
+  const locale = 'en' // default locale
+  const handleLocaleChange = (e) => {
+    // add logic to handle locale change
+  }
 
   return (
     <div className="space-y-8 p-10">
       {/* 页面标题 */}
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">设置</h2>
+        <h2 className="text-2xl font-bold tracking-tight">{t('settings')}</h2>
         <p className="text-muted-foreground">
-          自定义您的应用程序体验
+          {t('customize_experience')}
         </p>
       </div>
 
@@ -28,9 +34,9 @@ export default function SettingsPage() {
         {/* 外观设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">外观</h3>
+            <h3 className="text-lg font-medium">{t('appearance')}</h3>
             <p className="text-sm text-muted-foreground">
-              自定义应用程序的外观和主题
+              {t('customize_appearance')}
             </p>
           </div>
           
@@ -39,9 +45,9 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Moon className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label htmlFor="dark-mode">深色模式</Label>
+                  <Label htmlFor="dark-mode">{t('dark_mode')}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    在深色环境下使用更舒适的配色
+                    {t('comfortable_coloring')}
                   </p>
                 </div>
               </div>
@@ -52,20 +58,36 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Smartphone className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label>主题模式</Label>
+                  <Label>{t('theme_mode')}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    选择您喜欢的主题模式
+                    {t('choose_theme_mode')}
                   </p>
                 </div>
               </div>
               <Select defaultValue="system">
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="选择主题模式" />
+                  <SelectValue placeholder={t('theme_mode_placeholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="light">浅色</SelectItem>
-                  <SelectItem value="dark">深色</SelectItem>
-                  <SelectItem value="system">跟随系统</SelectItem>
+                  <SelectItem value="light">{t('light')}</SelectItem>
+                  <SelectItem value="dark">{t('dark')}</SelectItem>
+                  <SelectItem value="system">{t('follow_system')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-center justify-between space-x-2">
+              <div className="flex items-center space-x-4">
+                <Label>{t('language')}</Label>
+              </div>
+              <Select value={locale} onValueChange={handleLocaleChange}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={t('language_placeholder')} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="zh">中文</SelectItem>
+                  <SelectItem value="ja">日本語</SelectItem>
+                  <SelectItem value="en">English</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -77,9 +99,9 @@ export default function SettingsPage() {
         {/* 通知设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">通知</h3>
+            <h3 className="text-lg font-medium">{t('notifications')}</h3>
             <p className="text-sm text-muted-foreground">
-              配置应用程序的通知方式
+              {t('configure_notifications')}
             </p>
           </div>
           
@@ -88,9 +110,9 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Bell className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label htmlFor="notifications">通知提醒</Label>
+                  <Label htmlFor="notifications">{t('notification_reminders')}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    接收重要更新和提醒
+                    {t('receive_updates')}
                   </p>
                 </div>
               </div>
@@ -104,9 +126,9 @@ export default function SettingsPage() {
         {/* 性能设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">性能</h3>
+            <h3 className="text-lg font-medium">{t('performance')}</h3>
             <p className="text-sm text-muted-foreground">
-              优化应用程序的性能和体验
+              {t('optimize_performance')}
             </p>
           </div>
           
@@ -115,9 +137,9 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Zap className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label htmlFor="auto-save">自动保存</Label>
+                  <Label htmlFor="auto-save">{t('auto_save')}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    自动保存您的更改
+                    {t('auto_save_changes')}
                   </p>
                 </div>
               </div>
@@ -130,7 +152,7 @@ export default function SettingsPage() {
         <div className="flex justify-end">
           <Button size="lg" className="gap-2 min-w-[120px]">
             <Save className="h-4 w-4" />
-            保存设置
+            {t('save_settings')}
           </Button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from '@/lib/ThemeContext';
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
+import { getLocale, getMessages } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Surf Novel",
@@ -17,10 +18,9 @@ export default async function RootLayout({
   params: { lang: string }; 
 }) {
   // Get the current locale from the params
-  const locale = params.lang || 'en'; 
-
+  const locale = await getLocale();
   // Load messages for the current locale
-  const messages = (await import(`../../locales/${locale}/common.json`)).default;
+  const messages = await getMessages();
 
   return (
     <NextIntlClientProvider messages={messages}>
