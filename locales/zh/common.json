@@ -1,5 +1,7 @@
 {
   "Settings": {
+    "language_placeholder": "选择您喜欢的语言",
+    "theme_mode_placeholder": "选择您喜欢的主题模式",
     "language": "语言",
     "welcome": "欢迎",
     "settings": "设置",

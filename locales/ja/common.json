@@ -1,5 +1,7 @@
 {
   "Settings": {
+    "language_placeholder": "好みの言語を選択する",
+    "theme_mode_placeholder": "好みのテーマモードを選択する",
     "language": "言語",
     "welcome": "ようこそ",
     "settings": "設定",

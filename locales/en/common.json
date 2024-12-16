@@ -1,5 +1,7 @@
 {
   "Settings": {
+    "language_placeholder": "Select your preferred language",
+    "theme_mode_placeholder": "Select your preferred theme mode",
     "language": "Language",
     "welcome": "Welcome",
     "settings": "Settings",
