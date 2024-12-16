@@ -4,7 +4,7 @@ export interface Note {
   id: string;
   title: string;
   content: Descendant[];
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 export interface NotesResponse {

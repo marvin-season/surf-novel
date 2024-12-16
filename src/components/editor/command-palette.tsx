@@ -22,6 +22,7 @@ import {
   ListOrdered,
   Quote,
 } from "lucide-react"
+import { CustomNode } from '@/types/slate'
 
 interface CommandPaletteProps {
   editor: Editor
@@ -41,25 +42,25 @@ const commands = [
   {
     group: "标题",
     items: [
-      { label: "标题 1", icon: Heading1, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "h1" }) } },
-      { label: "标题 2", icon: Heading2, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "h2" }) } },
-      { label: "标题 3", icon: Heading3, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "h3" }) } },
+      { label: "标题 1", icon: Heading1, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "h1" }) } },
+      { label: "标题 2", icon: Heading2, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "h2" }) } },
+      { label: "标题 3", icon: Heading3, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "h3" }) } },
     ],
   },
   {
     group: "对齐",
     items: [
-      { label: "左对齐", icon: AlignLeft, command: (editor: Editor) => { Transforms.setNodes(editor, { align: "left" }) } },
-      { label: "居中", icon: AlignCenter, command: (editor: Editor) => { Transforms.setNodes(editor, { align: "center" }) } },
-      { label: "右对齐", icon: AlignRight, command: (editor: Editor) => { Transforms.setNodes(editor, { align: "right" }) } },
+      { label: "左对齐", icon: AlignLeft, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { align: "left" }) } },
+      { label: "居中", icon: AlignCenter, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { align: "center" }) } },
+      { label: "右对齐", icon: AlignRight, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { align: "right" }) } },
     ],
   },
   {
     group: "列表",
     items: [
-      { label: "无序列表", icon: List, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "bulleted-list" }) } },
-      { label: "有序列表", icon: ListOrdered, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "numbered-list" }) } },
-      { label: "引用", icon: Quote, command: (editor: Editor) => { Transforms.setNodes(editor, { type: "block-quote" }) } },
+      { label: "无序列表", icon: List, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "bulleted-list" }) } },
+      { label: "有序列表", icon: ListOrdered, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "numbered-list" }) } },
+      { label: "引用", icon: Quote, command: (editor: Editor) => { Transforms.setNodes<CustomNode>(editor, { type: "block-quote" }) } },
     ],
   },
 ]

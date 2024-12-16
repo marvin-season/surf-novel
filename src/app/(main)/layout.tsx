@@ -54,7 +54,7 @@ export default function MainAppLayout({
     router.push("/login")
   }
 
-  const renderNavItems = (items: typeof sidebarNavItems, expanded: boolean) => {
+  const renderNavItems = (items: typeof sidebarNavItems | typeof profileNavItems, expanded: boolean) => {
     return items.map((item) => {
       const isActive = segment === item.href.split("/")[1]
       return (

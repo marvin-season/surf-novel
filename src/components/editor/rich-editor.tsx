@@ -19,6 +19,7 @@ const FORMATTING_HOTKEYS = {
 // 定义编辑器初始值
 export const INITIAL_EDITOR_VALUE: Descendant[] = [
   {
+    // @ts-ignore
     type: 'paragraph',
     children: [{ text: '' }],
   },
@@ -49,7 +50,7 @@ interface LeafProps {
 
 // 格式化处理函数
 const toggleFormat = (editor: Editor, format: keyof typeof FORMATTING_HOTKEYS) => {
-  const marks = Editor.marks(editor) || {}
+  const marks: any = Editor.marks(editor) || {}
   editor.addMark(format, !marks[format])
 }
 
@@ -189,6 +190,7 @@ export function RichEditor({ className, value, onChange }: RichEditorProps) {
               <Editable
                 className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
                 renderElement={renderElement}
+                // @ts-ignore
                 renderLeaf={renderLeaf}
                 placeholder="开始写作..."
                 onKeyDown={handleKeyDown}
