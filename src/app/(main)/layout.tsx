@@ -132,7 +132,7 @@ export default function MainAppLayout({
               onClick={handleLogout}
             >
               <LogOut className="h-4 w-4" />
-              {expanded && <span>退出登录</span>}
+              {expanded && <span>{t("logout")}</span>}
             </Button>
           </div>
         </div>

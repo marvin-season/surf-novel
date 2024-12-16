@@ -31,6 +31,7 @@
     "favorites": "お気に入り",
     "profile": "プロフィール",
     "settings": "設定",
-    "profile_info": "プロフィール情報"
+    "profile_info": "プロフィール情報",
+    "logout": "ログアウト"
   }
 }

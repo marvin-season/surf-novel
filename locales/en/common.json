@@ -31,6 +31,7 @@
     "profile": "Profile",
     "settings": "Settings",
     "profile_info": "Profile Info",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "logout": "Logout"
   }
 }
