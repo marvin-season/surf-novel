@@ -47,36 +47,3 @@ export async function fetchApi<T>(
     throw error
   }
 }
-
-// 预定义的 API 方法
-export const api = {
-  // 用户相关
-  auth: {
-    login: (data: any) => fetchApi('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
-    register: (data: any) => fetchApi('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
-    logout: () => fetchApi('/auth/logout', { method: 'POST' }),
-  },
-  
-  // 笔记相关
-  notes: {
-    list: () => fetchApi('/notes'),
-    create: (data: any) => fetchApi('/notes', { 
-      method: 'POST', 
-      body: JSON.stringify(data),
-      showSuccess: true,
-      successMessage: '笔记创建成功'
-    }),
-    update: (id: string, data: any) => fetchApi(`/notes/${id}`, { 
-      method: 'PUT', 
-      body: JSON.stringify(data),
-      showSuccess: true,
-      successMessage: '笔记更新成功'
-    }),
-    delete: (id: string) => fetchApi(`/notes/${id}`, { 
-      method: 'DELETE',
-      showSuccess: true,
-      successMessage: '笔记删除成功'
-    }),
-    get: (id: string) => fetchApi(`/notes/${id}`),
-  },
-}
