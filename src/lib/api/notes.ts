@@ -2,7 +2,7 @@ import { fetchApi } from "../fetch";
 
 // 笔记相关
 const notes = {
-  list: () => fetchApi("/notes"),
+  list: <T>() => fetchApi<T>("/notes"),
   create: (data: any) =>
     fetchApi("/notes", {
       method: "POST",

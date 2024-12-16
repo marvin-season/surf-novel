@@ -7,13 +7,7 @@ import { RichEditor } from "@/components/editor/rich-editor"
 import { cn } from "@/lib/utils"
 import { Descendant } from "slate"
 import api from "@/lib/api"
-
-interface Note {
-  id: string
-  title: string
-  content: string
-  updatedAt: string
-}
+import { Note, NotesResponse } from "@/types/notes"
 
 export default function NotesPage() {
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new")
@@ -27,8 +21,7 @@ export default function NotesPage() {
 
   useEffect(() => {
     (async () => {
-      const data = await api.notes.list()
-      console.log(data)
+      const data = await api.notes.list<NotesResponse>()
       setNotes(data.notes)
     })()
   }, [])

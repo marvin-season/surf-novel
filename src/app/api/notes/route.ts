@@ -1,10 +1,21 @@
+import { NotesResponse } from "@/types/notes";
+
 export const GET = () => {
   const notes = [
-    { id: "1", title: "Note 1", content: "Content of Note 1" },
-    { id: "2", title: "Note 2", content: "Content of Note 2" },
-    { id: "3", title: "Note 3", content: "Content of Note 3" },
+    {
+      id: "1",
+      title: "笔记 1",
+      content: "这是笔记 1 的内容",
+      updatedAt: "2023-08-01",
+    },
+    {
+      id: "2",
+      title: "笔记 2",
+      content: "这是笔记 2 的内容",
+      updatedAt: "2023-08-02",
+    },
   ];
-  return new Response(JSON.stringify({ notes }), {
+  return new Response(JSON.stringify({ notes } as NotesResponse), {
     headers: { "Content-Type": "application/json" },
   });
 };
