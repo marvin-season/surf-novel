@@ -19,7 +19,7 @@ export function EditorContextMenu({ editor, children }: EditorContextMenuProps) 
   }
 
   const isMarkActive = (editor: Editor, format: string) => {
-    const marks = Editor.marks(editor)
+    const marks: any = Editor.marks(editor)
     return marks ? marks[format] === true : false
   }
 
