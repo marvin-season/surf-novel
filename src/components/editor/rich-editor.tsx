@@ -34,8 +34,11 @@ export const INITIAL_EDITOR_VALUE: Descendant[] = [
 // 定义类型
 interface RichEditorProps {
   className?: string;
-  content: Descendant[];
-  noteTitle?: string;
+  selectedNote: {
+    content: Descendant[];
+    title: string;
+    id: string;
+  };
   onSave: (value: Descendant[], title: string) => void;
 }
 
@@ -64,15 +67,19 @@ const toggleFormat = (
   editor.addMark(format, !marks[format]);
 };
 
-export function RichEditor({ className, content, noteTitle = "", onSave }: RichEditorProps) {
+export function RichEditor({
+  className,
+  selectedNote,
+  onSave,
+}: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [showToolbar, setShowToolbar] = useState(true);
-  const [title, setTitle] = useState(noteTitle);
+  const [title, setTitle] = useState(selectedNote.title);
 
   useEffect(() => {
-    setTitle(noteTitle);
-  }, [noteTitle]);
+    setTitle(selectedNote.title);
+  }, [selectedNote]);
   const renderElement = useCallback(
     ({ attributes, children, element }: ElementProps) => {
       const style = { textAlign: element.align };
@@ -199,7 +206,11 @@ export function RichEditor({ className, content, noteTitle = "", onSave }: RichE
         />
         <Button onClick={() => onSave(editor.children, title)}>保存</Button>
       </div>
-      <Slate key={JSON.stringify(content)} editor={editor} initialValue={content}>
+      <Slate
+        key={JSON.stringify(selectedNote.id)}
+        editor={editor}
+        initialValue={selectedNote.content}
+      >
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
           {/* 工具栏控制按钮 */}
           <div className="">

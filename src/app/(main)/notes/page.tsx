@@ -24,6 +24,7 @@ export default function NotesPage() {
   const selectedNote = useMemo(() => {
     if (selectedNoteId === NewNote) {
       return {
+        id: selectedNoteId,
         content: INITIAL_EDITOR_VALUE as Descendant[],
         title: "",
       };
@@ -33,6 +34,7 @@ export default function NotesPage() {
 
     if (!note) {
       return {
+        id: selectedNoteId,
         content: INITIAL_EDITOR_VALUE as Descendant[],
         title: "",
       };
@@ -40,7 +42,8 @@ export default function NotesPage() {
 
     const slateContent = JSON.parse(note.content || "[]");
     return {
-      content: slateContent,
+      id: selectedNoteId,
+      content: slateContent as Descendant[],
       title: note.title,
     };
   }, [selectedNoteId, notes]);
@@ -119,8 +122,7 @@ export default function NotesPage() {
       <div className="flex-1 min-w-0 flex flex-col bg-background">
         <div className="flex-1 relative min-h-0">
           <RichEditor
-            noteTitle={selectedNote.title}
-            content={selectedNote.content}
+            selectedNote={selectedNote}
             className="absolute inset-0"
             onSave={handleUpdateOrCreate}
           />
