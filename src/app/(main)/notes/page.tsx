@@ -11,8 +11,10 @@ import { cn } from "@/lib/utils";
 import { Descendant } from "slate";
 import api from "@/lib/api";
 import { Note, NotesResponse } from "@/types/notes";
+import { useTranslations } from "next-intl";
 
 export default function NotesPage() {
+  const t = useTranslations("notes");
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new");
   const [notes, setNotes] = useState<Note[]>([]);
 
@@ -43,7 +45,7 @@ export default function NotesPage() {
       {/* 笔记列表 */}
       <div className="w-60 flex-shrink-0 border-r flex flex-col bg-muted/5">
         <div className="p-4 border-b bg-background">
-          <h2 className="text-lg font-semibold">我的笔记</h2>
+          <h2 className="text-lg font-semibold">{t("title")}</h2>
         </div>
         <div className="flex-1 overflow-y-auto p-2">
           <Button
@@ -55,7 +57,7 @@ export default function NotesPage() {
             onClick={() => setSelectedNoteId("new")}
           >
             <Plus className="h-4 w-4" />
-            新建笔记
+            {t("newNote")}
           </Button>
           {notes.map((note) => (
             <Button
@@ -69,7 +71,7 @@ export default function NotesPage() {
             >
               <div className="flex flex-col items-start gap-1">
                 <span className="font-medium line-clamp-1">
-                  {note.title || "无标题"}
+                  {note.title || t("noTitle")}
                 </span>
                 <span className="text-xs text-muted-foreground">
                   {new Date(note.updatedAt).toLocaleDateString()}
@@ -85,7 +87,7 @@ export default function NotesPage() {
         <div className="flex-shrink-0 border-b px-8 py-4">
           <input
             type="text"
-            placeholder="笔记标题"
+            placeholder={t("noteTitle")}
             className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
           />
         </div>

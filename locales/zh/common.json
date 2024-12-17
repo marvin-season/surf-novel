@@ -55,5 +55,20 @@
     "bio": "简介",
     "bioInfo": "在个人信息页面和侧边栏中显示的简介",
     "save_changes": "保存更改"
+  },
+  "favorites": {
+    "title": "收藏夹",
+    "notesList": "收藏的笔记列表将在这里显示"
+  },
+  "notes": {
+    "title": "笔记",
+    "myNotes": "我的笔记",
+    "newNote": "新建笔记",
+    "noTitle": "无标题",
+    "noteTitle": "笔记标题"
+  },
+  "recent": {
+    "title": "最近编辑",
+    "notesList": "最近编辑的笔记列表将在这里显示"
   }
 }

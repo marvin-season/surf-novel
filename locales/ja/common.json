@@ -55,5 +55,20 @@
     "bio": "自己紹介",
     "bioInfo": "プロフィールページとサイドバーで表示される自己紹介",
     "save_changes": "変更を保存"
+  },
+  "favorites": {
+    "title": "お気に入り",
+    "notesList": "お気に入りのメモリストはここに表示されます"
+  },
+  "notes": {
+    "title": "メモ",
+    "myNotes": "私のメモ",
+    "newNote": "新しいメモ",
+    "noTitle": "タイトルなし",
+    "noteTitle": "メモタイトル"
+  },
+  "recent": {
+    "title": "最近の編集",
+    "notesList": "最近の編集されたメモリストはここに表示されます"
   }
 }

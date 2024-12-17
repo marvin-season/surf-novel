@@ -55,5 +55,20 @@
     "bio": "Bio",
     "bioInfo": "Your bio is displayed on your profile page and in the sidebar",
     "save_changes": "Save Changes"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "notesList": "Your favorite notes will be listed here"
+  },
+  "notes": {
+    "title": "Notes",
+    "myNotes": "My Notes",
+    "newNote": "New Note",
+    "noTitle": "No title",
+    "noteTitle": "Note Title"
+  },
+  "recent": {
+    "title": "Recent Edits",
+    "notesList": "Your recent edits will be listed here"
   }
 }
