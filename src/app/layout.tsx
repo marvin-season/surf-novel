@@ -24,18 +24,16 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
-      <ThemeProvider>
-        <AuthProvider>
-          <html lang={locale}>
-            <body
-              className={`antialiased`}
-            >
+    <html lang={locale}>
+      <body className="antialiased">
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <AuthProvider>
               {children}
-            </body>
-          </html>
-        </AuthProvider>
-      </ThemeProvider>
-    </NextIntlClientProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

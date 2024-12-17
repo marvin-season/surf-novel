@@ -53,8 +53,12 @@ export default function MainAppLayout({
   const { logout, user } = useAuth();
 
   const handleLogout = async () => {
-    logout();
-    router.push("/login");
+    try {
+      logout();
+      router.replace("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const renderNavItems = (
