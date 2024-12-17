@@ -8,6 +8,14 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const token = getStore("token");
 
+  console.log("pathname", pathname, request);
+
+  if (pathname === "/") {
+    const loginUrl = new URL(`/login`, request.url);
+    loginUrl.searchParams.set("from", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
   // Check if the pathname starts with /api
   if (pathname.startsWith("/api")) {
     if (!token && !publicPages.some((page) => pathname.includes(page))) {
