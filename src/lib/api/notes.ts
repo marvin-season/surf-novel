@@ -3,8 +3,8 @@ import { fetchApi } from "../fetch";
 // 笔记相关
 const notes = {
   list: <T>() => fetchApi<T>("/notes"),
-  create: (data: any) =>
-    fetchApi("/notes", {
+  create: <T>(data: any) =>
+    fetchApi<T>("/notes", {
       method: "POST",
       body: JSON.stringify(data),
       showSuccess: true,

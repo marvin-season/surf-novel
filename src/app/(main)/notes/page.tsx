@@ -13,25 +13,38 @@ import api from "@/lib/api";
 import { Note, NotesResponse } from "@/types/notes";
 import { useTranslations } from "next-intl";
 
+const NewNote = "new";
+
 export default function NotesPage() {
   const t = useTranslations("notes");
-  const [selectedNoteId, setSelectedNoteId] = useState<string | null>("new");
+  const [selectedNoteId, setSelectedNoteId] = useState<string>(NewNote);
   const [notes, setNotes] = useState<Note[]>([]);
 
   const value = useMemo(() => {
-    if (selectedNoteId === "new") {
+    if (selectedNoteId === NewNote) {
       return INITIAL_EDITOR_VALUE as Descendant[];
     }
-    const note = notes.find((note) => note.id === selectedNoteId);
-    return note?.content || (INITIAL_EDITOR_VALUE as Descendant[]);
+
+    const slateContent = JSON.parse(notes.find((note) => note.id === selectedNoteId)?.content || "[]");
+    return slateContent || (INITIAL_EDITOR_VALUE as Descendant[]);
   }, [selectedNoteId, notes]);
 
-  const handleUpdate = useCallback(async (content: Descendant[]) => {
-    selectedNoteId &&
-      (await api.notes.update(selectedNoteId, {
-        content,
-      }));
-  }, [selectedNoteId]);
+  const handleUpdateOrCreate = useCallback(
+    async (content: Descendant[]) => {
+      if (selectedNoteId === NewNote) {
+        const note = await api.notes.create<Note>({
+          title: "",
+          content,
+        });
+        setSelectedNoteId(note.id);
+      } else {
+        await api.notes.update(selectedNoteId, {
+          content,
+        });
+      }
+    },
+    [selectedNoteId]
+  );
 
   useEffect(() => {
     (async () => {
@@ -49,12 +62,12 @@ export default function NotesPage() {
         </div>
         <div className="flex-1 overflow-y-auto p-2">
           <Button
-            variant={selectedNoteId === "new" ? "secondary" : "ghost"}
+            variant={selectedNoteId === NewNote ? "secondary" : "ghost"}
             className={cn(
               "w-full justify-start gap-2 mb-2",
-              selectedNoteId === "new" && "bg-accent"
+              selectedNoteId === NewNote && "bg-accent"
             )}
-            onClick={() => setSelectedNoteId("new")}
+            onClick={() => setSelectedNoteId(NewNote)}
           >
             <Plus className="h-4 w-4" />
             {t("newNote")}
@@ -95,7 +108,7 @@ export default function NotesPage() {
           <RichEditor
             className="absolute inset-0"
             value={value}
-            onChange={handleUpdate}
+            onChange={handleUpdateOrCreate}
           />
         </div>
       </div>
