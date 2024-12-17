@@ -19,19 +19,32 @@ export default function NotesPage() {
   const t = useTranslations("notes");
   const [selectedNoteId, setSelectedNoteId] = useState<string>(NewNote);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [_, forceUpdate] = useState<number>();
 
-  const value = useMemo(() => {
+  const selectedNote = useMemo(() => {
     if (selectedNoteId === NewNote) {
-      return INITIAL_EDITOR_VALUE as Descendant[];
+      return {
+        content: INITIAL_EDITOR_VALUE as Descendant[],
+        title: "",
+      };
     }
 
-    const slateContent = JSON.parse(
-      notes.find((note) => note.id === selectedNoteId)?.content || "[]"
-    );
-    return slateContent.length > 0
-      ? slateContent
-      : (INITIAL_EDITOR_VALUE as Descendant[]);
+    const note = notes.find((note) => note.id === selectedNoteId);
+
+    if (!note) {
+      return {
+        content: INITIAL_EDITOR_VALUE as Descendant[],
+        title: "",
+      };
+    }
+
+    const slateContent = JSON.parse(note.content || "[]");
+    return {
+      content: slateContent,
+      title: note.title,
+    };
   }, [selectedNoteId, notes]);
+
 
   const handleUpdateOrCreate = useCallback(
     async (content: Descendant[], title: string) => {
@@ -47,8 +60,10 @@ export default function NotesPage() {
           title,
         });
       }
+
+      forceUpdate(Date.now());
     },
-    [selectedNoteId]
+    []
   );
 
   useEffect(() => {
@@ -56,7 +71,7 @@ export default function NotesPage() {
       const data = await api.notes.list<NotesResponse>();
       data?.length > 0 && setNotes(data);
     })();
-  }, []);
+  }, [_]);
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
@@ -104,9 +119,10 @@ export default function NotesPage() {
       <div className="flex-1 min-w-0 flex flex-col bg-background">
         <div className="flex-1 relative min-h-0">
           <RichEditor
+            noteTitle={selectedNote.title}
+            content={selectedNote.content}
             className="absolute inset-0"
-            value={value}
-            onChange={handleUpdateOrCreate}
+            onSave={handleUpdateOrCreate}
           />
         </div>
       </div>

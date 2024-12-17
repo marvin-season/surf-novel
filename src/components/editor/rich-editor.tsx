@@ -13,6 +13,7 @@ import { EditorToolbar } from "./editor-toolbar";
 import { isKeyHotkey } from "is-hotkey";
 import { CommandPalette } from "./command-palette";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "../ui/button";
 
 // 定义快捷键常量
 const FORMATTING_HOTKEYS = {
@@ -33,8 +34,9 @@ export const INITIAL_EDITOR_VALUE: Descendant[] = [
 // 定义类型
 interface RichEditorProps {
   className?: string;
-  value: Descendant[];
-  onChange: (value: Descendant[], title: string) => void;
+  content: Descendant[];
+  noteTitle?: string;
+  onSave: (value: Descendant[], title: string) => void;
 }
 
 interface ElementProps {
@@ -62,11 +64,15 @@ const toggleFormat = (
   editor.addMark(format, !marks[format]);
 };
 
-export function RichEditor({ className, value, onChange }: RichEditorProps) {
+export function RichEditor({ className, content, noteTitle = "", onSave }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [showToolbar, setShowToolbar] = useState(true);
+  const [title, setTitle] = useState(noteTitle);
 
+  useEffect(() => {
+    setTitle(noteTitle);
+  }, [noteTitle]);
   const renderElement = useCallback(
     ({ attributes, children, element }: ElementProps) => {
       const style = { textAlign: element.align };
@@ -182,24 +188,18 @@ export function RichEditor({ className, value, onChange }: RichEditorProps) {
     [editor]
   );
 
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    // 清除久的editor的内容，内容更新为新的 value
-    console.log(value);
-  }, [value]);
-
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
-      <div className="flex-shrink-0 border-b px-8 py-4">
+      <div className="flex border px-8 py-4">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
           className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
         />
+        <Button onClick={() => onSave(editor.children, title)}>保存</Button>
       </div>
-      <Slate key={JSON.stringify(value)} editor={editor} initialValue={value}>
+      <Slate key={JSON.stringify(content)} editor={editor} initialValue={content}>
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
           {/* 工具栏控制按钮 */}
           <div className="">
@@ -235,7 +235,7 @@ export function RichEditor({ className, value, onChange }: RichEditorProps) {
                 placeholder="开始写作..."
                 onKeyDown={handleKeyDown}
                 onBlur={() => {
-                  onChange(editor.children, title);
+                  onSave(editor.children, title);
                 }}
               />
             </EditorContextMenu>
