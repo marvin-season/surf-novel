@@ -1,8 +1,14 @@
-'use client';
+"use client";
 
-import { AuthResponse, LoginCredentials, RegisterCredentials, User } from '@/types/auth';
-import { createContext, useContext, useEffect, useState } from 'react';
-import * as authService from '@/services/auth';
+import {
+  AuthResponse,
+  LoginCredentials,
+  RegisterCredentials,
+  User,
+} from "@/types/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import * as authService from "@/services/auth";
+import { getStore, removeStore, setStore } from "@/lib/store";
 
 interface AuthContextType {
   user: User | null;
@@ -19,31 +25,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 检查本地存储中的用户信息
-    const token = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    
-    if (token && storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error('Failed to parse stored user:', error);
-        // 如果解析失败，清除存储的数据
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+    (async () => {
+      // 检查本地存储中的用户信息
+      const token = await getStore("token");
+      const storedUser = await getStore("user");
+
+      if (token && storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          console.error("Failed to parse stored user:", error);
+          // 如果解析失败，清除存储的数据
+          await removeStore("token");
+          await removeStore("user");
+        }
       }
-    }
-    
-    setIsLoading(false);
+
+      setIsLoading(false);
+    })();
   }, []);
 
-  const handleAuthResponse = (response: AuthResponse) => {
+  const handleAuthResponse = async (response: AuthResponse) => {
     if (response.token && response.user) {
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
+      await setStore("token", response.token);
+      await setStore("user", JSON.stringify(response.user));
       setUser(response.user);
     } else {
-      throw new Error('Invalid authentication response');
+      throw new Error("Invalid authentication response");
     }
   };
 
@@ -52,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await authService.login(credentials);
       handleAuthResponse(response);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
       throw error;
     }
   };
@@ -62,14 +70,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const response = await authService.register(credentials);
       handleAuthResponse(response);
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error("Registration failed:", error);
       throw error;
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    removeStore("token");
+    removeStore("user");
     setUser(null);
   };
 
@@ -87,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
