@@ -3,10 +3,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import EditorJSComponent from '@/components/editor/EditorJSComponent';
+import {
+  INITIAL_EDITOR_VALUE,
+  RichEditor,
+} from "@/components/editor/rich-editor";
 import { cn } from "@/lib/utils";
-import { getNotes, createNote, updateNote, deleteNote } from '@/services/notes';
-import { Note } from "@/types/notes";
+import { Descendant } from "slate";
+import api from "@/lib/api";
+import { Note, NotesResponse } from "@/types/notes";
 import { useTranslations } from "next-intl";
 
 export default function NotesPage() {
@@ -16,43 +20,23 @@ export default function NotesPage() {
 
   const value = useMemo(() => {
     if (selectedNoteId === "new") {
-      return { blocks: [] };
+      return INITIAL_EDITOR_VALUE as Descendant[];
     }
     const note = notes.find((note) => note.id === selectedNoteId);
-    return note?.content || { blocks: [] };
+    return note?.content || (INITIAL_EDITOR_VALUE as Descendant[]);
   }, [selectedNoteId, notes]);
 
-  const handleUpdate = useCallback(async (content: any) => {
-    if (selectedNoteId) {
-      const updatedNote = await updateNote(selectedNoteId, { content });
-      setNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.id === updatedNote.id ? updatedNote : note
-        )
-      );
-    }
+  const handleUpdate = useCallback(async (content: Descendant[]) => {
+    selectedNoteId &&
+      (await api.notes.update(selectedNoteId, {
+        content,
+      }));
   }, [selectedNoteId]);
-
-  const handleCreate = useCallback(async () => {
-    const newNote = await createNote({ title: "New Note", content: { blocks: [] } });
-    setNotes((prevNotes) => [newNote, ...prevNotes]);
-    setSelectedNoteId(newNote.id);
-  }, []);
-
-  const handleDelete = useCallback(async (id: string) => {
-    await deleteNote(id);
-    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
-    setSelectedNoteId("new");
-  }, []);
-
-  const handleEditorChange = useCallback((data: any) => {
-    handleUpdate(data);
-  }, [handleUpdate]);
 
   useEffect(() => {
     (async () => {
-      const data = await getNotes();
-      setNotes(data);
+      const data = await api.notes.list<NotesResponse>();
+      setNotes(data.notes);
     })();
   }, []);
 
@@ -65,42 +49,55 @@ export default function NotesPage() {
         </div>
         <div className="flex-1 overflow-y-auto p-2">
           <Button
-            onClick={handleCreate}
-            className="w-full mb-2"
-            variant="outline"
+            variant={selectedNoteId === "new" ? "secondary" : "ghost"}
+            className={cn(
+              "w-full justify-start gap-2 mb-2",
+              selectedNoteId === "new" && "bg-accent"
+            )}
+            onClick={() => setSelectedNoteId("new")}
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="h-4 w-4" />
             {t("newNote")}
           </Button>
-          {/* 笔记项 */}
           {notes.map((note) => (
-            <div
+            <Button
               key={note.id}
+              variant={selectedNoteId === note.id ? "secondary" : "ghost"}
               className={cn(
-                "p-2 rounded cursor-pointer",
+                "w-full justify-start text-left mb-1 h-auto py-3",
                 selectedNoteId === note.id && "bg-accent"
               )}
               onClick={() => setSelectedNoteId(note.id)}
             >
-              {note.title}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="ml-auto"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDelete(note.id);
-                }}
-              >
-                删除
-              </Button>
-            </div>
+              <div className="flex flex-col items-start gap-1">
+                <span className="font-medium line-clamp-1">
+                  {note.title || t("noTitle")}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {new Date(note.updatedAt).toLocaleDateString()}
+                </span>
+              </div>
+            </Button>
           ))}
         </div>
       </div>
-      {/* 编辑器 */}
-      <div className="flex-1">
-        <EditorJSComponent data={value} onChange={handleEditorChange} />
+
+      {/* 编辑区 */}
+      <div className="flex-1 min-w-0 flex flex-col bg-background">
+        <div className="flex-shrink-0 border-b px-8 py-4">
+          <input
+            type="text"
+            placeholder={t("noteTitle")}
+            className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
+          />
+        </div>
+        <div className="flex-1 relative min-h-0">
+          <RichEditor
+            className="absolute inset-0"
+            value={value}
+            onChange={handleUpdate}
+          />
+        </div>
       </div>
     </div>
   );
