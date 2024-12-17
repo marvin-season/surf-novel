@@ -10,9 +10,10 @@ import { AlertCircle } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import Link from "next/link"
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter()
-  const { login } = useAuth()
+  const { register } = useAuth()
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -24,10 +25,10 @@ export default function LoginPage() {
     setIsLoading(true)
     
     try {
-      await login({ email, password })
+      await register({ name, email, password })
       router.push("/notes")
     } catch (err) {
-      setError(err instanceof Error ? err.message : "登录失败")
+      setError(err instanceof Error ? err.message : "注册失败")
     } finally {
       setIsLoading(false)
     }
@@ -37,9 +38,9 @@ export default function LoginPage() {
     <div className="h-screen w-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-sm space-y-6 p-6">
         <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-bold">登录</h1>
+          <h1 className="text-2xl font-bold">注册</h1>
           <p className="text-sm text-muted-foreground">
-            输入您的账户信息以继续
+            创建您的账户以开始使用
           </p>
         </div>
 
@@ -51,6 +52,17 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">用户名</Label>
+            <Input
+              id="name"
+              placeholder="请输入用户名"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={isLoading}
+              required
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="email">邮箱</Label>
             <Input
@@ -76,14 +88,14 @@ export default function LoginPage() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "登录中..." : "登录"}
+            {isLoading ? "注册中..." : "注册"}
           </Button>
         </form>
 
         <div className="text-sm text-center">
-          <span className="text-muted-foreground">还没有账号？</span>{" "}
-          <Link href="/register" className="text-primary hover:underline">
-            立即注册
+          <span className="text-muted-foreground">已有账号？</span>{" "}
+          <Link href="/login" className="text-primary hover:underline">
+            立即登录
           </Link>
         </div>
       </div>
