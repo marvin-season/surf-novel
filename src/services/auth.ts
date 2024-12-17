@@ -1,4 +1,5 @@
 import { AuthResponse, LoginCredentials, RegisterCredentials } from '@/types/auth';
+import { fetchApi } from '@/lib/fetch';
 
 const API_BASE = '/api/auth';
 
@@ -16,37 +17,23 @@ async function handleResponse(response: Response) {
 }
 
 export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
-  try {
-    const response = await fetch(`${API_BASE}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    return handleResponse(response);
-  } catch (error) {
-    console.error('Login request failed:', error);
-    throw error;
-  }
+  return fetchApi<AuthResponse>('/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    showError: true,
+    showSuccess: true,
+    successMessage: '登录成功'
+  });
 }
 
 export async function register(credentials: RegisterCredentials): Promise<AuthResponse> {
-  try {
-    const response = await fetch(`${API_BASE}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    return handleResponse(response);
-  } catch (error) {
-    console.error('Registration request failed:', error);
-    throw error;
-  }
+  return fetchApi<AuthResponse>('/api/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    showError: true,
+    showSuccess: true,
+    successMessage: '注册成功'
+  });
 }
 
 export function logout() {
