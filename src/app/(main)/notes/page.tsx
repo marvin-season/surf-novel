@@ -34,16 +34,17 @@ export default function NotesPage() {
   }, [selectedNoteId, notes]);
 
   const handleUpdateOrCreate = useCallback(
-    async (content: Descendant[]) => {
+    async (content: Descendant[], title: string) => {
       if (selectedNoteId === NewNote) {
         const note = await api.notes.create<Note>({
-          title: "",
+          title,
           content,
         });
         setSelectedNoteId(note.id);
       } else {
         await api.notes.update(selectedNoteId, {
           content,
+          title,
         });
       }
     },
@@ -101,13 +102,6 @@ export default function NotesPage() {
 
       {/* 编辑区 */}
       <div className="flex-1 min-w-0 flex flex-col bg-background">
-        <div className="flex-shrink-0 border-b px-8 py-4">
-          <input
-            type="text"
-            placeholder={t("noteTitle")}
-            className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
-          />
-        </div>
         <div className="flex-1 relative min-h-0">
           <RichEditor
             className="absolute inset-0"
