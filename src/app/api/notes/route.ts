@@ -15,7 +15,7 @@ export async function GET() {
       },
     });
 
-    return new Response(JSON.stringify({ notes } as NotesResponse), {
+    return new Response(JSON.stringify(notes), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

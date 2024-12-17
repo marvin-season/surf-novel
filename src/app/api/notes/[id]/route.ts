@@ -1,5 +1,5 @@
-import { prisma } from '@/lib/prisma';
-import { NextRequest } from 'next/server';
+import { prisma } from "@/lib/prisma";
+import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
@@ -12,15 +12,15 @@ export async function GET(
         author: {
           select: {
             name: true,
-            email: true
-          }
+            email: true,
+          },
         },
-        tags: true
-      }
+        tags: true,
+      },
     });
 
     if (!note) {
-      return new Response(JSON.stringify({ error: 'Note not found' }), {
+      return new Response(JSON.stringify({ error: "Note not found" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
@@ -30,7 +30,7 @@ export async function GET(
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to fetch note' }), {
+    return new Response(JSON.stringify({ error: "Failed to fetch note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
@@ -49,32 +49,23 @@ export async function PUT(
       where: { id: params.id },
       data: {
         title,
-        content,
-        isFavorite,
-        tags: {
-          set: [], // Remove all existing tags
-          connectOrCreate: tags.map((tag: string) => ({
-            where: { name: tag },
-            create: { name: tag }
-          }))
-        }
+        content: JSON.stringify(content),
       },
       include: {
         author: {
           select: {
             name: true,
-            email: true
-          }
+            email: true,
+          },
         },
-        tags: true
-      }
+      },
     });
 
     return new Response(JSON.stringify(note), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to update note' }), {
+    return new Response(JSON.stringify({ error: "Failed to update note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
@@ -87,12 +78,12 @@ export async function DELETE(
 ) {
   try {
     await prisma.note.delete({
-      where: { id: params.id }
+      where: { id: params.id },
     });
 
     return new Response(null, { status: 204 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to delete note' }), {
+    return new Response(JSON.stringify({ error: "Failed to delete note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

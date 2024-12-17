@@ -25,8 +25,12 @@ export default function NotesPage() {
       return INITIAL_EDITOR_VALUE as Descendant[];
     }
 
-    const slateContent = JSON.parse(notes.find((note) => note.id === selectedNoteId)?.content || "[]");
-    return slateContent || (INITIAL_EDITOR_VALUE as Descendant[]);
+    const slateContent = JSON.parse(
+      notes.find((note) => note.id === selectedNoteId)?.content || "[]"
+    );
+    return slateContent.length > 0
+      ? slateContent
+      : (INITIAL_EDITOR_VALUE as Descendant[]);
   }, [selectedNoteId, notes]);
 
   const handleUpdateOrCreate = useCallback(
@@ -49,7 +53,7 @@ export default function NotesPage() {
   useEffect(() => {
     (async () => {
       const data = await api.notes.list<NotesResponse>();
-      setNotes(data.notes);
+      data?.length > 0 && setNotes(data);
     })();
   }, []);
 

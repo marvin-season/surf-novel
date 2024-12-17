@@ -7,6 +7,4 @@ export interface Note {
   updatedAt: string;
 }
 
-export interface NotesResponse {
-  notes: Note[];
-}
+export type NotesResponse = Note[];
