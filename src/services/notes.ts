@@ -1,4 +1,5 @@
 import { Note } from '@/types/notes';
+import { fetchApi } from '@/lib/fetch';
 
 const API_BASE = '/api/notes';
 
@@ -11,70 +12,45 @@ function getAuthHeaders() {
 }
 
 export async function getNotes(): Promise<Note[]> {
-  const response = await fetch(API_BASE, {
-    headers: getAuthHeaders(),
+  const response = await fetchApi<{ notes: Note[] }>('/notes', {
+    method: 'GET',
+    showError: true
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to fetch notes');
-  }
-
-  const data = await response.json();
-  return data.notes;
+  return response.notes;
 }
 
 export async function getNote(id: string): Promise<Note> {
-  const response = await fetch(`${API_BASE}/${id}`, {
-    headers: getAuthHeaders(),
+  return fetchApi<Note>(`/notes/${id}`, {
+    method: 'GET',
+    showError: true
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to fetch note');
-  }
-
-  return response.json();
 }
 
 export async function createNote(note: Partial<Note>): Promise<Note> {
-  const response = await fetch(API_BASE, {
+  return fetchApi<Note>('/notes', {
     method: 'POST',
-    headers: getAuthHeaders(),
     body: JSON.stringify(note),
+    showError: true,
+    showSuccess: true,
+    successMessage: '笔记创建成功'
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to create note');
-  }
-
-  return response.json();
 }
 
 export async function updateNote(id: string, note: Partial<Note>): Promise<Note> {
-  const response = await fetch(`${API_BASE}/${id}`, {
+  return fetchApi<Note>(`/notes/${id}`, {
     method: 'PUT',
-    headers: getAuthHeaders(),
     body: JSON.stringify(note),
+    showError: true,
+    showSuccess: true,
+    successMessage: '笔记更新成功'
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to update note');
-  }
-
-  return response.json();
 }
 
 export async function deleteNote(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/${id}`, {
+  return fetchApi<void>(`/notes/${id}`, {
     method: 'DELETE',
-    headers: getAuthHeaders(),
+    showError: true,
+    showSuccess: true,
+    successMessage: '笔记删除成功'
   });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to delete note');
-  }
 }
