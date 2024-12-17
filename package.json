@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.30.7",
     "@formatjs/intl-localematcher": "^0.5.9",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-context-menu": "^2.2.3",

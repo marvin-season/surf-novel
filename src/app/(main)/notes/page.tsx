@@ -3,12 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import {
-  INITIAL_EDITOR_VALUE,
-  RichEditor,
-} from "@/components/editor/rich-editor";
+import EditorJSComponent from '@/components/editor/EditorJSComponent';
 import { cn } from "@/lib/utils";
-import { Descendant } from "slate";
 import { getNotes, createNote, updateNote, deleteNote } from '@/services/notes';
 import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
@@ -20,13 +16,13 @@ export default function NotesPage() {
 
   const value = useMemo(() => {
     if (selectedNoteId === "new") {
-      return INITIAL_EDITOR_VALUE as Descendant[];
+      return { blocks: [] };
     }
     const note = notes.find((note) => note.id === selectedNoteId);
-    return note?.content || (INITIAL_EDITOR_VALUE as Descendant[]);
+    return note?.content || { blocks: [] };
   }, [selectedNoteId, notes]);
 
-  const handleUpdate = useCallback(async (content: Descendant[]) => {
+  const handleUpdate = useCallback(async (content: any) => {
     if (selectedNoteId) {
       const updatedNote = await updateNote(selectedNoteId, { content });
       setNotes((prevNotes) =>
@@ -38,7 +34,7 @@ export default function NotesPage() {
   }, [selectedNoteId]);
 
   const handleCreate = useCallback(async () => {
-    const newNote = await createNote({ title: "New Note", content: INITIAL_EDITOR_VALUE });
+    const newNote = await createNote({ title: "New Note", content: { blocks: [] } });
     setNotes((prevNotes) => [newNote, ...prevNotes]);
     setSelectedNoteId(newNote.id);
   }, []);
@@ -48,6 +44,10 @@ export default function NotesPage() {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
     setSelectedNoteId("new");
   }, []);
+
+  const handleEditorChange = useCallback((data: any) => {
+    handleUpdate(data);
+  }, [handleUpdate]);
 
   useEffect(() => {
     (async () => {
@@ -100,7 +100,7 @@ export default function NotesPage() {
       </div>
       {/* 编辑器 */}
       <div className="flex-1">
-        <RichEditor value={value} onBlur={handleUpdate} />
+        <EditorJSComponent data={value} onChange={handleEditorChange} />
       </div>
     </div>
   );

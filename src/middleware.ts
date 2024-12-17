@@ -8,8 +8,6 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const token = getStore("token");
 
-  console.log("pathname", pathname, request);
-
   if (pathname === "/") {
     const loginUrl = new URL(`/login`, request.url);
     loginUrl.searchParams.set("from", request.nextUrl.pathname);
