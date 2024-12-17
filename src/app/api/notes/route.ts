@@ -1,31 +1,30 @@
+import { prisma } from '@/lib/prisma';
 import { NotesResponse } from "@/types/notes";
 
-export const GET = () => {
-  const notes = [
-    {
-      id: "1",
-      title: "笔记 1",
-      content: [
-        {
-          type: "paragraph",
-          children: [{ text: "笔记 1" }],
+export async function GET() {
+  try {
+    const notes = await prisma.note.findMany({
+      include: {
+        author: {
+          select: {
+            name: true,
+            email: true
+          }
         },
-      ],
-      updatedAt: "2023-08-01",
-    },
-    {
-      id: "2",
-      title: "笔记 2",
-      content: [
-        {
-          type: "paragraph",
-          children: [{ text: "笔记 2" }],
-        },
-      ],
-      updatedAt: "2023-08-02",
-    },
-  ];
-  return new Response(JSON.stringify({ notes } as NotesResponse), {
-    headers: { "Content-Type": "application/json" },
-  });
-};
+        tags: true
+      },
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    });
+
+    return new Response(JSON.stringify({ notes } as NotesResponse), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Failed to fetch notes' }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
