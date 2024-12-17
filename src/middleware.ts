@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getStore } from "./lib/store";
 
 const publicPages = ["/login", "/register"];
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const token = request.cookies.get("token")?.value;
-
-  console.log("token middleware", token);
+  const token = getStore("token");
 
   // Check if the pathname starts with /api
   if (pathname.startsWith("/api")) {
@@ -16,8 +15,6 @@ export function middleware(request: NextRequest) {
     }
     return NextResponse.next();
   }
-
-  console.log("page", pathname);
 
   // Check authentication for protected routes
   if (!token && !publicPages.some((page) => pathname.includes(page))) {

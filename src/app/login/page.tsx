@@ -25,7 +25,10 @@ export default function LoginPage() {
     
     try {
       await login({ email, password })
-      router.replace("/notes")
+      console.log("登录成功")
+      setTimeout(() => {
+        router.push("/notes")
+      }, 100)
     } catch (err) {
       setError(err instanceof Error ? err.message : "登录失败")
     } finally {
