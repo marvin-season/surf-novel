@@ -1,4 +1,4 @@
-"use server";
+// "use server";
 
 import { notesApi } from "@/lib/api";
 import { NotesResponse } from "@/types/notes";

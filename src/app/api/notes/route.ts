@@ -1,17 +1,22 @@
 import { prisma } from "@/lib/prisma";
 import { NotesResponse } from "@/types/notes";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const email = "2764876579@qq.com";
+    // 筛选 id, updatedAt, title字段
     const notes = await prisma.note.findMany({
-      include: {
+      select: {
+        id: true,
+        updatedAt: true,
+        title: true,
+        content: false,
+      },
+      where: {
         author: {
-          select: {
-            name: true,
-            email: true,
-          },
+          email,
         },
-        tags: true,
       },
     });
 
@@ -35,7 +40,7 @@ export async function POST(request: Request) {
       content,
       tags,
       isFavorite,
-    })
+    });
     const note = await prisma.note.create({
       data: {
         title,
@@ -44,7 +49,7 @@ export async function POST(request: Request) {
           connect: {
             email: "2764876579@qq.com",
           },
-        }
+        },
       },
     });
 
