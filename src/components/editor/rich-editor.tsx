@@ -1,9 +1,12 @@
+// ts-nocheck
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   createEditor,
   Descendant,
   Element as SlateElement,
   Editor,
+  Transforms,
 } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { withHistory } from "slate-history";
@@ -23,21 +26,12 @@ const FORMATTING_HOTKEYS = {
   underline: "mod+u",
 } as const;
 
-// 定义编辑器初始值
-export const INITIAL_EDITOR_VALUE: Descendant[] = [
-  {
-    // @ts-ignore
-    type: "paragraph",
-    children: [{ text: "" }],
-  },
-];
-
 // 定义类型
 interface RichEditorProps {
   className?: string;
-  selectedNote: Note | null;
+  initValue: Descendant[];
+  showToolbar?: boolean;
   onSave: (value: Descendant[], title?: string) => void;
-  onDelete: (id: string) => void;
 }
 
 interface ElementProps {
@@ -65,26 +59,9 @@ const toggleFormat = (
   editor.addMark(format, !marks[format]);
 };
 
-export function RichEditor({
-  className,
-  selectedNote,
-  onSave,
-  onDelete,
-}: RichEditorProps) {
+export function RichEditor({ showToolbar, initValue }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
-  const [showToolbar, setShowToolbar] = useState(true);
-  const [title, setTitle] = useState<string>();
-
-  const initValue = useMemo(() => {
-    return selectedNote?.content
-      ? JSON.parse(selectedNote.content)
-      : INITIAL_EDITOR_VALUE;
-  }, [selectedNote]);
-
-  useEffect(() => {
-    setTitle(selectedNote?.title);
-  }, [selectedNote]);
 
   const renderElement = useCallback(
     ({ attributes, children, element }: ElementProps) => {
@@ -201,73 +178,38 @@ export function RichEditor({
     [editor]
   );
 
+  useEffect(() => {
+    if (!initValue) return;
+    Transforms.delete(editor, { at: [0] }); // 删除所有内容
+    Transforms.insertNodes(editor, initValue);
+  }, [initValue]);
+
   return (
-    <div
-      key={JSON.stringify(selectedNote?.id)}
-      className={cn("h-full w-full flex flex-col", className)}
-    >
-      <div className="flex border px-8 py-4">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
-        />
-        <Button onClick={() => onSave(editor.children, title)}>保存</Button>
-        {selectedNote && (
-          <Button
-            variant={"secondary"}
-            onClick={() => onDelete(selectedNote.id)}
-          >
-            删除
-          </Button>
-        )}
-      </div>
+    <>
       <Slate editor={editor} initialValue={initValue}>
-        <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
-          {/* 工具栏控制按钮 */}
-          <div className="">
-            <button
-              type="button"
-              onClick={() => setShowToolbar(!showToolbar)}
-              className="p-1.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-            >
-              {showToolbar ? (
-                <ChevronUp size={16} />
-              ) : (
-                <ChevronDown size={16} />
-              )}
-            </button>
-          </div>
-
-          {/* 工具栏 */}
-          {showToolbar && (
-            <EditorToolbar
-              editor={editor}
-              className="sticky top-0 z-40 bg-background px-3 py-2 border-b border-input"
-            />
-          )}
-
-          {/* 编辑区 */}
-          <div className="flex-1 px-3 py-2 overflow-auto">
-            <EditorContextMenu editor={editor}>
-              <Editable
-                className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
-                renderElement={renderElement}
-                // @ts-ignore
-                renderLeaf={renderLeaf}
-                placeholder="开始写作..."
-                onKeyDown={handleKeyDown}
-              />
-            </EditorContextMenu>
-          </div>
-        </div>
+        {/* 工具栏 */}
+        {showToolbar && (
+          <EditorToolbar
+            editor={editor}
+            className="sticky top-0 z-40 bg-background px-3 py-2 border-b border-input"
+          />
+        )}
+        <EditorContextMenu editor={editor}>
+          <Editable
+            className="h-full w-full prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none"
+            renderElement={renderElement}
+            // @ts-ignore
+            renderLeaf={renderLeaf}
+            placeholder="开始写作..."
+            onKeyDown={handleKeyDown}
+          />
+        </EditorContextMenu>
       </Slate>
       <CommandPalette
         editor={editor}
         open={showCommandPalette}
         onOpenChange={setShowCommandPalette}
       />
-    </div>
+    </>
   );
 }
