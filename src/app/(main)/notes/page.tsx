@@ -12,7 +12,7 @@ import { Descendant } from "slate";
 import { notesApi } from "@/lib/api";
 import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
-import { getNotes } from "./actions";
+import { getNotes, getNote } from "./actions";
 
 const NewNote = "new";
 
@@ -20,34 +20,17 @@ export default function NotesPage() {
   const t = useTranslations("notes");
   const [selectedNoteId, setSelectedNoteId] = useState<string>(NewNote);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [_, forceUpdate] = useState<number>();
 
-  const selectedNote = useMemo(() => {
-    if (selectedNoteId === NewNote) {
-      return {
-        id: selectedNoteId,
-        content: INITIAL_EDITOR_VALUE as Descendant[],
-        title: "",
-      };
-    }
-
-    const note = notes.find((note) => note.id === selectedNoteId);
-
-    if (!note) {
-      return {
-        id: selectedNoteId,
-        content: INITIAL_EDITOR_VALUE as Descendant[],
-        title: "",
-      };
-    }
-
-    const slateContent = JSON.parse(note.content || "[]");
-    return {
-      id: selectedNoteId,
-      content: slateContent as Descendant[],
-      title: note.title,
-    };
-  }, [selectedNoteId, notes]);
+  useEffect(() => {
+    (async () => {
+      if (selectedNoteId !== NewNote) {
+        const note = await getNote(selectedNoteId);
+        note && setSelectedNote(note);
+      }
+    })();
+  }, [selectedNoteId]);
 
   const handleDelete = useCallback(async (id: string) => {
     await notesApi.delete(id);
@@ -55,7 +38,7 @@ export default function NotesPage() {
   }, []);
 
   const handleUpdateOrCreate = useCallback(
-    async (content: Descendant[], title: string) => {
+    async (content: Descendant[], title?: string) => {
       if (selectedNoteId === NewNote) {
         const note = await notesApi.create<Note>({
           title,

@@ -1,8 +1,12 @@
 // "use server";
 
 import { notesApi } from "@/lib/api";
-import { NotesResponse } from "@/types/notes";
+import { Note } from "@/types/notes";
 
 export async function getNotes() {
-  return notesApi.list<NotesResponse>();
+  return notesApi.list<Note[]>();
+}
+
+export async function getNote(id: string) {
+  return notesApi.get<Note>(id);
 }

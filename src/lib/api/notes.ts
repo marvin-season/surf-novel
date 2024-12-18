@@ -23,7 +23,7 @@ const notes = {
       showSuccess: true,
       successMessage: "笔记删除成功",
     }),
-  get: (id: string) => fetchApi(`/notes/${id}`),
+  get: <T>(id: string) => fetchApi<T>(`/notes/${id}`),
 };
 
 export default notes;

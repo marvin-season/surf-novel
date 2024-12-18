@@ -8,15 +8,6 @@ export async function GET(
   try {
     const note = await prisma.note.findUnique({
       where: { id: params.id },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-        tags: true,
-      },
     });
 
     if (!note) {

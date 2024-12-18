@@ -14,6 +14,7 @@ import { isKeyHotkey } from "is-hotkey";
 import { CommandPalette } from "./command-palette";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "../ui/button";
+import { Note } from "@/types/notes";
 
 // 定义快捷键常量
 const FORMATTING_HOTKEYS = {
@@ -34,12 +35,8 @@ export const INITIAL_EDITOR_VALUE: Descendant[] = [
 // 定义类型
 interface RichEditorProps {
   className?: string;
-  selectedNote: {
-    content: Descendant[];
-    title: string;
-    id: string;
-  };
-  onSave: (value: Descendant[], title: string) => void;
+  selectedNote: Note | null;
+  onSave: (value: Descendant[], title?: string) => void;
   onDelete: (id: string) => void;
 }
 
@@ -74,13 +71,20 @@ export function RichEditor({
   onSave,
   onDelete,
 }: RichEditorProps) {
+  console.log("selectedNote", selectedNote);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [showToolbar, setShowToolbar] = useState(true);
-  const [title, setTitle] = useState(selectedNote.title);
+  const [title, setTitle] = useState<string>();
+  const [value, setValue] = useState<Descendant[]>(INITIAL_EDITOR_VALUE);
 
   useEffect(() => {
-    setTitle(selectedNote.title);
+    setTitle(selectedNote?.title);
+    setValue(
+      selectedNote?.content
+        ? JSON.parse(selectedNote.content)
+        : INITIAL_EDITOR_VALUE
+    );
   }, [selectedNote]);
   const renderElement = useCallback(
     ({ attributes, children, element }: ElementProps) => {
@@ -197,6 +201,10 @@ export function RichEditor({
     [editor]
   );
 
+  if (!selectedNote) {
+    return null;
+  }
+
   return (
     <div className={cn("h-full w-full flex flex-col", className)}>
       <div className="flex border px-8 py-4">
@@ -207,12 +215,14 @@ export function RichEditor({
           className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
         />
         <Button onClick={() => onSave(editor.children, title)}>保存</Button>
-        <Button variant={'secondary'} onClick={() => onDelete(selectedNote.id)}>删除</Button>
+        <Button variant={"secondary"} onClick={() => onDelete(selectedNote.id)}>
+          删除
+        </Button>
       </div>
       <Slate
-        key={JSON.stringify(selectedNote.id)}
+        key={JSON.stringify(selectedNote?.id)}
         editor={editor}
-        initialValue={selectedNote.content}
+        initialValue={value}
       >
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
           {/* 工具栏控制按钮 */}
