@@ -248,9 +248,6 @@ export function RichEditor({
                 renderLeaf={renderLeaf}
                 placeholder="开始写作..."
                 onKeyDown={handleKeyDown}
-                onBlur={() => {
-                  onSave(editor.children, title);
-                }}
               />
             </EditorContextMenu>
           </div>
