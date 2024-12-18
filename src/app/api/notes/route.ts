@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, content, tags, isFavorite } = body;
+    const { title = "", content = [] } = body;
 
     const note = await prisma.note.create({
       data: {

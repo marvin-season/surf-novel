@@ -3,9 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import {
-  RichEditor,
-} from "@/components/editor/rich-editor";
+import { RichEditor } from "@/components/editor/rich-editor";
 import { cn } from "@/lib/utils";
 import { Descendant } from "slate";
 import { notesApi } from "@/lib/api";
@@ -34,7 +32,8 @@ export default function NotesPage() {
   }, []);
 
   const handleUpdateOrCreate = useCallback(
-    async (content: Descendant[], title?: string) => {
+    async (content: Descendant[], title = "") => {
+      debugger;
       if (!selectedNote) {
         const note = await notesApi.create<Note>({
           title,
@@ -50,7 +49,7 @@ export default function NotesPage() {
 
       forceUpdate(Date.now());
     },
-    []
+    [selectedNote]
   );
 
   useEffect(() => {
