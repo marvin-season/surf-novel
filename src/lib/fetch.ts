@@ -6,7 +6,7 @@ interface FetchOptions extends RequestInit {
   successMessage?: string
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'
 
 export async function fetchApi<T>(
   endpoint: string,
@@ -17,7 +17,7 @@ export async function fetchApi<T>(
     showSuccess = false,
     successMessage = '操作成功',
     ...fetchOptions
-  } = options
+  } = options;
 
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
@@ -35,14 +35,14 @@ export async function fetchApi<T>(
 
     const data = await response.json()
 
-    if (showSuccess) {
-      toast.success(successMessage)
-    }
+    // if (showSuccess) {
+    //   toast.success(successMessage)
+    // }
 
     return data
   } catch (error) {
     if (showError) {
-      toast.error(error instanceof Error ? error.message : '请求失败')
+      // toast.error(error instanceof Error ? error.message : '请求失败')
     }
     throw error
   }

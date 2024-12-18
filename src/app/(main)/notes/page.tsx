@@ -10,8 +10,9 @@ import {
 import { cn } from "@/lib/utils";
 import { Descendant } from "slate";
 import { notesApi } from "@/lib/api";
-import { Note, NotesResponse } from "@/types/notes";
+import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
+import { getNotes } from "./actions";
 
 const NewNote = "new";
 
@@ -75,7 +76,7 @@ export default function NotesPage() {
 
   useEffect(() => {
     (async () => {
-      const data = await notesApi.list<NotesResponse>();
+      const data = await getNotes();
       data?.length > 0 && setNotes(data);
     })();
   }, [_]);
