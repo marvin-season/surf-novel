@@ -35,12 +35,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { title, content, tags, isFavorite } = body;
-    console.log({
-      title,
-      content,
-      tags,
-      isFavorite,
-    });
+
     const note = await prisma.note.create({
       data: {
         title,

@@ -71,21 +71,21 @@ export function RichEditor({
   onSave,
   onDelete,
 }: RichEditorProps) {
-  console.log("selectedNote", selectedNote);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
   const [showToolbar, setShowToolbar] = useState(true);
   const [title, setTitle] = useState<string>();
-  const [value, setValue] = useState<Descendant[]>(INITIAL_EDITOR_VALUE);
+
+  const initValue = useMemo(() => {
+    return selectedNote?.content
+      ? JSON.parse(selectedNote.content)
+      : INITIAL_EDITOR_VALUE;
+  }, [selectedNote]);
 
   useEffect(() => {
     setTitle(selectedNote?.title);
-    setValue(
-      selectedNote?.content
-        ? JSON.parse(selectedNote.content)
-        : INITIAL_EDITOR_VALUE
-    );
   }, [selectedNote]);
+
   const renderElement = useCallback(
     ({ attributes, children, element }: ElementProps) => {
       const style = { textAlign: element.align };
@@ -206,7 +206,10 @@ export function RichEditor({
   }
 
   return (
-    <div className={cn("h-full w-full flex flex-col", className)}>
+    <div
+      key={JSON.stringify(selectedNote?.id)}
+      className={cn("h-full w-full flex flex-col", className)}
+    >
       <div className="flex border px-8 py-4">
         <input
           value={title}
@@ -219,11 +222,7 @@ export function RichEditor({
           删除
         </Button>
       </div>
-      <Slate
-        key={JSON.stringify(selectedNote?.id)}
-        editor={editor}
-        initialValue={value}
-      >
+      <Slate editor={editor} initialValue={initValue}>
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
           {/* 工具栏控制按钮 */}
           <div className="">

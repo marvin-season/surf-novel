@@ -17,8 +17,6 @@ const EditorJSComponent: React.FC<EditorJSComponentProps> = ({ data, onChange })
       data,
       onChange: async () => {
         const savedData = await editor.save();
-        console.log('savedData',savedData);
-        // onChange(savedData);
       },
       // Add more Editor.js configuration here if needed
     });

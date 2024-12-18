@@ -14,8 +14,6 @@ import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
 import { getNotes, getNote } from "./actions";
 
-const NewNote = "new";
-
 export default function NotesPage() {
   const t = useTranslations("notes");
   const [notes, setNotes] = useState<Note[]>([]);
