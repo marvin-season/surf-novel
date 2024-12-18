@@ -7,7 +7,7 @@ import {
   User,
 } from "@/types/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import * as authService from "@/services/auth";
+import { authApi } from "@/lib/api";
 import { getStore, removeStore, setStore } from "@/lib/store";
 
 interface AuthContextType {
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (credentials: LoginCredentials) => {
     try {
-      const response = await authService.login(credentials);
+      const response = await authApi.login(credentials);
       handleAuthResponse(response);
     } catch (error) {
       console.error("Login failed:", error);
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (credentials: RegisterCredentials) => {
     try {
-      const response = await authService.register(credentials);
+      const response = await authApi.register(credentials);
       handleAuthResponse(response);
     } catch (error) {
       console.error("Registration failed:", error);

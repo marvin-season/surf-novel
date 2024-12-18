@@ -9,7 +9,7 @@ import {
 } from "@/components/editor/rich-editor";
 import { cn } from "@/lib/utils";
 import { Descendant } from "slate";
-import api from "@/lib/api";
+import { notesApi } from "@/lib/api";
 import { Note, NotesResponse } from "@/types/notes";
 import { useTranslations } from "next-intl";
 
@@ -49,20 +49,20 @@ export default function NotesPage() {
   }, [selectedNoteId, notes]);
 
   const handleDelete = useCallback(async (id: string) => {
-    await api.notes.delete(id);
+    await notesApi.delete(id);
     setSelectedNoteId(NewNote);
   }, []);
 
   const handleUpdateOrCreate = useCallback(
     async (content: Descendant[], title: string) => {
       if (selectedNoteId === NewNote) {
-        const note = await api.notes.create<Note>({
+        const note = await notesApi.create<Note>({
           title,
           content,
         });
         setSelectedNoteId(note.id);
       } else {
-        await api.notes.update(selectedNoteId, {
+        await notesApi.update(selectedNoteId, {
           content,
           title,
         });
@@ -75,7 +75,7 @@ export default function NotesPage() {
 
   useEffect(() => {
     (async () => {
-      const data = await api.notes.list<NotesResponse>();
+      const data = await notesApi.list<NotesResponse>();
       data?.length > 0 && setNotes(data);
     })();
   }, [_]);
