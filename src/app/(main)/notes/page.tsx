@@ -18,35 +18,33 @@ const NewNote = "new";
 
 export default function NotesPage() {
   const t = useTranslations("notes");
-  const [selectedNoteId, setSelectedNoteId] = useState<string>(NewNote);
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [_, forceUpdate] = useState<number>();
-
-  useEffect(() => {
-    (async () => {
-      if (selectedNoteId !== NewNote) {
-        const note = await getNote(selectedNoteId);
-        note && setSelectedNote(note);
-      }
-    })();
-  }, [selectedNoteId]);
+  const handleSelectNote = useCallback(async (id?: string) => {
+    if (!id) {
+      setSelectedNote(null);
+      return;
+    }
+    const note = await getNote(id);
+    note && setSelectedNote(note);
+  }, []);
 
   const handleDelete = useCallback(async (id: string) => {
     await notesApi.delete(id);
-    setSelectedNoteId(NewNote);
+    setSelectedNote(null);
   }, []);
 
   const handleUpdateOrCreate = useCallback(
     async (content: Descendant[], title?: string) => {
-      if (selectedNoteId === NewNote) {
+      if (!selectedNote) {
         const note = await notesApi.create<Note>({
           title,
           content,
         });
-        setSelectedNoteId(note.id);
+        setSelectedNote(note);
       } else {
-        await notesApi.update(selectedNoteId, {
+        await notesApi.update(selectedNote.id, {
           content,
           title,
         });
@@ -73,12 +71,12 @@ export default function NotesPage() {
         </div>
         <div className="flex-1 overflow-y-auto p-2">
           <Button
-            variant={selectedNoteId === NewNote ? "secondary" : "ghost"}
+            variant={!selectedNote ? "secondary" : "ghost"}
             className={cn(
               "w-full justify-start gap-2 mb-2",
-              selectedNoteId === NewNote && "bg-accent"
+              !selectedNote && "bg-accent"
             )}
-            onClick={() => setSelectedNoteId(NewNote)}
+            onClick={() => handleSelectNote()}
           >
             <Plus className="h-4 w-4" />
             {t("newNote")}
@@ -86,12 +84,12 @@ export default function NotesPage() {
           {notes.map((note) => (
             <Button
               key={note.id}
-              variant={selectedNoteId === note.id ? "secondary" : "ghost"}
+              variant={selectedNote?.id === note.id ? "secondary" : "ghost"}
               className={cn(
                 "w-full justify-start text-left mb-1 h-auto py-3",
-                selectedNoteId === note.id && "bg-accent"
+                selectedNote?.id === note.id && "bg-accent"
               )}
-              onClick={() => setSelectedNoteId(note.id)}
+              onClick={() => handleSelectNote(note.id)}
             >
               <div className="flex flex-col items-start gap-1">
                 <span className="font-medium line-clamp-1">
