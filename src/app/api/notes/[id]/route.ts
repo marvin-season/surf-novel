@@ -81,7 +81,10 @@ export async function DELETE(
       where: { id: params.id },
     });
 
-    return new Response(null, { status: 204 });
+    return new Response(
+      JSON.stringify({ message: "Note deleted successfully" }),
+      { status: 200 }
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: "Failed to delete note" }), {
       status: 500,

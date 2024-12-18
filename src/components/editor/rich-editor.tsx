@@ -40,6 +40,7 @@ interface RichEditorProps {
     id: string;
   };
   onSave: (value: Descendant[], title: string) => void;
+  onDelete: (id: string) => void;
 }
 
 interface ElementProps {
@@ -71,6 +72,7 @@ export function RichEditor({
   className,
   selectedNote,
   onSave,
+  onDelete,
 }: RichEditorProps) {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [showCommandPalette, setShowCommandPalette] = useState(false);
@@ -205,6 +207,7 @@ export function RichEditor({
           className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
         />
         <Button onClick={() => onSave(editor.children, title)}>保存</Button>
+        <Button variant={'secondary'} onClick={() => onDelete(selectedNote.id)}>删除</Button>
       </div>
       <Slate
         key={JSON.stringify(selectedNote.id)}

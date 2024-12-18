@@ -48,6 +48,10 @@ export default function NotesPage() {
     };
   }, [selectedNoteId, notes]);
 
+  const handleDelete = useCallback(async (id: string) => {
+    await api.notes.delete(id);
+    setSelectedNoteId(NewNote);
+  }, []);
 
   const handleUpdateOrCreate = useCallback(
     async (content: Descendant[], title: string) => {
@@ -125,6 +129,7 @@ export default function NotesPage() {
             selectedNote={selectedNote}
             className="absolute inset-0"
             onSave={handleUpdateOrCreate}
+            onDelete={handleDelete}
           />
         </div>
       </div>
