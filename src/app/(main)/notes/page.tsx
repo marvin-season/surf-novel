@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import {
-  INITIAL_EDITOR_VALUE,
   RichEditor,
 } from "@/components/editor/rich-editor";
 import { cn } from "@/lib/utils";
@@ -31,6 +30,7 @@ export default function NotesPage() {
   const handleDelete = useCallback(async (id: string) => {
     await notesApi.delete(id);
     setSelectedNote(null);
+    forceUpdate(Date.now());
   }, []);
 
   const handleUpdateOrCreate = useCallback(

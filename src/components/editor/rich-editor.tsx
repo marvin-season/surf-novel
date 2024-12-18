@@ -201,10 +201,6 @@ export function RichEditor({
     [editor]
   );
 
-  if (!selectedNote) {
-    return null;
-  }
-
   return (
     <div
       key={JSON.stringify(selectedNote?.id)}
@@ -218,9 +214,14 @@ export function RichEditor({
           className="w-full text-xl font-medium bg-transparent border-none outline-none placeholder:text-muted-foreground/60"
         />
         <Button onClick={() => onSave(editor.children, title)}>保存</Button>
-        <Button variant={"secondary"} onClick={() => onDelete(selectedNote.id)}>
-          删除
-        </Button>
+        {selectedNote && (
+          <Button
+            variant={"secondary"}
+            onClick={() => onDelete(selectedNote.id)}
+          >
+            删除
+          </Button>
+        )}
       </div>
       <Slate editor={editor} initialValue={initValue}>
         <div className="relative flex-1 flex flex-col w-full rounded-md border border-input bg-background">
