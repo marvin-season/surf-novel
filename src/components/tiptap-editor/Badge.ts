@@ -1,4 +1,4 @@
-import { Node, CommandProps } from "@tiptap/core";
+import { Node, CommandProps, mergeAttributes } from "@tiptap/core";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -20,6 +20,7 @@ declare module "@tiptap/core" {
 }
 
 interface BadgeAttributes {
+  HTMLAttributes: Record<string, unknown>;
   color: string;
   text: string;
 }
@@ -32,28 +33,25 @@ const Badge = Node.create<BadgeAttributes>({
   inline: true,
 
   atom: true,
-
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+      color: "red",
+      text: "",
+    };
+  },
   addAttributes() {
     return {
       color: {
         default: "red",
-        parseHTML: (element: HTMLElement) =>
-          element.getAttribute("data-color") || "red",
         renderHTML: (attributes: BadgeAttributes) => {
           return {
-            "data-color": attributes.color,
-            style: `background-color: ${attributes.color}; color: white; padding: 2px 4px; border-radius: 4px;`,
+            style: `background-color: ${attributes.color}; color: white; padding: 1px 2px; margin-left: 1px; margin-right: 1px; border-radius: 4px;`,
           };
         },
       },
       text: {
         default: "",
-        parseHTML: (element: HTMLElement) => element.innerText,
-        renderHTML: (attributes: BadgeAttributes) => {
-          return {
-            "data-text": attributes.text,
-          };
-        },
       },
     };
   },
@@ -61,16 +59,22 @@ const Badge = Node.create<BadgeAttributes>({
   parseHTML() {
     return [
       {
-        tag: "span[data-badge]",
+        tag: "span",
       },
     ];
   },
 
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({
+    HTMLAttributes,
+    node: {
+      attrs: { text },
+    },
+  }) {
+    console.log("text", text);
     return [
       "span",
-      { "data-badge": "", ...HTMLAttributes },
-      HTMLAttributes["data-text"],
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      text,
     ];
   },
 
