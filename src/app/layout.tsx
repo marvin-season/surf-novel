@@ -13,10 +13,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
 }: {
   children: ReactNode;
-  params: { lang: string }; 
 }) {
   // Get the current locale from the params
   const locale = await getLocale();
