@@ -8,6 +8,7 @@ import Highlight from "@tiptap/extension-highlight";
 import Command from "./command";
 import Mention from "@tiptap/extension-mention";
 import suggestion from "./suggestion";
+import BubbleMenuList from "./BubbleMenuList";
 
 const TipTapEditor = () => {
   const editor = useEditor({
@@ -43,6 +44,7 @@ const TipTapEditor = () => {
   return (
     <>
       <Command editor={editor} />
+      <BubbleMenuList editor={editor} />
       <EditorContent
         editor={editor}
         className="w-full h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:p-4 [&_.ProseMirror]:overflow-y-auto"
