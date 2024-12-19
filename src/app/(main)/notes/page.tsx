@@ -32,7 +32,6 @@ export default function NotesPage() {
 
   const handleUpdateOrCreate = useCallback(
     async (content: any, title = "") => {
-      debugger;
       if (!selectedNote) {
         const note = await notesApi.create<Note>({
           title,
@@ -101,7 +100,10 @@ export default function NotesPage() {
       </div>
 
       {/* 编辑区 */}
-      <TiptapEditorContainer />
+      <TiptapEditorContainer
+        onSave={handleUpdateOrCreate}
+        selectedNote={selectedNote}
+      />
       {/* <NoteEditorContainer
         selectedNote={selectedNote}
         onSave={handleUpdateOrCreate}

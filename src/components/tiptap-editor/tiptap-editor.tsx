@@ -16,6 +16,7 @@ import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
+import { useEffect, useState } from "react";
 // create a lowlight instance with all languages loaded
 const lowlight = createLowlight(all);
 
@@ -24,7 +25,13 @@ lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
 
-const TipTapEditor = () => {
+const TipTapEditor = ({
+  onSave,
+  value,
+}: {
+  onSave: (value: any) => void;
+  value: any;
+}) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -43,7 +50,9 @@ const TipTapEditor = () => {
       }),
     ],
     onUpdate: ({ editor }) => {
-      console.log(editor.storage.markdown.getMarkdown());
+      const json = editor.getJSON();
+      console.log(json);
+      // console.log(editor.storage.markdown.getMarkdown());
     },
     editorProps: {
       attributes: {
@@ -57,13 +66,31 @@ const TipTapEditor = () => {
     `,
   });
 
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(value);
+    }
+
+    return () => {
+      if (editor) {
+        editor.commands.setContent("");
+        editor.destroy();
+      }
+    };
+  }, [editor, value]);
+
   if (!editor) {
     return null;
   }
 
   return (
     <>
-      <Command editor={editor} />
+      <Command
+        editor={editor}
+        onSave={() => {
+          onSave(editor.getJSON());
+        }}
+      />
       <BubbleMenuList editor={editor} />
       <EditorContent
         editor={editor}
