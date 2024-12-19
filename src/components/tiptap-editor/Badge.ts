@@ -35,7 +35,9 @@ const Badge = Node.create<BadgeAttributes>({
   atom: true,
   addOptions() {
     return {
-      HTMLAttributes: {},
+      HTMLAttributes: {
+        style: `padding: 1px 2px; margin-left: 1px; margin-right: 1px; border-radius: 4px;`,
+      },
       color: "red",
       text: "",
     };
@@ -44,9 +46,10 @@ const Badge = Node.create<BadgeAttributes>({
     return {
       color: {
         default: "red",
+        // 节点属性后续会被合并
         renderHTML: (attributes: BadgeAttributes) => {
           return {
-            style: `background-color: ${attributes.color}; color: white; padding: 1px 2px; margin-left: 1px; margin-right: 1px; border-radius: 4px;`,
+            style: `background-color: ${attributes.color}; color: white;`,
           };
         },
       },
@@ -63,18 +66,14 @@ const Badge = Node.create<BadgeAttributes>({
       },
     ];
   },
-
-  renderHTML({
-    HTMLAttributes,
-    node: {
-      attrs: { text },
-    },
-  }) {
-    console.log("text", text);
+  // 最终渲染
+  renderHTML({ HTMLAttributes, node }) {
     return [
       "span",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      text,
+      mergeAttributes(this.options.HTMLAttributes, {
+        style: HTMLAttributes.style,
+      }),
+      node.attrs.text,
     ];
   },
 
