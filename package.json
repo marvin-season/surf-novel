@@ -23,6 +23,7 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@tailwindcss/typography": "^0.5.15",
     "@tiptap/extension-highlight": "^2.10.3",
+    "@tiptap/extension-mention": "^2.10.3",
     "@tiptap/extension-typography": "^2.10.3",
     "@tiptap/pm": "^2.10.3",
     "@tiptap/react": "^2.10.3",
@@ -51,6 +52,7 @@
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
+    "tippy.js": "^6.3.7",
     "tiptap-markdown": "^0.8.10"
   },
   "devDependencies": {
