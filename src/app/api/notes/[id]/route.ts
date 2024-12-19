@@ -17,6 +17,8 @@ export async function GET(
       });
     }
 
+    note.content = JSON.parse(note.content || "[]");
+
     return new Response(JSON.stringify(note), {
       headers: { "Content-Type": "application/json" },
     });

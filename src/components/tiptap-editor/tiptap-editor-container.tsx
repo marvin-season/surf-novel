@@ -10,13 +10,7 @@ export default function TiptapEditorContainer({
   onSave: (value: any) => void;
   selectedNote: any;
 }) {
-  const value = useMemo(
-    () =>
-      selectedNote
-        ? JSON.parse(selectedNote?.content ? selectedNote.content : "[]")
-        : null,
-    [selectedNote?.content]
-  );
+  const value = useMemo(() => selectedNote?.content, [selectedNote]);
 
   return (
     <div className="flex-1 p-4">
