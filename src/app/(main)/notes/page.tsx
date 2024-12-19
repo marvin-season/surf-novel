@@ -11,6 +11,7 @@ import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
 import { getNotes, getNote } from "./actions";
 import NoteEditorContainer from "@/components/note-editor/container";
+import TiptapEditorContainer from "@/components/tiptap-editor/tiptap-editor-container";
 
 export default function NotesPage() {
   const t = useTranslations("notes");
@@ -103,11 +104,12 @@ export default function NotesPage() {
       </div>
 
       {/* 编辑区 */}
-      <NoteEditorContainer
+      <TiptapEditorContainer />
+      {/* <NoteEditorContainer
         selectedNote={selectedNote}
         onSave={handleUpdateOrCreate}
         // onDelete={handleDelete}
-      />
+      /> */}
     </div>
   );
 }
