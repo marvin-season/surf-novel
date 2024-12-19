@@ -10,7 +10,7 @@ const TipTapEditor = () => {
   const editor = useEditor({
     extensions: [StarterKit, Typography, Highlight, Markdown],
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
+      console.log(editor.storage.markdown.getMarkdown());
     },
     editorProps: {
       attributes: {
