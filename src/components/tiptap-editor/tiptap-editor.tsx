@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
+import Command from "./command";
 
 const TipTapEditor = () => {
   const editor = useEditor({
@@ -22,10 +23,13 @@ const TipTapEditor = () => {
   });
 
   return (
-    <EditorContent
-      editor={editor}
-      className="w-full h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:p-4 [&_.ProseMirror]:overflow-y-auto"
-    />
+    <>
+      <Command editor={editor} />
+      <EditorContent
+        editor={editor}
+        className="w-full h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:p-4 [&_.ProseMirror]:overflow-y-auto"
+      />
+    </>
   );
 };
 
