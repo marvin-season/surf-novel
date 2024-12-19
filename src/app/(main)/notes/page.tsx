@@ -1,16 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { RichEditor } from "@/components/editor/rich-editor";
 import { cn } from "@/lib/utils";
-import { Descendant } from "slate";
 import { notesApi } from "@/lib/api";
 import { Note } from "@/types/notes";
 import { useTranslations } from "next-intl";
 import { getNotes, getNote } from "./actions";
-import NoteEditorContainer from "@/components/note-editor/container";
 import TiptapEditorContainer from "@/components/tiptap-editor/tiptap-editor-container";
 
 export default function NotesPage() {
@@ -34,7 +31,7 @@ export default function NotesPage() {
   }, []);
 
   const handleUpdateOrCreate = useCallback(
-    async (content: Descendant[], title = "") => {
+    async (content: any, title = "") => {
       debugger;
       if (!selectedNote) {
         const note = await notesApi.create<Note>({

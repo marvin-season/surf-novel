@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@editorjs/editorjs": "^2.30.7",
     "@formatjs/intl-localematcher": "^0.5.9",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-context-menu": "^2.2.3",
@@ -45,9 +44,6 @@
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "slate": "^0.112.0",
-    "slate-history": "^0.110.3",
-    "slate-react": "^0.112.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar": "^3.1.0",
