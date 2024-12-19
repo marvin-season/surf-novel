@@ -1,7 +1,7 @@
 import { Code2, Redo2, Save, Undo2 } from "lucide-react";
 import { Editor } from "@tiptap/react";
 
-export default function Command({ editor, onSave }: { editor: Editor; onSave: () => void }) {
+export default function CommandPanel({ editor, onSave }: { editor: Editor; onSave: () => void }) {
   return (
     <>
       <div className="flex p-2 gap-2 justify-end">

@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
-import Command from "./command";
+import CommandPanel from "./CommandPanel";
 import Mention from "@tiptap/extension-mention";
 import suggestion from "./suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -85,13 +85,14 @@ const TipTapEditor = ({
 
   return (
     <>
-      <Command
+      <CommandPanel
         editor={editor}
         onSave={() => {
           onSave(editor.getJSON());
         }}
       />
       <BubbleMenuList editor={editor} />
+
       <EditorContent
         editor={editor}
         className="w-full h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:p-4 [&_.ProseMirror]:overflow-y-auto"
