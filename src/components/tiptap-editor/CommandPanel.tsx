@@ -29,6 +29,37 @@ export default function CommandPanel({ editor, onSave }: { editor: Editor; onSav
         >
           <Code2 size={12} />
         </div>
+        <div
+          className="cursor-pointer rounded-sm bg-red-500 p-1 text-white"
+          onClick={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to, ' ');
+            editor.chain().focus().setBadge('red', text).run();
+          }}
+        >
+          Red Badge
+        </div>
+        <div
+          className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
+          onClick={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to, ' ');
+            console.log(text);
+            editor.chain().focus().setBadge('green', text).run();
+          }}
+        >
+          Green Badge
+        </div>
+        <div
+          className="cursor-pointer rounded-sm bg-blue-500 p-1 text-white"
+          onClick={() => {
+            const { from, to } = editor.state.selection;
+            const text = editor.state.doc.textBetween(from, to, ' ');
+            editor.chain().focus().setBadge('blue', text).run();
+          }}
+        >
+          Blue Badge
+        </div>
       </div>
     </>
   );
