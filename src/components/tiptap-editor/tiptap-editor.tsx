@@ -11,6 +11,7 @@ import suggestion from "./suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import BubbleMenuList from "./BubbleMenuList";
 import { all, createLowlight } from "lowlight";
+import "./styles.css";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
@@ -22,6 +23,7 @@ lowlight.register("html", html);
 lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
+
 const TipTapEditor = () => {
   const editor = useEditor({
     extensions: [
@@ -49,12 +51,10 @@ const TipTapEditor = () => {
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none",
       },
     },
-    content: `<p>
-          That's a boring paragraph followed by a fenced code block:
-        </p>
-        <p>
-          Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
-        </p>`,
+    content: `
+    import { useEditor, EditorContent } from "@tiptap/react";
+    import StarterKit from "@tiptap/starter-kit";
+    `,
   });
 
   if (!editor) {
