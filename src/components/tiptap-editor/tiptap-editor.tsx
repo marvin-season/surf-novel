@@ -22,6 +22,10 @@ const TipTapEditor = () => {
     content: "## h2",
   });
 
+  if (!editor) {
+    return null;
+  }
+
   return (
     <>
       <Command editor={editor} />

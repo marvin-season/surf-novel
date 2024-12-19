@@ -1,4 +1,4 @@
-import { Redo, Redo2, Undo, Undo2 } from "lucide-react";
+import { Redo2, Undo2 } from "lucide-react";
 import { Editor } from "@tiptap/react";
 
 export default function Command({ editor }: { editor: Editor }) {
