@@ -19,7 +19,7 @@ export function MainLayout({ children, className, sidebar }: MainLayoutProps) {
       {sidebar && (
         <aside className={cn(
           "relative flex flex-col border-r bg-muted/5 transition-all duration-300",
-          expanded ? "w-72" : "w-16"
+          expanded ? "w-[200px]" : "w-[64px]"
         )}>
           <div className="flex-1 overflow-hidden">
             {sidebar({ expanded })}

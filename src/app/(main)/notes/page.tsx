@@ -64,7 +64,7 @@ export default function NotesPage() {
   return (
     <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
       {/* 笔记列表 */}
-      <div className="w-60 flex-shrink-0 border-r flex flex-col bg-muted/5">
+      <div className="w-[180px] flex-shrink-0 border-r flex flex-col bg-muted/5">
         <div className="p-4 border-b bg-background">
           <h2 className="text-lg font-semibold">{t("title")}</h2>
         </div>
