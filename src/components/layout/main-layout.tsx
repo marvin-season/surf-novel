@@ -11,7 +11,7 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children, className, sidebar }: MainLayoutProps) {
-  const [expanded, setExpanded] = useState(true)
+  const [expanded, setExpanded] = useState(false)
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
