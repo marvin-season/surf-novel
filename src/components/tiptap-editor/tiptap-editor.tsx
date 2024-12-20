@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
 import { Highlight } from "./extension/highlight";
+import { Heading } from "./extension/heading";
 import CommandPanel from "./CommandPanel";
 import Mention from "@tiptap/extension-mention";
 import suggestion from "./suggestion";
@@ -38,6 +39,9 @@ const TipTapEditor = ({
     extensions: [
       StarterKit,
       Typography,
+      Heading.configure({
+        levels: [1, 2, 3, 4, 5, 6],
+      }),
       Markdown,
 
       Mention.configure({
