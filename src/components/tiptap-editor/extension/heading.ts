@@ -1,4 +1,5 @@
 import { mergeAttributes, Node, textblockTypeInputRule } from '@tiptap/core'
+import { debug } from 'console'
 
 /**
  * The heading level options.

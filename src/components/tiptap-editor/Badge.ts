@@ -1,4 +1,4 @@
-import { Node, CommandProps, mergeAttributes } from "@tiptap/core";
+import { Node, CommandProps } from "@tiptap/core";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -20,7 +20,6 @@ declare module "@tiptap/core" {
 }
 
 interface BadgeAttributes {
-  HTMLAttributes: Record<string, unknown>;
   color: string;
   text: string;
 }
@@ -33,23 +32,18 @@ const Badge = Node.create<BadgeAttributes>({
   inline: true,
 
   atom: true,
-  addOptions() {
-    return {
-      HTMLAttributes: {
-        style: `padding: 1px 2px; margin-left: 1px; margin-right: 1px; border-radius: 4px;`,
-      },
-      color: "red",
-      text: "",
-    };
-  },
+
   addAttributes() {
     return {
       color: {
         default: "red",
-        // 节点属性后续会被合并
+        parseHTML: (element: HTMLElement) =>
+          element.getAttribute("data-color") || "red",
         renderHTML: (attributes: BadgeAttributes) => {
           return {
-            style: `background-color: ${attributes.color}; color: white;`,
+            "data-color": attributes.color,
+            "data-badge": true,
+            style: `background-color: ${attributes.color}; color: white; padding: 2px 4px; border-radius: 4px;`,
           };
         },
       },
@@ -62,19 +56,13 @@ const Badge = Node.create<BadgeAttributes>({
   parseHTML() {
     return [
       {
-        tag: "span",
+        tag: "span[data-badge]",
       },
     ];
   },
-  // 最终渲染
+
   renderHTML({ HTMLAttributes, node }) {
-    return [
-      "span",
-      mergeAttributes(this.options.HTMLAttributes, {
-        style: HTMLAttributes.style,
-      }),
-      node.attrs.text,
-    ];
+    return ["span", HTMLAttributes, node.attrs.text];
   },
 
   addCommands() {
@@ -86,16 +74,6 @@ const Badge = Node.create<BadgeAttributes>({
             type: this.name,
             attrs: { color, text },
           });
-        },
-      toggleBadge:
-        () =>
-        ({ commands }: CommandProps) => {
-          return commands.toggleMark(this.name);
-        },
-      unsetBadge:
-        () =>
-        ({ commands }: CommandProps) => {
-          return commands.unsetMark(this.name);
         },
     };
   },
