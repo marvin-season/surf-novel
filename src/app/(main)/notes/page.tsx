@@ -31,7 +31,7 @@ export default function NotesPage() {
   }, []);
 
   const handleUpdateOrCreate = useCallback(
-    async (content: any, title = "") => {
+    async (content: any, title = "未命名") => {
       if (!selectedNote) {
         const note = await notesApi.create<Note>({
           title,
