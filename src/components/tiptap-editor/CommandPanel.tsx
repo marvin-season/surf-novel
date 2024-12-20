@@ -48,7 +48,10 @@ export default function CommandPanel({
           onClick={() => {
             const { from, to } = editor.state.selection;
             const text = editor.state.doc.textBetween(from, to, " ");
-            editor.chain().focus().setBadge("red", text).run();
+            editor.chain().focus().setBadge({
+              color: "#ff0000",
+              text,
+            }).run();
           }}
         >
           <Badge size={12} />

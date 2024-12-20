@@ -6,11 +6,11 @@ declare module "@tiptap/core" {
       /**
        * Set a badge mark
        */
-      setBadge: (color: string, text: string) => ReturnType;
+      setBadge: (attributes: BadgeAttributes) => ReturnType;
       /**
        * Toggle a badge mark
        */
-      toggleBadge: () => ReturnType;
+      toggleBadge: (attributes: BadgeAttributes) => ReturnType;
       /**
        * Unset a badge mark
        */
@@ -68,11 +68,11 @@ const Badge = Node.create<BadgeAttributes>({
   addCommands() {
     return {
       setBadge:
-        (color: string, text: string) =>
+        (attributes) =>
         ({ commands }: CommandProps) => {
           return commands.insertContent({
             type: this.name,
-            attrs: { color, text },
+            attrs: attributes,
           });
         },
     };
