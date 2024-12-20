@@ -17,7 +17,8 @@ import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { useEffect, useState } from "react";
-import Badge from './Badge';
+
+import Badge from "./Badge";
 // create a lowlight instance with all languages loaded
 const lowlight = createLowlight(all);
 
@@ -37,7 +38,6 @@ const TipTapEditor = ({
     extensions: [
       StarterKit,
       Typography,
-      Highlight,
       Markdown,
 
       Mention.configure({
@@ -50,6 +50,7 @@ const TipTapEditor = ({
         lowlight,
       }),
       Badge,
+      Highlight.configure({ multicolor: true }),
     ],
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();

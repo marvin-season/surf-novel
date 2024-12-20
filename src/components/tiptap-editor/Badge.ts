@@ -87,6 +87,16 @@ const Badge = Node.create<BadgeAttributes>({
             attrs: { color, text },
           });
         },
+      toggleBadge:
+        () =>
+        ({ commands }: CommandProps) => {
+          return commands.toggleMark(this.name);
+        },
+      unsetBadge:
+        () =>
+        ({ commands }: CommandProps) => {
+          return commands.unsetMark(this.name);
+        },
     };
   },
 });
