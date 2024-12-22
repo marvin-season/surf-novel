@@ -14,7 +14,7 @@ declare module "@tiptap/core" {
       /**
        * Unset a badge mark
        */
-      unsetBadge: () => ReturnType;
+      unsetBadge: ({ text }: Pick<BadgeAttributes, "text">) => ReturnType;
     };
   }
 }
@@ -22,7 +22,7 @@ declare module "@tiptap/core" {
 interface BadgeAttributes {
   color: string;
   text: string;
-  HTMLAttributes: Record<string, any>;
+  HTMLAttributes?: Record<string, any>;
 }
 
 const Badge = Node.create<BadgeAttributes>({
@@ -76,7 +76,7 @@ const Badge = Node.create<BadgeAttributes>({
   renderHTML({ HTMLAttributes, node }) {
     return [
       "span",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      mergeAttributes(this.options.HTMLAttributes || {}, HTMLAttributes),
       node.attrs.text,
     ];
   },
@@ -90,6 +90,12 @@ const Badge = Node.create<BadgeAttributes>({
               type: this.name,
               attrs: attributes,
             });
+          },
+
+      unsetBadge:
+        ({ text }) =>
+          ({ commands }: CommandProps) => {
+            return commands.insertContent(text);
           },
     };
   },

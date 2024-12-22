@@ -1,5 +1,6 @@
 import {
   Badge,
+  Circle,
   Code2,
   Heading,
   Highlighter,
@@ -8,6 +9,7 @@ import {
   Undo2,
 } from "lucide-react";
 import { Editor } from "@tiptap/react";
+import { NodeSelection } from "@tiptap/pm/state";
 
 export default function CommandPanel({
   editor,
@@ -56,6 +58,18 @@ export default function CommandPanel({
         >
           <Badge size={12} />
         </div>
+
+        <div
+          className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
+          onClick={() => {
+            const selection = editor.state.selection as NodeSelection;
+            const node = selection.node;
+            debugger
+            editor.chain().focus().unsetBadge({ text: node?.attrs?.text }).run();
+          }}
+        >
+          <Circle size={12} />
+        </div>
         <div
           className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
           onClick={() => {
@@ -64,14 +78,7 @@ export default function CommandPanel({
         >
           <Highlighter size={12} />
         </div>
-        <div
-          className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
-          onClick={() => {
-            editor.chain().focus().toggleHeading({ level: 1 }).run();
-          }}
-        >
-          <Heading size={12} />
-        </div>
+
       </div>
     </>
   );
