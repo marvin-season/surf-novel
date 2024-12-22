@@ -50,6 +50,9 @@ export default function CommandPanel({
           onClick={() => {
             const { from, to } = editor.state.selection;
             const text = editor.state.doc.textBetween(from, to, " ");
+            if (text === "") {
+              return;
+            }
             editor.chain().focus().setBadge({
               color: "#ff0000",
               text,
@@ -63,9 +66,9 @@ export default function CommandPanel({
           className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
           onClick={() => {
             const selection = editor.state.selection as NodeSelection;
-            const node = selection.node;
-            debugger
-            editor.chain().focus().unsetBadge({ text: node?.attrs?.text }).run();
+            if (selection.node?.type.name === "badge") {
+              editor.chain().focus().unsetBadge({ text: selection.node.attrs.text }).run();
+            }
           }}
         >
           <Circle size={12} />
