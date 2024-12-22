@@ -63,7 +63,7 @@ export default function CommandPanel({
         </div>
 
         <div
-          className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
+          className="cursor-pointer rounded-sm bg-slate-100 p-1 text-white"
           onClick={() => {
             const selection = editor.state.selection as NodeSelection;
             if (selection.node?.type.name === "badge") {
@@ -71,7 +71,7 @@ export default function CommandPanel({
             }
           }}
         >
-          <Circle size={12} />
+          <Badge size={12} stroke="#ff0000"/>
         </div>
         <div
           className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
