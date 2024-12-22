@@ -61,6 +61,8 @@ const Badge = Node.create<BadgeAttributes>({
       text: {
         default: "",
         rendered: false,
+        // 从 html 中解析 为 prosemirror 中的 state
+        parseHTML: (element: HTMLElement) => element.textContent,
       },
     };
   },
