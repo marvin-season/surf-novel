@@ -8,7 +8,8 @@ body {
 
 @layer base {
   :root {
-    --hl-background: #2d2d2d; /* Light theme background */
+    --hl-background: #2d2d2d;
+    /* Light theme background */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -35,8 +36,10 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
-    --hl-background: #2d2d2d; /* Dark theme background */
+    --hl-background: #2d2d2d;
+    /* Dark theme background */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -68,19 +71,13 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-/* 选中 badge 节点时的样式 */
-/* 给 `badge` 添加选中样式 */
-.badge::selection {
-  background-color: rgba(0, 0, 0) !important; /* 设置选中背景颜色 */
-  color: #fff !important; /* 设置选中文本的颜色 */
-}
-
 /* 给 `badge` 添加焦点时的样式 */
-.badge:focus {
+.badge.ProseMirror-selectednode {
   outline: 2px solid #4d90fe;
 }

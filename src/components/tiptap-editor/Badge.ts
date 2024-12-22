@@ -36,8 +36,9 @@ const Badge = Node.create<BadgeAttributes>({
   addOptions() {
     return {
       HTMLAttributes: {
-        style: "color: white; padding: 2px 4px; border-radius: 4px;",
+        style: "color: white; font-size: 0.9em; padding: 2px 3px; margin: 0 1px; border-radius: 6px; cursor: pointer;",
         "data-type": this.name,
+        class: "badge",
       },
       color: "red",
       text: "",
