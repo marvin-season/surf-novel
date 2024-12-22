@@ -59,6 +59,7 @@ const Badge = Node.create<BadgeAttributes>({
       },
       text: {
         default: "",
+        rendered: false,
       },
     };
   },
