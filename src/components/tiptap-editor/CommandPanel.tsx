@@ -79,7 +79,7 @@ export default function CommandPanel({
         <div
           className="cursor-pointer rounded-sm bg-green-500 p-1 text-white"
           onClick={() => {
-            editor.chain().focus().toggleHighlight({ color: "#007700" }).run();
+            editor.chain().focus().toggleHighlight({ color: "#04F" }).run();
           }}
         >
           <Highlighter size={12} />

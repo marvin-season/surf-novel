@@ -84,7 +84,7 @@ export const Highlight = Mark.create<HighlightOptions>({
           }
 
           return {
-            style: `background-color: ${attributes.color}; color: inherit`,
+            style: `color: ${attributes.color}; background-color: transparent;`,
           };
         },
       },
