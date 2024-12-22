@@ -4,12 +4,14 @@ import {
   Code2,
   Heading,
   Highlighter,
+  MessageCircleWarning,
   Redo2,
   Save,
   Undo2,
 } from "lucide-react";
 import { Editor } from "@tiptap/react";
 import { NodeSelection } from "@tiptap/pm/state";
+import { toast } from "sonner";
 
 export default function CommandPanel({
   editor,
@@ -51,6 +53,7 @@ export default function CommandPanel({
             const { from, to } = editor.state.selection;
             const text = editor.state.doc.textBetween(from, to, " ");
             if (text === "") {
+              toast.warning("选区中没有文本", { duration: 1000, icon: <MessageCircleWarning /> });
               return;
             }
             editor.chain().focus().setBadge({

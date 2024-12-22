@@ -35,14 +35,14 @@ export async function fetchApi<T>(
 
     const data = await response.json()
 
-    // if (showSuccess) {
-    //   toast.success(successMessage)
-    // }
+    if (showSuccess) {
+      toast.success(successMessage)
+    }
 
     return data
   } catch (error) {
     if (showError) {
-      // toast.error(error instanceof Error ? error.message : '请求失败')
+      toast.error(error instanceof Error ? error.message : '请求失败')
     }
     throw error
   }
