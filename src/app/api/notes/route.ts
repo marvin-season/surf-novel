@@ -18,6 +18,9 @@ export async function GET(request: NextRequest) {
           email,
         },
       },
+      orderBy: {
+        updatedAt: "desc",
+      }
     });
 
     return new Response(JSON.stringify(notes), {
