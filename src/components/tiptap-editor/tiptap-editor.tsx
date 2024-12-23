@@ -8,9 +8,9 @@ import Highlight from "@tiptap/extension-highlight";
 import { Heading } from "./extension/heading";
 import CommandPanel from "./CommandPanel";
 import Mention from "@tiptap/extension-mention";
-import suggestion from "./suggestion";
+import suggestion from "./extension/mention/suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import BubbleMenuList from "./BubbleMenuList";
+import BubbleMenuList from "./extension/mention/BubbleMenuList";
 import { all, createLowlight } from "lowlight";
 import "./styles.css";
 import css from "highlight.js/lib/languages/css";
@@ -19,7 +19,7 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { useEffect, useState } from "react";
 
-import Badge from "./Badge";
+import Badge from "./extension/Badge";
 // create a lowlight instance with all languages loaded
 const lowlight = createLowlight(all);
 
