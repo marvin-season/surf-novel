@@ -1,4 +1,11 @@
 .tiptap {
+  --gray-4: #ccced2;
+  --gray-3: #e5e7eb;
+  --gray-2: #f3f4f6;
+  --gray-1: #f9fafb;
+  --white: #ffffff;
+  --black: #000000;
+
   :first-child {
     margin-top: 0;
   }

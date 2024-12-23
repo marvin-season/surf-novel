@@ -53,7 +53,7 @@ const TipTapEditor = ({
       Badge,
       Highlight.configure({ multicolor: true }),
       Placeholder.configure({
-        placeholder: "开始编辑...",
+        placeholder: "Please write something...",
       }),
     ],
     onUpdate: ({ editor }) => {
