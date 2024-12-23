@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditor, EditorContent } from "@tiptap/react";
+import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
@@ -51,6 +52,9 @@ const TipTapEditor = ({
       }),
       Badge,
       Highlight.configure({ multicolor: true }),
+      Placeholder.configure({
+        placeholder: "开始编辑...",
+      }),
     ],
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
@@ -63,10 +67,6 @@ const TipTapEditor = ({
           "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none",
       },
     },
-    content: `
-    import { useEditor, EditorContent } from "@tiptap/react";
-    import StarterKit from "@tiptap/starter-kit";
-    `,
   });
 
   useEffect(() => {
