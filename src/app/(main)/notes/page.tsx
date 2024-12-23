@@ -102,6 +102,7 @@ export default function NotesPage() {
       {/* 编辑区 */}
       <TiptapEditorContainer
         onSave={handleUpdateOrCreate}
+        onDelete={handleDelete}
         selectedNote={selectedNote}
       />
       {/* <NoteEditorContainer

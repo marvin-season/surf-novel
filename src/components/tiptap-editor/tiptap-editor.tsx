@@ -10,10 +10,12 @@ import { useExtensions } from "./extension";
 
 const TipTapEditor = ({
   onSave,
+  onDelete,
   value,
   collaborationEnabled,
 }: {
   onSave: (value: any) => void;
+  onDelete: () => void;
   value: any;
   collaborationEnabled: boolean;
 }) => {
@@ -58,6 +60,7 @@ const TipTapEditor = ({
         onSave={() => {
           onSave(editor.getJSON());
         }}
+        onDelete={onDelete}
       />
       {/* 内联选中气泡 */}
       <BubbleMenuList editor={editor} />

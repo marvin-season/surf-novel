@@ -2,11 +2,13 @@ import {
   Badge,
   Circle,
   Code2,
+  Delete,
   Heading,
   Highlighter,
   MessageCircleWarning,
   Redo2,
   Save,
+  Trash2,
   Undo2,
 } from "lucide-react";
 import { Editor } from "@tiptap/react";
@@ -16,13 +18,21 @@ import { toast } from "sonner";
 export default function Operator({
   editor,
   onSave,
+  onDelete
 }: {
   editor: Editor;
   onSave: () => void;
+  onDelete: () => void;
 }) {
   return (
     <>
       <div className="flex p-2 gap-2 justify-end">
+        <div
+          className="cursor-pointer rounded-sm bg-slate-50 p-1"
+          onClick={onDelete}
+        >
+          <Trash2 size={12} />
+        </div>
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={onSave}
