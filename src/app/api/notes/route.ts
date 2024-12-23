@@ -39,6 +39,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
   try {
+    const user = JSON.parse((await getStore("user")) || "{}");
+    if (!user) {
+      return new Response("Unauthorized", { status: 401 });
+    }
     const body = await request.json();
     const { title = "", content = [] } = body;
 
@@ -48,7 +52,7 @@ export async function POST(request: Request) {
         content: JSON.stringify(content),
         author: {
           connect: {
-            email: "2764876579@qq.com",
+            email: user.email,
           },
         },
       },
