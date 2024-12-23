@@ -51,6 +51,10 @@ export async function POST(request: Request) {
         },
       },
       select: {
+        id: true,
+        title: true,
+        content: true,
+        updatedAt: true,
         author: {
           select: {
             name: true,
