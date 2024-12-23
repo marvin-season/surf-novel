@@ -1,12 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { getStore } from "@/lib/store";
+import { getLoggedUserInfo } from "@/lib/user";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const user = JSON.parse((await getStore("user")) || "{}");
-  if (!user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+  const user = await getLoggedUserInfo();
   try {
     // 筛选 id, updatedAt, title字段
     const notes = await prisma.note.findMany({
@@ -39,10 +37,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
   try {
-    const user = JSON.parse((await getStore("user")) || "{}");
-    if (!user) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+    const user = await getLoggedUserInfo();
     const body = await request.json();
     const { title = "", content = [] } = body;
 
