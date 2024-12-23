@@ -50,6 +50,14 @@ export async function POST(request: Request) {
           },
         },
       },
+      select: {
+        author: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      }
     });
 
     return new Response(JSON.stringify({ ...note, content }), {
