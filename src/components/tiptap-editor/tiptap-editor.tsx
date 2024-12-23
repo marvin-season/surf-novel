@@ -23,6 +23,7 @@ import { useEffect } from "react";
 
 import Badge from "./extension/Badge";
 import { getStore } from "@/lib/store";
+import { useExtensions } from "./extension";
 // create a lowlight instance with all languages loaded
 const lowlight = createLowlight(all);
 
@@ -31,50 +32,18 @@ lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
 
-const useremail = JSON.parse(await getStore("user") || '{}')?.email;
-
 const TipTapEditor = ({
   onSave,
   value,
-  ydoc,
-  provider,
+  collaborationEnabled,
 }: {
   onSave: (value: any) => void;
   value: any;
-  ydoc: any;
-  provider: any;
+  collaborationEnabled: boolean;
 }) => {
+  const extensions = useExtensions({collaborationEnabled});
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Typography,
-      Markdown,
-
-      Mention.configure({
-        HTMLAttributes: {
-          class: "mention",
-        },
-        suggestion,
-      }),
-      CodeBlockLowlight.configure({
-        lowlight,
-      }),
-      Badge,
-      Highlight.configure({ multicolor: true }),
-      Placeholder.configure({
-        placeholder: "Please write something ...",
-      }),
-      Collaboration.extend().configure({
-        document: ydoc,
-      }),
-      CollaborationCursor.extend().configure({
-        provider: provider,
-        user: {
-          name: useremail,
-          color: "#ff0000",
-        },
-      }),
-    ],
+    extensions,
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
       console.log(json);
