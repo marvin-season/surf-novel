@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import TipTapEditor from "./tiptap-editor";
-import { Slice } from "lucide-react";
 
 export default function TiptapEditorContainer({
   children,
