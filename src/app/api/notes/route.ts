@@ -1,12 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { getStore } from "@/lib/store";
-import { NotesResponse } from "@/types/notes";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  // get user from cookies
-  // const cookies = request.cookies;
-  // console.log("user", JSON.parse(cookies.get("user")?.value || "{}"));
   const user = JSON.parse((await getStore("user")) || "{}");
   if (!user) {
     return new Response("Unauthorized", { status: 401 });
