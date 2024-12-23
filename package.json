@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack --port 4000",
     "build": "next build",
     "start": "next start --port 4001",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev --name init"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.9",
