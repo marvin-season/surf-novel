@@ -1,12 +1,12 @@
-import { toast } from 'sonner'
+import { toast } from "sonner";
 
 interface FetchOptions extends RequestInit {
-  showError?: boolean
-  showSuccess?: boolean
-  successMessage?: string
+  showError?: boolean;
+  showSuccess?: boolean;
+  successMessage?: string;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api'
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchApi<T>(
   endpoint: string,
@@ -15,35 +15,39 @@ export async function fetchApi<T>(
   const {
     showError = true,
     showSuccess = false,
-    successMessage = '操作成功',
+    successMessage = "操作成功",
     ...fetchOptions
   } = options;
+
+  if (!BASE_URL) {
+    toast.error("API URL 未配置");
+  }
 
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       ...fetchOptions,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...fetchOptions.headers,
       },
-    })
+    });
 
     if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.message || '请求失败')
+      const error = await response.json();
+      throw new Error(error.message || "请求失败");
     }
 
-    const data = await response.json()
+    const data = await response.json();
 
     if (showSuccess) {
-      toast.success(successMessage)
+      toast.success(successMessage);
     }
 
-    return data
+    return data;
   } catch (error) {
     if (showError) {
-      toast.error(error instanceof Error ? error.message : '请求失败')
+      toast.error(error instanceof Error ? error.message : "请求失败");
     }
-    throw error
+    throw error;
   }
 }

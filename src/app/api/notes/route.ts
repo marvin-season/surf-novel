@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { getStore } from "@/lib/store";
 import { getLoggedUserInfo } from "@/lib/user";
 import { NextRequest } from "next/server";
 
