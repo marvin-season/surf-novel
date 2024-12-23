@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed to fetch notes" }), {
+    return new Response(JSON.stringify({ message: "Failed to fetch notes" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed to create note" }), {
+    return new Response(JSON.stringify({ message: "Failed to create note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

@@ -23,7 +23,7 @@ export async function GET(
     });
 
     if (!note) {
-      return new Response(JSON.stringify({ error: "Note not found" }), {
+      return new Response(JSON.stringify({ message: "Note not found" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
@@ -35,7 +35,7 @@ export async function GET(
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed to fetch note" }), {
+    return new Response(JSON.stringify({ message: "Failed to fetch note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
@@ -70,7 +70,7 @@ export async function PUT(
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed to update note" }), {
+    return new Response(JSON.stringify({ message: "Failed to update note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
@@ -91,7 +91,7 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed to delete note" }), {
+    return new Response(JSON.stringify({ message: "Failed to delete note" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

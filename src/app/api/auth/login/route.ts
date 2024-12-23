@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const isValid = await compare(password, user.password);
 
     if (!isValid) {
-      return new Response(JSON.stringify({ error: 'Invalid password' }), {
+      return new Response(JSON.stringify({ message: 'Invalid password' }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to login' }), {
+    return new Response(JSON.stringify({ message: 'Failed to login' }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

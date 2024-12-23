@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingUser) {
-      return new Response(JSON.stringify({ error: 'User already exists' }), {
+      return new Response(JSON.stringify({ message: 'User already exists' }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to create user' }), {
+    return new Response(JSON.stringify({ message: 'Failed to create user' }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
