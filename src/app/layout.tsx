@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from '@/lib/ThemeContext';
+import { ThemeProvider } from '@/contexts/theme-context';
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
 import { getLocale, getMessages } from "next-intl/server";

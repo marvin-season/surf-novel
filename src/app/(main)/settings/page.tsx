@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useTheme } from "@/lib/ThemeContext";
+import { useTheme } from "@/contexts/theme-context";
 import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "@/services/locale";
 import { Locale } from "@/i18n/config";
