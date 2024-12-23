@@ -27,13 +27,7 @@ export default function TiptapEditorContainer({
 
   return (
     <div className="flex-1 p-4">
-      <TipTapEditor
-        ydoc={ydoc}
-        provider={provider}
-        onSave={onSave}
-        value={value}
-        room={room}
-      />
+      <TipTapEditor ydoc={ydoc} provider={provider} onSave={onSave} value={value} />
     </div>
   );
 }

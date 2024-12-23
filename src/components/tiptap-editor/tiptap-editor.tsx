@@ -22,6 +22,7 @@ import html from "highlight.js/lib/languages/xml";
 import { useEffect } from "react";
 
 import Badge from "./extension/Badge";
+import { getStore } from "@/lib/store";
 // create a lowlight instance with all languages loaded
 const lowlight = createLowlight(all);
 
@@ -30,18 +31,18 @@ lowlight.register("css", css);
 lowlight.register("js", js);
 lowlight.register("ts", ts);
 
+const useremail = JSON.parse(await getStore("user") || '{}')?.email;
+
 const TipTapEditor = ({
   onSave,
   value,
   ydoc,
   provider,
-  room,
 }: {
   onSave: (value: any) => void;
   value: any;
   ydoc: any;
   provider: any;
-  room: any;
 }) => {
   const editor = useEditor({
     extensions: [
@@ -67,7 +68,11 @@ const TipTapEditor = ({
         document: ydoc,
       }),
       CollaborationCursor.extend().configure({
-        provider,
+        provider: provider,
+        user: {
+          name: useremail,
+          color: "#ff0000",
+        },
       }),
     ],
     onUpdate: ({ editor }) => {
