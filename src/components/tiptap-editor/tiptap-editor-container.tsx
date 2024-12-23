@@ -19,7 +19,7 @@ export default function TiptapEditorContainer({
       return false;
     }
     // or public
-    if (selectedNote.author.id) {
+    if (selectedNote.author) {
       return false;
     }
     return true;
