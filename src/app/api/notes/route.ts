@@ -18,6 +18,9 @@ export async function GET(request: NextRequest) {
           email,
         },
       },
+      orderBy: {
+        updatedAt: "desc",
+      }
     });
 
     return new Response(JSON.stringify(notes), {
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return new Response(JSON.stringify(note), {
+    return new Response(JSON.stringify({...note, content}), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

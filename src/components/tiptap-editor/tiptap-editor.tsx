@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
-import { Highlight } from "./extension/highlight";
+import Highlight from "@tiptap/extension-highlight";
 import { Heading } from "./extension/heading";
 import CommandPanel from "./CommandPanel";
 import Mention from "@tiptap/extension-mention";

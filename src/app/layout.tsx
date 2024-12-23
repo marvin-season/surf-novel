@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode } from 'react';
 import { getLocale, getMessages } from "next-intl/server";
 import { AuthProvider } from "@/contexts/auth-context";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Surf Novel",
@@ -24,6 +25,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="antialiased">
+        <Toaster />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <AuthProvider>

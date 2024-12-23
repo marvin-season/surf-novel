@@ -1,4 +1,4 @@
-import { Node, CommandProps } from "@tiptap/core";
+import { Node, CommandProps, mergeAttributes } from "@tiptap/core";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -14,7 +14,7 @@ declare module "@tiptap/core" {
       /**
        * Unset a badge mark
        */
-      unsetBadge: () => ReturnType;
+      unsetBadge: ({ text }: Pick<BadgeAttributes, "text">) => ReturnType;
     };
   }
 }
@@ -22,6 +22,7 @@ declare module "@tiptap/core" {
 interface BadgeAttributes {
   color: string;
   text: string;
+  HTMLAttributes?: Record<string, any>;
 }
 
 const Badge = Node.create<BadgeAttributes>({
@@ -32,6 +33,17 @@ const Badge = Node.create<BadgeAttributes>({
   inline: true,
 
   atom: true,
+  addOptions() {
+    return {
+      HTMLAttributes: {
+        style: "color: white; font-size: 0.9em; padding: 2px 3px; margin: 0 1px; border-radius: 6px; cursor: pointer;",
+        "data-type": this.name,
+        class: "badge",
+      },
+      color: "red",
+      text: "",
+    };
+  },
 
   addAttributes() {
     return {
@@ -42,13 +54,15 @@ const Badge = Node.create<BadgeAttributes>({
         renderHTML: (attributes: BadgeAttributes) => {
           return {
             "data-color": attributes.color,
-            "data-badge": true,
-            style: `background-color: ${attributes.color}; color: white; padding: 2px 4px; border-radius: 4px;`,
+            style: `background-color: ${attributes.color};`,
           };
         },
       },
       text: {
         default: "",
+        rendered: false,
+        // 从 html 中解析 为 prosemirror 中的 state
+        parseHTML: (element: HTMLElement) => element.textContent,
       },
     };
   },
@@ -56,25 +70,35 @@ const Badge = Node.create<BadgeAttributes>({
   parseHTML() {
     return [
       {
-        tag: "span[data-badge]",
+        tag: `span[data-type=${this.name}]`,
       },
     ];
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    return ["span", HTMLAttributes, node.attrs.text];
+    return [
+      "span",
+      mergeAttributes(this.options.HTMLAttributes || {}, HTMLAttributes),
+      node.attrs.text,
+    ];
   },
 
   addCommands() {
     return {
       setBadge:
         (attributes) =>
-        ({ commands }: CommandProps) => {
-          return commands.insertContent({
-            type: this.name,
-            attrs: attributes,
-          });
-        },
+          ({ commands }: CommandProps) => {
+            return commands.insertContent({
+              type: this.name,
+              attrs: attributes,
+            });
+          },
+
+      unsetBadge:
+        ({ text }) =>
+          ({ commands }: CommandProps) => {
+            return commands.insertContent(text);
+          },
     };
   },
 });

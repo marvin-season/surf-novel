@@ -1,5 +1,21 @@
 # Surf Novel - AI驱动的在线笔记平台
 
+## 快速开始
+
+### install dependencies
+```sh
+pnpm install
+```
+
+### init db from prisma/schema.prisma
+```sh
+npx prisma db push
+```
+
+### dev
+```sh
+pnpm dev
+```
 ## 项目简介
 一个基于AI的在线笔记平台，提供实时协同编辑功能和富文本编辑体验。用户可以在浏览器中直接编辑和管理笔记，无需下载客户端。
 
