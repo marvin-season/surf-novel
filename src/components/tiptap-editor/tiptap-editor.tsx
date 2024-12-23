@@ -11,6 +11,8 @@ import Mention from "@tiptap/extension-mention";
 import suggestion from "./extension/mention/suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import BubbleMenuList from "./extension/mention/BubbleMenuList";
+import Collaboration from '@tiptap/extension-collaboration';
+import CollaborationCursor from '@tiptap/extension-collaboration-cursor';
 import { all, createLowlight } from "lowlight";
 import "./styles.css";
 import css from "highlight.js/lib/languages/css";
@@ -31,9 +33,15 @@ lowlight.register("ts", ts);
 const TipTapEditor = ({
   onSave,
   value,
+  ydoc,
+  provider,
+  room,
 }: {
   onSave: (value: any) => void;
   value: any;
+  ydoc: any;
+  provider: any;
+  room: any;
 }) => {
   const editor = useEditor({
     extensions: [
@@ -54,6 +62,12 @@ const TipTapEditor = ({
       Highlight.configure({ multicolor: true }),
       Placeholder.configure({
         placeholder: "Please write something ...",
+      }),
+      Collaboration.extend().configure({
+        document: ydoc,
+      }),
+      CollaborationCursor.extend().configure({
+        provider,
       }),
     ],
     onUpdate: ({ editor }) => {
