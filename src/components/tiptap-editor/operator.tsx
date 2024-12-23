@@ -13,7 +13,7 @@ import { Editor } from "@tiptap/react";
 import { NodeSelection } from "@tiptap/pm/state";
 import { toast } from "sonner";
 
-export default function CommandPanel({
+export default function Operator({
   editor,
   onSave,
 }: {

@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
-import CommandPanel from "./CommandPanel";
+import Operator from "./operator";
 import Mention from "@tiptap/extension-mention";
 import suggestion from "./extension/mention/suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -16,7 +16,7 @@ import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Badge from "./extension/Badge";
 // create a lowlight instance with all languages loaded
@@ -88,14 +88,16 @@ const TipTapEditor = ({
 
   return (
     <>
-      <CommandPanel
+      {/* 顶部操作栏 */}
+      <Operator
         editor={editor}
         onSave={() => {
           onSave(editor.getJSON());
         }}
       />
+      {/* 内联选中气泡 */}
       <BubbleMenuList editor={editor} />
-
+      {/* 编辑器 */}
       <EditorContent
         editor={editor}
         className="w-full h-full [&_.ProseMirror]:h-full [&_.ProseMirror]:p-4 [&_.ProseMirror]:overflow-y-auto"
