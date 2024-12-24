@@ -3,8 +3,6 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
-import Mention from "@tiptap/extension-mention";
-import suggestion from "./mention/suggestion";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
@@ -58,13 +56,6 @@ export const useExtensions = ({ collaborationEnabled = false }) => {
     StarterKit,
     Typography,
     Markdown,
-
-    Mention.configure({
-      HTMLAttributes: {
-        class: "mention",
-      },
-      suggestion,
-    }),
     CodeBlockLowlight.configure({
       lowlight,
     }),

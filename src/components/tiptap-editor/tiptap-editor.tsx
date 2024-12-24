@@ -2,7 +2,6 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import Operator from "./operator";
-import BubbleMenuList from "./extension/mention/BubbleMenuList";
 import "./styles.css";
 import { useEffect } from "react";
 
@@ -62,8 +61,6 @@ const TipTapEditor = ({
         }}
         onDelete={onDelete}
       />
-      {/* 内联选中气泡 */}
-      <BubbleMenuList editor={editor} />
       {/* 编辑器 */}
       <EditorContent
         editor={editor}
