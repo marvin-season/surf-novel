@@ -3,7 +3,8 @@ import { DefaultExtentions } from "./extentions";
 import EditorBubble from "./editor-bubble";
 import { Fragment, useState } from "react";
 import { Button } from "../ui/button";
-import Magic from "../ui/icon";
+import { Magic } from "../ui/icon";
+import { AISelector } from "./ai-selector";
 
 export default function ContentEditor({}) {
   const [open, setOpen] = useState();
@@ -33,7 +34,7 @@ const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
       }}
       className="flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl"
     >
-      {/* {open && <AISelector open={open} onOpenChange={onOpenChange} />} */}
+      {open && <AISelector open={open} onOpenChange={onOpenChange} />}
       {!open && (
         <Fragment>
           <Button
