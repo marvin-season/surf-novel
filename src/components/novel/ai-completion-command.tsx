@@ -1,5 +1,5 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { TextQuote } from "lucide-react";
+import { Check, TextQuote } from "lucide-react";
 
 const AICompletionCommands = ({
   completion,
@@ -14,7 +14,28 @@ const AICompletionCommands = ({
   }
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-2">
+        <div
+          className="text-sm text-blue-500 cursor-pointer gap-2 px-4"
+          onClick={() => {
+            const selection = editor.view.state.selection;
+
+            editor
+              .chain()
+              .focus()
+              .insertContentAt(
+                {
+                  from: selection.from,
+                  to: selection.to,
+                },
+                completion
+              )
+              .run();
+          }}
+        >
+          <Check className="h-4 w-4 text-muted-foreground" />
+          Replace selection
+        </div>
         <div
           className="text-sm text-blue-500 cursor-pointer gap-2 px-4"
           onClick={() => {
