@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CrazySpinner, Magic } from "../ui/icon";
 import { useCurrentEditor } from "@tiptap/react";
+import AICompletionCommands from "./ai-completion-command";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -22,6 +23,9 @@ interface AISelectorProps {
 
 export function AISelector({ onOpenChange }: AISelectorProps) {
   const { editor } = useCurrentEditor();
+  if (!editor) {
+    return;
+  }
   const [inputValue, setInputValue] = useState("");
 
   // const { completion, complete, isLoading } = useCompletion({
@@ -72,17 +76,18 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
             <ArrowUp className="h-4 w-4" />
           </Button>
         </div>
-        {/* {hasCompletion ? (
-            <AICompletionCommands
-              onDiscard={() => {
-                editor.chain().unsetHighlight().focus().run();
-                onOpenChange(false);
-              }}
-              completion={completion}
-            />
-          ) : (
-            <AISelectorCommands onSelect={(value, option) => complete(value, { body: { option } })} />
-          )} */}
+        {hasCompletion ? (
+          <AICompletionCommands
+            onDiscard={() => {
+              editor.chain().unsetHighlight().focus().run();
+              onOpenChange(false);
+            }}
+            completion={completion}
+          />
+        ) : (
+          <></>
+          // <AISelectorCommands onSelect={(value, option) => complete(value, { body: { option } })} />
+        )}
       </>
     </Command>
   );
