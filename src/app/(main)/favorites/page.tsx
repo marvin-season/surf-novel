@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from '@/components/ui/button';
+import { ContentEditor } from '@/components/novel';
 import { useTranslations } from 'next-intl';
 
 export default function FavoritesPage() {
@@ -13,6 +13,8 @@ export default function FavoritesPage() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* {t('common.favorites.notesList')} */}
+
+        <ContentEditor />
       </div>
     </div>
   );
