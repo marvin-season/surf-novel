@@ -1,19 +1,42 @@
 import {
   Badge,
-  Circle,
   Code2,
-  Delete,
-  Heading,
   Highlighter,
   MessageCircleWarning,
   Redo2,
   Save,
   Trash2,
   Undo2,
+  Download,
+  Upload,
 } from "lucide-react";
 import { Editor } from "@tiptap/react";
 import { NodeSelection } from "@tiptap/pm/state";
 import { toast } from "sonner";
+
+function handleExport(editor: Editor) {
+  const json = editor.getJSON();
+  const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'editor-content.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast.success("Exported successfully!");
+}
+
+async function handleImport(editor: Editor, event: React.ChangeEvent<HTMLInputElement>) {
+  const file = event.target.files?.[0];
+  if (file) {
+    const text = await file.text();
+    const json = JSON.parse(text);
+    editor.commands.setContent(json);
+    toast.success("Imported successfully!");
+  } else {
+    toast.error("No file selected.");
+  }
+}
 
 export default function Operator({
   editor,
@@ -94,7 +117,23 @@ export default function Operator({
         >
           <Highlighter size={12} />
         </div>
+        <div
+          className="cursor-pointer rounded-sm bg-blue-500 p-1 text-white"
+          onClick={() => handleExport(editor)}
+        >
+          <Download size={12} />
+        </div>
 
+        <input
+          type="file"
+          accept="application/json"
+          style={{ display: 'none' }}
+          id="import-json"
+          onChange={(event) => handleImport(editor, event)}
+        />
+        <label htmlFor="import-json" className="cursor-pointer rounded-sm bg-yellow-500 p-1 text-white">
+          <Upload size={12} />
+        </label>
       </div>
     </>
   );
