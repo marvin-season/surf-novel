@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CrazySpinner, Magic } from "@/components/ui/icon";
 import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
+import AISelectorCommands from "./ai-selector-commands";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -41,7 +42,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
   //     toast.error(e.message);
   //   },
   // });
-  const completion = "hi";
+  const completion = "";
   const hasCompletion = completion.length > 0;
 
   return (
@@ -85,8 +86,11 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
             completion={completion}
           />
         ) : (
-          <></>
-          // <AISelectorCommands onSelect={(value, option) => complete(value, { body: { option } })} />
+          <>
+            <AISelectorCommands
+              onSelect={(value, option) => console.log(value, option)}
+            />
+          </>
         )}
       </>
     </Command>
