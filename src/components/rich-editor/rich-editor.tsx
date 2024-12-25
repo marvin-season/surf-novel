@@ -2,6 +2,7 @@ import type { Extension } from "@tiptap/core";
 import { EditorProvider } from "@tiptap/react";
 import "./styles.css";
 import useExtentions from "./hooks/useExtentions";
+import Operator from "./operator/operator";
 
 export default function RichEditor({
   extensions = [],
@@ -26,6 +27,7 @@ export default function RichEditor({
         content={content}
         extensions={[...defaultExtentions, ...extensions]}
       >
+        <Operator/>
         {children}
       </EditorProvider>
     </>
