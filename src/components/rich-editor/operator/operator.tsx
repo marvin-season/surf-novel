@@ -66,7 +66,8 @@ export default function Operator({
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={() => {
-            editor.chain().focus().setAiWriter().run();
+            // editor.chain().focus().setAiWriter().run();
+            editor.chain().focus().insertContent(`**hi**`).run();
           }}
         >
           <Notebook size={12} />
