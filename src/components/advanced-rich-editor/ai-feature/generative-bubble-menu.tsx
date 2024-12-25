@@ -1,7 +1,7 @@
 import { useCurrentEditor } from "@tiptap/react";
 import EditorBubble from "../editor-bubble";
 import { AISelector } from "./ai-selector";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment } from "react";
 import { Button } from "@/components/ui/button";
 import { Magic } from "@/components/ui/icon";
 
