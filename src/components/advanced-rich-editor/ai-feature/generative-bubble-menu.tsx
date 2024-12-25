@@ -1,7 +1,7 @@
 import { useCurrentEditor } from "@tiptap/react";
 import EditorBubble from "../editor-bubble";
 import { AISelector } from "./ai-selector";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Magic } from "@/components/ui/icon";
 
@@ -11,6 +11,7 @@ const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
   if (!editor) {
     return null;
   }
+
   return (
     <EditorBubble
       tippyOptions={{
