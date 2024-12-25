@@ -1,6 +1,7 @@
 import { createAzure } from '@ai-sdk/azure';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { streamText } from 'ai';
+import { getSystemPrompt } from './prompt';
 
 const LLMConfig = {
   'ollama': {
@@ -14,10 +15,14 @@ const LLMConfig = {
 const azure = createAzure(LLMConfig.azure);
 
 export async function POST(request: NextRequest) {
-  const { prompt } = await request.json();
-  const modelConfig = {
+  const { prompt, option, command } = await request.json();
+  const messages = getSystemPrompt(prompt, option, command);
+
+  console.log(messages);
+
+  const modelConfig: Parameters<typeof streamText>[0] = {
     model: azure('gpt-4o'),
-    prompt,
+    messages ,
   };
 
   const result = streamText(modelConfig);
