@@ -22,20 +22,5 @@ export async function POST(request: NextRequest) {
 
   const result = streamText(modelConfig);
 
-  const stream = new ReadableStream({
-    async start(controller) {
-      try {
-        for await (const textPart of result.textStream) {
-          controller.enqueue(new TextEncoder().encode(textPart));
-        }
-        controller.close();
-      } catch (error) {
-        controller.error(error);
-      }
-    },
-  });
-
-  return new NextResponse(stream, {
-    headers: { 'Content-Type': 'text/plain' },
-  });
+  return result.toDataStreamResponse();
 }
