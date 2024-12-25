@@ -7,7 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { ColorSelector } from "./selector/color-selector";
-
+import { AIHighlight } from "./extentions/highlight/ai-highlight";
+import Highlight from "@tiptap/extension-highlight";
 export default function AdvancedRichEditor({
   content,
   className,
@@ -22,7 +23,13 @@ export default function AdvancedRichEditor({
       <RichEditor
         content={content}
         className={className}
-        extensions={[AiWriter.configure({}), TextStyle, Color]}
+        extensions={[
+          AiWriter.configure({}),
+          TextStyle,
+          Color,
+          AIHighlight,
+          Highlight.configure({ multicolor: true }),
+        ]}
       >
         <Operator />
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
