@@ -20,6 +20,9 @@ export default function FavoritesPage() {
       <Button onClick={() => {
         fetchApi('/generate', {
           method: 'POST',
+          body: JSON.stringify({
+            prompt: 'hi',
+          }),
         })
       }}>Generate</Button>
     </div>

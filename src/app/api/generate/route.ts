@@ -14,9 +14,10 @@ const LLMConfig = {
 const azure = createAzure(LLMConfig.azure);
 
 export async function POST(request: NextRequest) {
+  const { prompt } = await request.json();
   const modelConfig = {
     model: azure('gpt-4o'),
-    prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+    prompt,
   };
 
   const result = streamText(modelConfig);
