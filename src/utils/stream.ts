@@ -15,6 +15,11 @@ export class MessageBox {
     return this; // For chaining
   }
 
+  close() {
+    this.#transformStream.readable.cancel();
+    this.#transformStream.writable.abort();
+  }
+
   async writeMessage(message: string) {
     const writer = this.#transformStream.writable.getWriter();
     try {
@@ -39,13 +44,37 @@ export class MessageBox {
   }
 }
 
+export class CharMessageBox extends MessageBox {
+  constructor() {
+    super();
+    this.setIsStream(true);
+  }
+
+  async writeMessage(message: string) {
+    try {
+      for (const char of message) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        await super.writeMessage(char);
+      }
+
+      // close the stream
+      super.close();
+    } catch (error) {
+      console.error("Failed to write message:", error);
+    } finally {
+    }
+  }
+}
+
 export const messagePingPong = async (
   message: string,
   onMessage: (message: string) => void
 ) => {
-  const messageBox = new MessageBox();
+  const messageBox = new CharMessageBox();
   messageBox.writeMessage(message);
-  for await (const message of messageBox.readMessage()) {
+  const iter = messageBox.readMessage();
+  debugger;
+  for await (const message of iter) {
     onMessage(message);
   }
 };

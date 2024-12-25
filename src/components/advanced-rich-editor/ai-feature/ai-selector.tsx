@@ -4,7 +4,7 @@ import { Command, CommandInput } from "@/components/ui/command";
 
 import { ArrowUp } from "lucide-react";
 // import { addAIHighlight } from "novel/extensions";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 // import Markdown from "react-markdown";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { CrazySpinner, Magic } from "@/components/ui/icon";
 import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
+import { messagePingPong } from "@/utils";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -42,57 +43,66 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
   //     toast.error(e.message);
   //   },
   // });
-  const completion = "";
-  const hasCompletion = completion.length > 0;
-
+  const [completion, setCompletion] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const hasCompletion = useMemo(() => completion.length > 0, [completion]);
+  console.log(hasCompletion);
   return (
     <Command className="w-[350px]">
       <div className="flex max-h-[400px]">{completion}</div>
 
-      <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
-        <Magic className="mr-2 h-4 w-4 shrink-0  " />
-        AI is thinking
-        <div className="ml-2 mt-1">
-          <CrazySpinner />
+      {isLoading && (
+        <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
+          <Magic className="mr-2 h-4 w-4 shrink-0  " />
+          AI is thinking
+          <div className="ml-2 mt-1">
+            <CrazySpinner />
+          </div>
         </div>
+      )}
+      <div className="relative">
+        <CommandInput
+          value={inputValue}
+          onValueChange={setInputValue}
+          autoFocus
+          placeholder={
+            hasCompletion
+              ? "Tell AI what to do next"
+              : "Ask AI to edit or generate..."
+          }
+          onFocus={() => {}}
+        />
+        <Button
+          size="icon"
+          className="absolute right-2 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-purple-500 hover:bg-purple-900"
+          onClick={async () => {
+            setIsLoading(true);
+            setInputValue("");
+            await messagePingPong(inputValue, (message) => {
+              setCompletion((prev) => prev.concat(message));
+            });
+
+            console.log("done");
+            setIsLoading(false);
+          }}
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
       </div>
-      <>
-        <div className="relative">
-          <CommandInput
-            value={inputValue}
-            onValueChange={setInputValue}
-            autoFocus
-            placeholder={
-              hasCompletion
-                ? "Tell AI what to do next"
-                : "Ask AI to edit or generate..."
-            }
-            onFocus={() => {}}
+      {hasCompletion ? (
+        <AICompletionCommands
+          onDiscard={() => {
+            onOpenChange(false);
+          }}
+          completion={completion}
+        />
+      ) : (
+        <>
+          <AISelectorCommands
+            onSelect={(value, option) => console.log(value, option)}
           />
-          <Button
-            size="icon"
-            className="absolute right-2 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-purple-500 hover:bg-purple-900"
-            onClick={() => {}}
-          >
-            <ArrowUp className="h-4 w-4" />
-          </Button>
-        </div>
-        {hasCompletion ? (
-          <AICompletionCommands
-            onDiscard={() => {
-              editor.chain().unsetHighlight().focus().run();
-              onOpenChange(false);
-            }}
-            completion={completion}
-          />
-        ) : (
-          <>
-            <AISelectorCommands
-              onSelect={(value, option) => console.log(value, option)}
-            />
-          </>
-        )}
-      </>
+        </>
+      )}
     </Command>
   );
 }
