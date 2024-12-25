@@ -1,6 +1,7 @@
 import type { Extension } from "@tiptap/core";
 import { EditorProvider } from "@tiptap/react";
-import defaultExtentions from "./default-extentions";
+import "./styles.css";
+import useExtentions from "./hooks/useExtentions";
 
 export default function RichEditor({
   extensions = [],
@@ -13,6 +14,7 @@ export default function RichEditor({
   children?: React.ReactNode;
   content?: string;
 }) {
+  const defaultExtentions = useExtentions();
   return (
     <>
       <EditorProvider
