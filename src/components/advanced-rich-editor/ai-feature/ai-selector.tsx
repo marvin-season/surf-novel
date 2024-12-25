@@ -13,6 +13,7 @@ import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
 import { messagePingPong } from "@/utils";
+import { addAIHighlight } from "../extentions/highlight/ai-highlight";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -70,7 +71,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
               ? "Tell AI what to do next"
               : "Ask AI to edit or generate..."
           }
-          onFocus={() => {}}
+          onFocus={() => addAIHighlight(editor)}
         />
         <Button
           size="icon"

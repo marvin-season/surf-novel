@@ -1,9 +1,10 @@
 import { useCurrentEditor } from "@tiptap/react";
 import EditorBubble from "../editor-bubble";
 import { AISelector } from "./ai-selector";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Magic } from "@/components/ui/icon";
+import { removeAIHighlight } from "../extentions/highlight/ai-highlight";
 
 const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
   const { editor } = useCurrentEditor();
@@ -11,13 +12,17 @@ const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
   if (!editor) {
     return null;
   }
-
+  useEffect(() => {
+    if (!open) removeAIHighlight(editor);
+  }, [open]);
+  
   return (
     <EditorBubble
       tippyOptions={{
         placement: open ? "bottom-start" : "top",
         onHidden: () => {
           onOpenChange(false);
+          editor.chain().unsetHighlight().run();
         },
       }}
       className="flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl"
