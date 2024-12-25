@@ -6,10 +6,12 @@ export default function RichEditor({
   extensions = [],
   className,
   children,
+  content,
 }: {
   extensions?: Extension[];
   className?: string;
   children?: React.ReactNode;
+  content?: string;
 }) {
   return (
     <>
@@ -19,7 +21,7 @@ export default function RichEditor({
             class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full ${className}`,
           },
         }}
-        content={"hello world"}
+        content={content}
         extensions={[...defaultExtentions, ...extensions]}
       >
         {children}
