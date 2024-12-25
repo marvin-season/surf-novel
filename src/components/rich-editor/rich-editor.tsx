@@ -5,9 +5,11 @@ import defaultExtentions from "./default-extentions";
 export default function RichEditor({
   extensions = [],
   className,
+  children,
 }: {
   extensions?: Extension[];
   className?: string;
+  children?: React.ReactNode;
 }) {
   return (
     <>
@@ -17,9 +19,11 @@ export default function RichEditor({
             class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full ${className}`,
           },
         }}
-        content={""}
+        content={"hello world"}
         extensions={[...defaultExtentions, ...extensions]}
-      ></EditorProvider>
+      >
+        {children}
+      </EditorProvider>
     </>
   );
 }

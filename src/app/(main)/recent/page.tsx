@@ -1,7 +1,6 @@
 "use client";
 
-import { RichEditor } from "@/components/rich-editor";
-import { Button } from "@/components/ui/button";
+import { AdvancedRichEditor } from "@/components/advanced-rich-editor";
 import { useTranslations } from "next-intl";
 
 export default function RecentPage() {
@@ -15,7 +14,7 @@ export default function RecentPage() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* {t('recent.notesList')} */}
-        <RichEditor className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg" />
+        <AdvancedRichEditor className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg p-4" />
       </div>
     </div>
   );
