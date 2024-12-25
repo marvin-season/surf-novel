@@ -54,7 +54,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
         <div className="flex max-h-[400px]">
           <ScrollArea>
             <div className="prose p-2 px-4 prose-sm">
-              <RichEditor content={completion} />
+              {completion}
             </div>
           </ScrollArea>
         </div>
