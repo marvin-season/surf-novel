@@ -2,13 +2,11 @@ import { useState } from "react";
 import { RichEditor } from "../rich-editor";
 import GenerativeBubbleMenu from "./ai-feature/generative-bubble-menu";
 import Operator from "../rich-editor/operator/operator";
-import AiWriter from "./extentions/ai-writer/ai-writer";
 import { Separator } from "@/components/ui/separator";
-import { Color } from "@tiptap/extension-color";
-import { TextStyle } from "@tiptap/extension-text-style";
+
 import { ColorSelector } from "./selector/color-selector";
-import { AIHighlight } from "./extentions/highlight/ai-highlight";
-import Highlight from "@tiptap/extension-highlight";
+import useAdvancedExtentions from "./hooks/useExtentions";
+
 export default function AdvancedRichEditor({
   content,
   className,
@@ -18,18 +16,13 @@ export default function AdvancedRichEditor({
 }) {
   const [open, setOpen] = useState(false);
   const [openColor, setOpenColor] = useState(false);
+  const extentions = useAdvancedExtentions();
   return (
     <>
       <RichEditor
         content={content}
         className={className}
-        extensions={[
-          AiWriter.configure({}),
-          TextStyle,
-          Color,
-          AIHighlight,
-          Highlight.configure({ multicolor: true }),
-        ]}
+        extensions={extentions}
       >
         <Operator />
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
