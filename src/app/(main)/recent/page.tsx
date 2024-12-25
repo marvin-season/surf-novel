@@ -12,10 +12,11 @@ export default function RecentPage() {
         <h2 className="text-3xl font-bold tracking-tight">{t("title")}</h2>
         {/* {t('recent.notesList')} */}
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {/* {t('recent.notesList')} */}
-        <AdvancedRichEditor content="sadhoiashdioahsio" className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg p-4" />
-      </div>
+      {/* {t('recent.notesList')} */}
+      <AdvancedRichEditor
+        content="sadhoiashdioahsio"
+        className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background  p-4"
+      />
     </div>
   );
 }
