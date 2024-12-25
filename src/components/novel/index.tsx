@@ -1,1 +1,0 @@
-export {default as ContentEditor} from './content-editor';
