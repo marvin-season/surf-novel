@@ -9,10 +9,12 @@ import {
   Undo2,
   Download,
   Upload,
+  Notebook,
 } from "lucide-react";
 import { Editor, useCurrentEditor } from "@tiptap/react";
 import { NodeSelection } from "@tiptap/pm/state";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 function handleExport(editor: Editor) {
   // const json = editor.getJSON();
@@ -61,6 +63,14 @@ export default function Operator({
   return (
     <>
       <div className="flex p-2 gap-2 justify-end">
+        <div
+          className="cursor-pointer rounded-sm bg-slate-50 p-1"
+          onClick={() => {
+            editor.chain().focus().setAiWriter().run();
+          }}
+        >
+          <Notebook size={12} />
+        </div>
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={onDelete}

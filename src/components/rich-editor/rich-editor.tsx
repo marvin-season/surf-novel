@@ -1,4 +1,4 @@
-import type { Extension } from "@tiptap/core";
+import type { AnyExtension } from "@tiptap/core";
 import { EditorProvider } from "@tiptap/react";
 import "./styles.css";
 import useExtentions from "./hooks/useExtentions";
@@ -9,7 +9,7 @@ export default function RichEditor({
   children,
   content,
 }: {
-  extensions?: Extension[];
+  extensions?: AnyExtension[];
   className?: string;
   children?: React.ReactNode;
   content?: string;
