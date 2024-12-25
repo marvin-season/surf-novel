@@ -14,6 +14,8 @@ import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
 import { messagePingPong } from "@/utils";
 import { useCompletion } from "ai/react";
+import { RichEditor } from "@/components/rich-editor";
+import { ScrollArea } from "@/components/ui/scroll-area";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -47,7 +49,16 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
   console.log(hasCompletion);
   return (
     <Command className="w-[350px]">
-      <div className="flex max-h-[400px]">{completion}</div>
+      
+      {hasCompletion && (
+        <div className="flex max-h-[400px]">
+          <ScrollArea>
+            <div className="prose p-2 px-4 prose-sm">
+              <RichEditor content={completion} />
+            </div>
+          </ScrollArea>
+        </div>
+      )}
 
       {isLoading && (
         <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
