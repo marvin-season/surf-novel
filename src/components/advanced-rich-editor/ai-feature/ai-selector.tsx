@@ -13,6 +13,7 @@ import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
 import { messagePingPong } from "@/utils";
+import { useCompletion } from "ai/react";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
@@ -29,21 +30,19 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
   }
   const [inputValue, setInputValue] = useState("");
 
-  // const { completion, complete, isLoading } = useCompletion({
-  //   // id: "novel",
-  //   api: "/api/generate",
-  //   onResponse: (response) => {
-  //     if (response.status === 429) {
-  //       toast.error("You have reached your request limit for the day.");
-  //       return;
-  //     }
-  //   },
-  //   onError: (e) => {
-  //     toast.error(e.message);
-  //   },
-  // });
-  const [completion, setCompletion] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { completion, complete, isLoading } = useCompletion({
+    // id: "novel",
+    api: "/api/generate",
+    onResponse: (response) => {
+      if (response.status === 429) {
+        toast.error("You have reached your request limit for the day.");
+        return;
+      }
+    },
+    onError: (e) => {
+      toast.error(e.message);
+    },
+  });
   const hasCompletion = useMemo(() => completion.length > 0, [completion]);
   console.log(hasCompletion);
   return (
@@ -76,15 +75,18 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
         <Button
           size="icon"
           className="absolute right-2 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-purple-500 hover:bg-purple-900"
-          onClick={async () => {
-            setIsLoading(true);
-            setInputValue("");
-            await messagePingPong(inputValue, (message) => {
-              setCompletion((prev) => prev.concat(message));
-            });
+          onClick={() => {
+            if (completion)
+              return complete(completion, {
+                body: { option: "zap", command: inputValue },
+              }).then(() => setInputValue(""));
 
-            console.log("done");
-            setIsLoading(false);
+            const slice = editor.state.selection.content();
+            const text = editor.storage.markdown.serializer.serialize(slice.content);
+
+            complete(text, {
+              body: { option: "zap", command: inputValue },
+            }).then(() => setInputValue(""));
           }}
         >
           <ArrowUp className="h-4 w-4" />
@@ -100,7 +102,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
       ) : (
         <>
           <AISelectorCommands
-            onSelect={(value, option) => console.log(value, option)}
+            onSelect={(value, option) => complete(value, { body: { option } })}
           />
         </>
       )}

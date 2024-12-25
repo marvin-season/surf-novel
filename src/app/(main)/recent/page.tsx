@@ -14,7 +14,7 @@ export default function RecentPage() {
       </div>
       {/* {t('recent.notesList')} */}
       <AdvancedRichEditor
-        content="sadhoiashdioahsio"
+        content="逆风如解意"
         className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background  p-4"
       />
     </div>
