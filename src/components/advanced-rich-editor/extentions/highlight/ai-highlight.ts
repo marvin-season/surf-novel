@@ -131,9 +131,3 @@ export const removeAIHighlight = (editor: Editor) => {
   );
   editor.view.dispatch(tr);
 };
-export const addAIHighlight = (editor: Editor, color?: string) => {
-  editor
-    .chain()
-    .setAIHighlight({ color: color ?? "#c1ecf970" })
-    .run();
-};

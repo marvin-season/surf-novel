@@ -13,11 +13,9 @@ import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
 import { messagePingPong } from "@/utils";
-import { addAIHighlight } from "../extentions/highlight/ai-highlight";
 // import { ScrollArea } from "../ui/scroll-area";
 // import AICompletionCommands from "./ai-completion-command";
 // import AISelectorCommands from "./ai-selector-commands";
-//TODO: I think it makes more sense to create a custom Tiptap extension for this functionality https://tiptap.dev/docs/editor/ai/introduction
 
 interface AISelectorProps {
   open: boolean;
@@ -71,7 +69,9 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
               ? "Tell AI what to do next"
               : "Ask AI to edit or generate..."
           }
-          onFocus={() => addAIHighlight(editor)}
+          onFocus={() => {
+            editor.chain().setAIHighlight({ color: "#b072ca6f" }).run();
+          }}
         />
         <Button
           size="icon"
