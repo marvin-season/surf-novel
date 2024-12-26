@@ -52,12 +52,13 @@ model Tag {
 }
 
 model LLMModelProvider {
-  id         String       @id @default(cuid())
-  name       String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  lLMModel   LLMModel[]
-  userConfig UserConfig[]
+  id           String       @id @default(cuid())
+  name         String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  lLMModel     LLMModel[]
+  userConfig   UserConfig[]
+  modelListApi String?
 }
 
 model LLMModel {

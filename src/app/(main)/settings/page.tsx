@@ -17,6 +17,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { setUserLocale } from '@/services/locale';
 import { Locale } from '@/i18n/config';
 import { ModelProvider } from '@/types/model-provider';
+import { useState } from 'react';
 
 export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
@@ -27,6 +28,9 @@ export default function SettingsPage() {
     setUserLocale(value);
   };
 
+  const [modelProvider, setModelProvider] = useState<ModelProvider>(ModelProvider.Ollama);
+  const [model, setModel] = useState<string>('llama3.1');
+  
   return (
     <div className="space-y-8 p-10">
       {/* 页面标题 */}
