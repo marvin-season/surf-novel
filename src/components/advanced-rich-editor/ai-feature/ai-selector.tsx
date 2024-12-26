@@ -3,22 +3,15 @@
 import { Command, CommandInput } from "@/components/ui/command";
 
 import { ArrowUp } from "lucide-react";
-// import { addAIHighlight } from "novel/extensions";
 import { useMemo, useState } from "react";
-// import Markdown from "react-markdown";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CrazySpinner, Magic } from "@/components/ui/icon";
 import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
-import { messagePingPong } from "@/utils";
 import { useCompletion } from "ai/react";
-import { RichEditor } from "@/components/rich-editor";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import { ScrollArea } from "../ui/scroll-area";
-// import AICompletionCommands from "./ai-completion-command";
-// import AISelectorCommands from "./ai-selector-commands";
 
 interface AISelectorProps {
   open: boolean;

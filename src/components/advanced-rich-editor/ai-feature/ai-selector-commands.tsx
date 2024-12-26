@@ -1,6 +1,7 @@
 import {
   ArrowDownWideNarrow,
   CheckCheck,
+  Languages,
   RefreshCcwDot,
   StepForward,
   WrapText,
@@ -86,6 +87,20 @@ const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
           >
             <StepForward className="h-4 w-4 text-purple-500" />
             Continue writing
+          </CommandItem>
+          {/* translate */}
+          <CommandItem
+            onSelect={() => {
+              const slice = editor.state.selection.content();
+              // get plain text
+              const text = slice.content.textBetween(0, slice.size + 1);
+              onSelect(text, "translate");
+            }}
+            value="translate"
+            className="gap-2 px-4"
+          >
+            <Languages className="h-4 w-4 text-purple-500" />
+            Translate
           </CommandItem>
         </CommandList>
       </CommandGroup>
