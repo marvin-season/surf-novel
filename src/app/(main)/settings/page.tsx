@@ -17,7 +17,9 @@ import { useLocale, useTranslations } from 'next-intl';
 import { setUserLocale } from '@/services/locale';
 import { Locale } from '@/i18n/config';
 import { ModelProvider } from '@/types/model-provider';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { getModelProviderList } from './action';
+import { LLMApiResponse } from '@/types/llm';
 
 export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
@@ -28,9 +30,24 @@ export default function SettingsPage() {
     setUserLocale(value);
   };
 
-  const [modelProvider, setModelProvider] = useState<ModelProvider>(ModelProvider.Ollama);
-  const [model, setModel] = useState<string>('llama3.1');
-  
+  const [modelProviderList, setModelProviderList] = useState<LLMApiResponse['providers']>([]);
+
+  // 已选择模型提供商
+  const [modelProviderId, setModelProviderId] = useState<string>('');
+  // 已选择模型
+  const [modelId, setModelId] = useState<string>('');
+
+  useEffect(() => {
+    getModelProviderList().then(providers => {
+      console.log(providers);
+      setModelProviderList(providers);
+    })
+  }, [])
+
+  const models = useMemo(() => {
+    return modelProviderList.find(provider => provider.id === modelProviderId)?.lLMModel || [];
+  }, [modelProviderList, modelProviderId]);
+
   return (
     <div className="space-y-8 p-10">
       {/* 页面标题 */}
@@ -102,23 +119,25 @@ export default function SettingsPage() {
 
           <div className="flex items-center gap-4">
             {/* 模型提供商 */}
-            <Select>
+            <Select value={modelProviderId} onValueChange={setModelProviderId}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={'选择模型提供商'} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={ModelProvider.Ollama}>Ollama</SelectItem>
-                <SelectItem value={ModelProvider.Azure}>Azure</SelectItem>
+                {modelProviderList.map(provider => (
+                    <SelectItem key={provider.id} value={provider.id}>{provider.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
             {/* 模型选择 */}
-            <Select>
+            <Select value={modelId} onValueChange={setModelId}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder={'选择模型'} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={'llama3.1'}>llama3.1</SelectItem>
-                <SelectItem value={'llama3.1'}>llama3.1</SelectItem>
+                {models.map((model) => (
+                  <SelectItem key={model.id} value={model.id}>{model.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
