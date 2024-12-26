@@ -9,13 +9,26 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  notes     Note[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String      @id @default(cuid())
+  email      String      @unique
+  name       String?
+  password   String
+  notes      Note[]
+  userConfig UserConfig?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model UserConfig {
+  id                 String            @id @default(cuid())
+  userId             String            @unique
+  user               User              @relation(fields: [userId], references: [id])
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  llmModelProvider   LLMModelProvider? @relation(fields: [lLMModelProviderId], references: [id])
+  llmModel           LLMModel?         @relation(fields: [lLMModelId], references: [id])
+  lLMModelId         String?
+  lLMModelProviderId String?
 }
 
 model Note {
@@ -39,11 +52,12 @@ model Tag {
 }
 
 model LLMModelProvider {
-  id        String     @id @default(cuid())
-  name      String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  LLMModel  LLMModel[]
+  id         String       @id @default(cuid())
+  name       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  lLMModel   LLMModel[]
+  userConfig UserConfig[]
 }
 
 model LLMModel {
@@ -53,4 +67,5 @@ model LLMModel {
   provider   LLMModelProvider @relation(fields: [providerId], references: [id])
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
+  UserConfig UserConfig[]
 }
