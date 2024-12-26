@@ -1,7 +1,7 @@
 import { CoreMessage } from "ai";
 import { match } from "ts-pattern";
 
-export const getSystemPrompt = (prompt: string, option: string = 'longer', command: string) => {
+export const getSystemPrompt = (prompt: string, option: string = 'translate', command: string) => {
 
     const messages = match(option)
     .with("continue", () => [
@@ -78,6 +78,16 @@ export const getSystemPrompt = (prompt: string, option: string = 'longer', comma
       {
         role: "user",
         content: `For this text: ${prompt}. You have to respect the command: ${command}`,
+      },
+    ])
+    .with("translate", () => [
+      {
+        role: "system",
+        content: "You are an AI writing assistant that translates text from English to Chinese.",
+      },
+      {
+        role: "user",
+        content: `For this text: ${prompt}. You have to translate it to Chinese.`,
       },
     ])
     .run() as CoreMessage[];
