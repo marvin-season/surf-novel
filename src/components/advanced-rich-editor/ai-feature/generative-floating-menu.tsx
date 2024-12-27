@@ -23,6 +23,7 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
 
   return (
     <EditorFloating>
+      <div className="p-2 text-sm text-gray-400">{completion}</div>
       <Command>
         <CommandGroup heading="Use AI to continue">
           <CommandList>
@@ -30,10 +31,9 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
               onSelect={() => {
                 // 获取所有的文本
                 const context = editor?.storage.markdown.getMarkdown()
-                // const text = editor.storage.markdown.serializer.serialize(editor.state.doc.content)
-                // complete(text, {
-                //   body: { option: 'continue', command: 'continue' },
-                // })
+                complete(context, {
+                  body: { option: 'continue' },
+                })
               }}
               value="continue"
               className="gap-2 px-4"

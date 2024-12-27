@@ -14,7 +14,7 @@ export const getSystemPrompt = (prompt: string, option: string = 'translate', co
       },
       {
         role: 'user',
-        content: `之前文本的上下文: ${prompt}`,
+        content: `之前的文本: ${prompt}`,
       },
     ])
     .with('improve', () => [
