@@ -1,7 +1,7 @@
 "use client";
 
 import { MainLayout } from "@/components/layout/main-layout";
-import { BookMarked, Clock, LogOut, Settings, Star, User } from "lucide-react";
+import { BookMarked, Clock, LogOut, NotebookTabs, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
@@ -15,18 +15,18 @@ const sidebarNavItems = [
   {
     title: "my_notes",
     href: "/notes",
-    icon: <BookMarked className="h-4 w-4" />,
+    icon: <NotebookTabs className="h-4 w-4" />,
   },
-  {
-    title: "recent_edits",
-    href: "/recent",
-    icon: <Clock className="h-4 w-4" />,
-  },
-  {
-    title: "favorites",
-    href: "/favorites",
-    icon: <Star className="h-4 w-4" />,
-  },
+  // {
+  //   title: "recent_edits",
+  //   href: "/recent",
+  //   icon: <Clock className="h-4 w-4" />,
+  // },
+  // {
+  //   title: "favorites",
+  //   href: "/favorites",
+  //   icon: <Star className="h-4 w-4" />,
+  // },
 ] as const;
 
 const profileNavItems = [
