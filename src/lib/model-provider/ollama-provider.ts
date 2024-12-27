@@ -1,7 +1,7 @@
 import { createOllama } from "ollama-ai-provider";
 
 export function initOllamaProvider({
-  model = process.env.NEXT_LLM_MODEL,
+  model = process.env.NEXT_OLLAME_LLM_MODEL,
   endpoint = process.env.NEXT_OLLAMA_ENDPOINT,
 }: {
   model?: string;
