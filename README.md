@@ -2,15 +2,19 @@
 
 ## 快速开始
 
+setup database and dependencies
+
 ```sh
 pnpm run setup
 ```
 
-**根路径.env.local 下添加**
+**copy .env.example to .env.local and add your own env**, just like this:
 
 ```txt
 NEXT_PUBLIC_API_URL=http://localhost:4000/api
 ```
+
+run the app
 
 ```sh
 pnpm run dev
