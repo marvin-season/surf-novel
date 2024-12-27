@@ -28,9 +28,9 @@ export default function AdvancedRichEditorProvider({
       >
         {children}
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
-          <Separator orientation="vertical" />
+          <Separator className="h-auto" orientation="vertical" />
           <NodeSelector/>
-          <Separator orientation="vertical" />
+          <Separator className="h-auto" orientation="vertical" />
           <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </GenerativeBubbleMenu>
       </RichEditorProvider>
