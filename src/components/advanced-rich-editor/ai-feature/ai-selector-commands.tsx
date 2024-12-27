@@ -1,53 +1,41 @@
-import {
-  ArrowDownWideNarrow,
-  CheckCheck,
-  Languages,
-  RefreshCcwDot,
-  StepForward,
-  WrapText,
-} from "lucide-react";
+import { ArrowDownWideNarrow, CheckCheck, Languages, RefreshCcwDot, StepForward, WrapText } from 'lucide-react'
 
-import {
-  CommandGroup,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
-import { getPrevText } from "@/utils";
-import { useCurrentEditor } from "@tiptap/react";
+import { CommandGroup, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
+import { getPrevText } from '@/utils'
+import { useCurrentEditor } from '@tiptap/react'
 
 const options = [
   {
-    value: "improve",
-    label: "Improve writing",
+    value: 'improve',
+    label: 'Improve writing',
     icon: RefreshCcwDot,
   },
 
   {
-    value: "fix",
-    label: "Fix grammar",
+    value: 'fix',
+    label: 'Fix grammar',
     icon: CheckCheck,
   },
   {
-    value: "shorter",
-    label: "Make shorter",
+    value: 'shorter',
+    label: 'Make shorter',
     icon: ArrowDownWideNarrow,
   },
   {
-    value: "longer",
-    label: "Make longer",
+    value: 'longer',
+    label: 'Make longer',
     icon: WrapText,
   },
-];
+]
 
 interface AISelectorCommandsProps {
-  onSelect: (value: string, option: string) => void;
+  onSelect: (value: string, option: string) => void
 }
 
 const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
-  const { editor } = useCurrentEditor();
+  const { editor } = useCurrentEditor()
   if (!editor) {
-    return;
+    return
   }
   return (
     <>
@@ -56,11 +44,9 @@ const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
           {options.map((option) => (
             <CommandItem
               onSelect={(value) => {
-                const slice = editor.state.selection.content();
-                const text = editor.storage.markdown.serializer.serialize(
-                  slice.content
-                );
-                onSelect(text, value);
+                const slice = editor.state.selection.content()
+                const text = editor.storage.markdown.serializer.serialize(slice.content)
+                onSelect(text, value)
               }}
               className="flex gap-2 px-4"
               key={option.value}
@@ -75,26 +61,13 @@ const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
       <CommandSeparator />
       <CommandGroup heading="Use AI to do more">
         <CommandList>
-          <CommandItem
-            onSelect={() => {
-              const pos = editor.state.selection.from;
-
-              const text = getPrevText(editor, pos);
-              onSelect(text, "continue");
-            }}
-            value="continue"
-            className="gap-2 px-4"
-          >
-            <StepForward className="h-4 w-4 text-purple-500" />
-            Continue writing
-          </CommandItem>
           {/* translate */}
           <CommandItem
             onSelect={() => {
-              const slice = editor.state.selection.content();
+              const slice = editor.state.selection.content()
               // get plain text
-              const text = slice.content.textBetween(0, slice.size + 1);
-              onSelect(text, "translate");
+              const text = slice.content.textBetween(0, slice.size + 1)
+              onSelect(text, 'translate')
             }}
             value="translate"
             className="gap-2 px-4"
@@ -105,7 +78,7 @@ const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
         </CommandList>
       </CommandGroup>
     </>
-  );
-};
+  )
+}
 
-export default AISelectorCommands;
+export default AISelectorCommands
