@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react'
 import { EditorFloating } from '../editor-floating'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import { StepForward, } from 'lucide-react'
+import { GitCommit, Github, StepForward, } from 'lucide-react'
 
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const complete = console.log
@@ -20,7 +20,18 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
               className="gap-2 px-4"
             >
               <StepForward className="h-4 w-4 text-purple-500" />
-              Continue writing
+              AI writing
+            </CommandItem>
+            <CommandItem
+              onSelect={(value) => {
+                // link to github
+                window.open(value, '_blank')
+              }}
+              value="https://github.com/marvin-season/surf-novel"
+              className="gap-2 px-4"
+            >
+              <Github className="h-4 w-4 text-purple-500" />
+              Github
             </CommandItem>
           </CommandList>
         </CommandGroup>
