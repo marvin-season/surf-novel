@@ -19,7 +19,7 @@ const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
   return (
     <EditorBubble
       tippyOptions={{
-        placement: "bottom-start",
+        placement: open ? "bottom-start" : "top",
         onHidden: () => {
           onOpenChange(false);
           editor.chain().unsetHighlight().run();
