@@ -39,7 +39,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
     },
   });
   const hasCompletion = useMemo(() => completion.length > 0, [completion]);
-  console.log(hasCompletion);
+  
   return (
     <Command className="w-[350px]">
       
