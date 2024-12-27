@@ -4,6 +4,7 @@ import GenerativeBubbleMenu from "./ai-feature/generative-bubble-menu";
 import { Separator } from "@/components/ui/separator";
 
 import { ColorSelector } from "./selector/color-selector";
+import { NodeSelector } from "./selector/node-selector";
 import useAdvancedExtentions from "./hooks/useExtentions";
 
 export default function AdvancedRichEditorProvider({
@@ -27,6 +28,8 @@ export default function AdvancedRichEditorProvider({
       >
         {children}
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
+          <Separator orientation="vertical" />
+          <NodeSelector/>
           <Separator orientation="vertical" />
           <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </GenerativeBubbleMenu>
