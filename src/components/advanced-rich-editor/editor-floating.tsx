@@ -1,4 +1,4 @@
-import { EditorContent, FloatingMenu, useCurrentEditor, useEditor } from '@tiptap/react'
+import { FloatingMenu, useCurrentEditor } from '@tiptap/react'
 import { ReactNode } from 'react'
 
 export const EditorFloating = ({ children }: { children: ReactNode }) => {
@@ -6,7 +6,7 @@ export const EditorFloating = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <FloatingMenu editor={editor} tippyOptions={{ placement: 'bottom-start' }}>
+      <FloatingMenu editor={editor} tippyOptions={{ placement: 'bottom-start', moveTransition: 'transform 0.15s ease-out' }}>
         {children}
       </FloatingMenu>
     </>

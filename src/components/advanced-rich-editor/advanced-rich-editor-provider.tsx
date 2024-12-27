@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ColorSelector } from "./selector/color-selector";
 import { NodeSelector } from "./selector/node-selector";
 import useAdvancedExtentions from "./hooks/useExtentions";
+import GenerativeFloatingMenu from "./ai-feature/generative-floating-menu";
 
 export default function AdvancedRichEditorProvider({
   content,
@@ -27,6 +28,7 @@ export default function AdvancedRichEditorProvider({
         extensions={extentions}
       >
         {children}
+        <GenerativeFloatingMenu></GenerativeFloatingMenu>
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
           <Separator className="h-auto" orientation="vertical" />
           <NodeSelector/>
