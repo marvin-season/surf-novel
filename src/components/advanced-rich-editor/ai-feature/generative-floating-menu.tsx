@@ -1,8 +1,7 @@
 import { ReactNode, useState } from 'react'
 import { EditorFloating } from '../editor-floating'
-import AISelectorCommands from './ai-selector-commands'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import { AirVentIcon, Forward, LucidePower, LucideStepForward, Power, StepForward, StepForwardIcon } from 'lucide-react'
+import { StepForward, } from 'lucide-react'
 
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const complete = console.log
