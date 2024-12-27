@@ -1,24 +1,20 @@
-import { CoreMessage } from 'ai';
-import { match } from 'ts-pattern';
+import { CoreMessage } from 'ai'
+import { match } from 'ts-pattern'
 
-export const getSystemPrompt = (
-  prompt: string,
-  option: string = 'translate',
-  command: string,
-) => {
+export const getSystemPrompt = (prompt: string, option: string = 'translate', command: string) => {
   const messages = match(option)
     .with('continue', () => [
       {
         role: 'system',
         content:
-          'You are an AI writing assistant that continues existing text based on context from prior text. ' +
-          'Give more weight/priority to the later characters than the beginning ones. ' +
-          'Limit your response to no more than 200 characters, but make sure to construct complete sentences.' +
-          'Use Markdown formatting when appropriate.',
+          '你是一个AI写作助手，继续基于之前文本的上下文来延续现有文本。' +
+          '相比起文本的开头，给予后面的字符更多的权重/优先级。' +
+          '限制你的回应在不超过200个字符以内，但要确保构建完整的句子。' +
+          '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: prompt,
+        content: `之前文本的上下文: ${prompt}`,
       },
     ])
     .with('improve', () => [
@@ -37,9 +33,7 @@ export const getSystemPrompt = (
     .with('shorter', () => [
       {
         role: 'system',
-        content:
-          'You are an AI writing assistant that shortens existing text. ' +
-          'Use Markdown formatting when appropriate.',
+        content: 'You are an AI writing assistant that shortens existing text. ' + 'Use Markdown formatting when appropriate.',
       },
       {
         role: 'user',
@@ -49,9 +43,7 @@ export const getSystemPrompt = (
     .with('longer', () => [
       {
         role: 'system',
-        content:
-          'You are an AI writing assistant that lengthens existing text. ' +
-          'Use Markdown formatting when appropriate.',
+        content: 'You are an AI writing assistant that lengthens existing text. ' + 'Use Markdown formatting when appropriate.',
       },
       {
         role: 'user',
@@ -87,16 +79,15 @@ export const getSystemPrompt = (
     .with('translate', () => [
       {
         role: 'system',
-        content:
-          '你是一个中英翻译助手！请直接返回翻译结果！！',
+        content: '你是一个中英翻译助手！请直接返回翻译结果！！',
       },
-  
+
       {
         role: 'user',
         content: `请翻译: "${prompt}"!`,
       },
     ])
-    .run() as CoreMessage[];
+    .run() as CoreMessage[]
 
-  return messages;
-};
+  return messages
+}

@@ -1,10 +1,25 @@
 import { ReactNode, useState } from 'react'
 import { EditorFloating } from '../editor-floating'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import { GitCommit, Github, StepForward, } from 'lucide-react'
+import { Github, StepForward } from 'lucide-react'
+import { useCompletion } from 'ai/react'
+import { toast } from 'sonner'
+import { useCurrentEditor } from '@tiptap/react'
 
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
-  const complete = console.log
+  const { editor } = useCurrentEditor()
+  const { completion, complete, isLoading } = useCompletion({
+    api: '/api/generate',
+    onResponse: (response) => {
+      if (response.status === 429) {
+        toast.error('You have reached your request limit for the day.')
+        return
+      }
+    },
+    onError: (e) => {
+      toast.error(e.message)
+    },
+  })
 
   return (
     <EditorFloating>
@@ -13,8 +28,12 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
           <CommandList>
             <CommandItem
               onSelect={() => {
-                complete('asas')
-                // 获取
+                // 获取所有的文本
+                const context = editor?.storage.markdown.getMarkdown()
+                // const text = editor.storage.markdown.serializer.serialize(editor.state.doc.content)
+                // complete(text, {
+                //   body: { option: 'continue', command: 'continue' },
+                // })
               }}
               value="continue"
               className="gap-2 px-4"
