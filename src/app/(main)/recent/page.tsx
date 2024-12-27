@@ -1,6 +1,6 @@
 "use client";
 
-import { AdvancedRichEditor } from "@/components/advanced-rich-editor";
+import {AdvancedRichEditorProvider} from "@/components/advanced-rich-editor";
 import { useTranslations } from "next-intl";
 
 export default function RecentPage() {
@@ -13,7 +13,7 @@ export default function RecentPage() {
         {/* {t('recent.notesList')} */}
       </div>
       {/* {t('recent.notesList')} */}
-      <AdvancedRichEditor
+      <AdvancedRichEditorProvider
         content="逆风如解意"
         className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background  p-4"
       />

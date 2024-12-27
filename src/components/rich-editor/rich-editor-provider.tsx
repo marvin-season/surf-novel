@@ -3,7 +3,7 @@ import { EditorProvider } from "@tiptap/react";
 import "./styles.css";
 import useExtentions from "./hooks/useExtentions";
 
-export default function RichEditor({
+export default function RichEditorProvider({
   extensions = [],
   className,
   children,

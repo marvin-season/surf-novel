@@ -1,1 +1,1 @@
-export { default as AdvancedRichEditor } from "./advanced-rich-editor";
+export { default as AdvancedRichEditorProvider } from "./advanced-rich-editor-provider";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RichEditor } from "../rich-editor";
+import { RichEditorProvider } from "@/components/rich-editor";
 import GenerativeBubbleMenu from "./ai-feature/generative-bubble-menu";
 import Operator from "../rich-editor/operator/operator";
 import { Separator } from "@/components/ui/separator";
@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { ColorSelector } from "./selector/color-selector";
 import useAdvancedExtentions from "./hooks/useExtentions";
 
-export default function AdvancedRichEditor({
+export default function AdvancedRichEditorProvider({
   content,
   className,
 }: {
@@ -19,7 +19,7 @@ export default function AdvancedRichEditor({
   const extentions = useAdvancedExtentions();
   return (
     <>
-      <RichEditor
+      <RichEditorProvider
         content={content}
         className={className}
         extensions={extentions}
@@ -29,7 +29,7 @@ export default function AdvancedRichEditor({
           <Separator orientation="vertical" />
           <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </GenerativeBubbleMenu>
-      </RichEditor>
+      </RichEditorProvider>
     </>
   );
 }
