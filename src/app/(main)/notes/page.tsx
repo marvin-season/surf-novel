@@ -17,18 +17,6 @@ export default function NotesPage() {
         <NoteEditorPanel>
           <NoteEditor />
         </NoteEditorPanel>
-
-        {/* 编辑区 */}
-        {/* <TiptapEditorContainer
-          onSave={handleUpdateOrCreate}
-          onDelete={handleDelete}
-          selectedNote={selectedNote}
-        /> */}
-        {/* <NoteEditorContainer
-        selectedNote={selectedNote}
-        onSave={handleUpdateOrCreate}
-        // onDelete={handleDelete}
-      /> */}
       </div>
     </NoteProvider>
   );
