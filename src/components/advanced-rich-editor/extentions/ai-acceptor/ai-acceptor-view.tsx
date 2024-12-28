@@ -7,18 +7,18 @@ import { useEffect, useState } from 'react'
 // 如果用户选择丢弃，则将ai生成的内容丢弃，删除当前节点
 const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState('node.attrs.content')
+  const [content, setContent] = useState(node.attrs.content)
+
   useEffect(() => {
     setContent(node.attrs.content)
-  }, [isEditing])
+  }, [node.attrs.content])
 
   return (
     <NodeViewWrapper data-drag-handle>
-      <Button variant={'secondary'} onClick={() => setIsEditing(!isEditing)}>{isEditing ? '取消编辑' : '编辑'}</Button>
-      <div>
+      <div className='p-2'>
         {isEditing ? (
           <Textarea
-            className="outline-none resize-none"
+            className="w-full h-20 bg-transparent focus:ring-0 font-inherit resize-none"
             value={content}
             onChange={(e) => {
               setContent(e.target.value)
@@ -47,6 +47,9 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
             }}
           >
             Discard
+          </span>
+          <span className="text-green-400" onClick={() => setIsEditing(!isEditing)}>
+            {isEditing ? '完成编辑' : '编辑'}
           </span>
         </div>
       </div>

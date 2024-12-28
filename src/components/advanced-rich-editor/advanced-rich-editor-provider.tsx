@@ -8,6 +8,8 @@ import { NodeSelector } from "./selector/node-selector";
 import useAdvancedExtentions from "./hooks/useExtentions";
 import GenerativeFloatingMenu from "./ai-feature/generative-floating-menu";
 
+import './style.css'
+
 export default function AdvancedRichEditorProvider({
   content,
   className,
