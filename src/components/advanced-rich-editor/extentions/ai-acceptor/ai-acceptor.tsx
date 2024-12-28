@@ -8,7 +8,7 @@ import AiAcceptorView from './ai-acceptor-view'
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     aiAcceptor: {
-      setAiAcceptor: ({ content }: { content: string }) => ReturnType
+      setAiAcceptor: ({ content, id }: { content: string; id: string }) => ReturnType
     }
   }
 }
@@ -23,6 +23,7 @@ export const AiAcceptor = Node.create({
   addOptions() {
     return {
       id: undefined,
+      content: undefined,
       HTMLAttributes: {
         class: `div-${this.name}`,
       },
@@ -65,18 +66,41 @@ export const AiAcceptor = Node.create({
   addCommands() {
     return {
       setAiAcceptor:
-        ({ content }) =>
-        ({ chain, editor }) =>
-          chain()
-            .focus()
-            .insertContentAt(editor.state.doc.content.size, {
-              type: this.name,
-              attrs: {
-                id: Date.now(),
+        ({ content, id }) =>
+        ({ chain, state, editor }) => {
+          const { doc } = state
+
+          let exists = false
+
+          doc.descendants((node) => {
+            if (node.type.name === this.name && node.attrs.id === id) {
+              exists = true
+              // 使用 updateAttributes 更新节点属性
+              editor.commands.updateAttributes(this.name, {
                 content,
-              },
-            })
-            .run(),
+              })
+              return false // 停止遍历
+            }
+            return true // 继续遍历
+          })
+
+          // 如果节点不存在，插入新节点
+          if (!exists) {
+            editor
+              .chain()
+              .focus()
+              .insertContentAt(doc.content.size, {
+                type: 'ai-acceptor',
+                attrs: {
+                  id,
+                  content,
+                },
+              })
+              .run()
+          }
+
+          return true
+        },
     }
   },
 
