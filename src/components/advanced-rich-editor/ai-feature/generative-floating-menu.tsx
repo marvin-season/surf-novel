@@ -50,7 +50,7 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
               onSelect={async () => {
                 const context = editor?.storage.markdown.getMarkdown()
                 await complete(context, {
-                  body: { option: 'continue' },
+                  body: { command: 'continue' },
                 })
                 hideMenu() // Hide the menu after completion
               }}

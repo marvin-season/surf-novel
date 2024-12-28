@@ -80,16 +80,11 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
           size="icon"
           className="absolute right-2 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-purple-500 hover:bg-purple-900"
           onClick={() => {
-            if (completion)
-              return complete(completion, {
-                body: { option: "zap", command: inputValue },
-              }).then(() => setInputValue(""));
-
             const slice = editor.state.selection.content();
             const text = editor.storage.markdown.serializer.serialize(slice.content);
 
-            complete(text, {
-              body: { option: "zap", command: inputValue },
+            complete(inputValue, {
+              body: { command: "zap", context: text },
             }).then(() => setInputValue(""));
           }}
         >
@@ -106,7 +101,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
       ) : (
         <>
           <AISelectorCommands
-            onSelect={(value, option) => complete(value, { body: { option } })}
+            onSelect={(value, command) => complete(value, { body: { command } })}
           />
         </>
       )}

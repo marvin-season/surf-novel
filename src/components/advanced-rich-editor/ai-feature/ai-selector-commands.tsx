@@ -29,7 +29,7 @@ const options = [
 ]
 
 interface AISelectorCommandsProps {
-  onSelect: (value: string, option: string) => void
+  onSelect: (value: string, command: string) => void
 }
 
 const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {

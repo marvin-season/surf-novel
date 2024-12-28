@@ -4,8 +4,8 @@ import { getSystemPrompt } from './prompt';
 import { loadLLM } from '@/lib/model-provider/load-llm';
 
 export async function POST(request: NextRequest) {
-  const { prompt, option, command } = await request.json();
-  const messages = getSystemPrompt(prompt, option, command);
+  const { prompt, command, context } = await request.json();
+  const messages = getSystemPrompt(prompt, command, context);
 
   console.log(messages);
   const model = loadLLM('azure', 'gpt-4o');

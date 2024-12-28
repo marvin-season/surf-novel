@@ -1,8 +1,8 @@
 import { CoreMessage } from 'ai'
 import { match } from 'ts-pattern'
 
-export const getSystemPrompt = (prompt: string, option: string = 'translate', command: string) => {
-  const messages = match(option)
+export const getSystemPrompt = (prompt: string, command: string = 'translate', context: string) => {
+  const messages = match(command)
     .with('continue', () => [
       {
         role: 'system',
@@ -67,13 +67,13 @@ export const getSystemPrompt = (prompt: string, option: string = 'translate', co
       {
         role: 'system',
         content:
-          '你是一个AI写作助手，基于用户输入和命令生成文本。' +
+          '你是一个AI写作助手，基于用户输入和上下文生成文本。' +
           '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
           '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `用户输入: ${prompt}. 请按照命令: ${command} 生成文本`,
+        content: `用户输入: ${prompt}. 请参考上下文: ${context} 生成文本`,
       },
     ])
     .with('translate', () => [
