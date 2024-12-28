@@ -10,7 +10,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
           '你是一个AI写作助手，继续基于之前的文本来延续现有文本。' +
           '相比起文本的开头，给予后面的字符更多的权重/优先级。' +
           '限制你的回应在不超过200个字符以内，但要确保构建完整的句子。' +
-          '在适当的时候使用Markdown格式。',
+          '',
       },
       {
         role: 'user',
@@ -23,7 +23,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
         content:
           '你是一个AI写作助手，你的任务是改善现有文本。' +
           '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
-          '在适当的时候使用Markdown格式。',
+          '',
       },
       {
         role: 'user',
@@ -33,7 +33,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
     .with('shorter', () => [
       {
         role: 'system',
-        content: '你是一个AI写作助手，你的任务是缩短现有文本。' + '在适当的时候使用Markdown格式。',
+        content: '你是一个AI写作助手，你的任务是缩短现有文本。' + '',
       },
       {
         role: 'user',
@@ -43,7 +43,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
     .with('longer', () => [
       {
         role: 'system',
-        content: '你是一个AI写作助手，你的任务是延长现有文本。' + '在适当的时候使用Markdown格式。',
+        content: '你是一个AI写作助手，你的任务是延长现有文本。' + '',
       },
       {
         role: 'user',
@@ -56,7 +56,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
         content:
           '你是一个AI写作助手，你的任务是修正现有文本中的语法和拼写错误。' +
           '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
-          '在适当的时候使用Markdown格式。',
+          '',
       },
       {
         role: 'user',
@@ -69,7 +69,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
         content:
           '你是一个AI写作助手，基于用户输入和上下文生成文本。' +
           '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
-          '在适当的时候使用Markdown格式。',
+          '',
       },
       {
         role: 'user',
@@ -91,7 +91,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
 
   return [...messages, {
       role: 'system',
-      content: `当使用md格式的时候，请严格使用md格式`,
+      content: `使用纯文本回答，不要使用markdown格式`,
     },
   ]
 }
