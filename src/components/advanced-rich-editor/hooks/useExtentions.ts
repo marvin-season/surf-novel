@@ -2,11 +2,11 @@ import { AIHighlight } from "../extentions/highlight/ai-highlight";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
-import AiWriter from "../extentions/ai-writer/ai-writer";
+import AiAcceptor from "../extentions/ai-acceptor/ai-acceptor";
 
 export default function useAdvancedExtentions() {
   return [
-    AiWriter.configure({}),
+    AiAcceptor.configure({}),
     TextStyle,
     Color,
     AIHighlight,
