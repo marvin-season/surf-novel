@@ -8,7 +8,7 @@ import AiAcceptorView from './ai-acceptor-view'
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     aiAcceptor: {
-      setAiAcceptor: () => ReturnType
+      setAiAcceptor: ({ content }: { content: string }) => ReturnType
     }
   }
 }
@@ -24,7 +24,7 @@ export const AiAcceptor = Node.create({
     return {
       id: undefined,
       HTMLAttributes: {
-        class: `span-${this.name}`,
+        class: `div-${this.name}`,
       },
     }
   },
@@ -38,25 +38,34 @@ export const AiAcceptor = Node.create({
           'data-id': attributes.id,
         }),
       },
+      content: {
+        default: '',
+        parseHTML: (element) => element.getAttribute('data-content'),
+        renderHTML(attributes) {
+          return {
+            'data-content': attributes.content,
+          }
+        },
+      },
     }
   },
 
   parseHTML() {
     return [
       {
-        tag: `span[data-type=${this.name}]`,
+        tag: `div[data-type=${this.name}]`,
       },
     ]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['span', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+    return ['div', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
 
   addCommands() {
     return {
       setAiAcceptor:
-        () =>
+        ({ content }) =>
         ({ chain }) =>
           chain()
             .focus()
@@ -64,6 +73,7 @@ export const AiAcceptor = Node.create({
               type: this.name,
               attrs: {
                 id: Date.now(),
+                content,
               },
             })
             .run(),

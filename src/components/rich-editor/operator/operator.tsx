@@ -67,7 +67,7 @@ export default function Operator({
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={() => {
             // editor.chain().focus().setAiWriter().run();
-            editor.chain().focus().setAiAcceptor().run();
+            editor.chain().focus().setAiAcceptor({ content: 'hi' }).run();
           }}
         >
           <ActivityIcon size={12} />
