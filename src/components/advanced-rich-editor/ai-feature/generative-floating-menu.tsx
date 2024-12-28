@@ -30,7 +30,12 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
   return (
     <EditorFloating
       editor={editor}
-      shouldShow={() => true}
+      shouldShow={() => {
+        // 未选中文本才显示
+        const selection = editor?.state.selection
+        if (selection?.empty) return true
+        return false
+      }}
       tippyOptions={{
         onCreate: (instance) => {
           instanceRef.current = instance
