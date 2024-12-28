@@ -93,7 +93,7 @@ export const AiAcceptor = Node.create({
           } else {
             // 如果节点不存在，插入新节点
             const position = state.selection.$to.pos
-            tr.insert(position, state.schema.nodes['ai-acceptor'].create({ id, content }))
+            tr.insert(position + 1, state.schema.nodes['ai-acceptor'].create({ id, content }))
             // 将光标移动到插入的新节点
             tr.setSelection(TextSelection.near(tr.doc.resolve(position + 1)))
           }

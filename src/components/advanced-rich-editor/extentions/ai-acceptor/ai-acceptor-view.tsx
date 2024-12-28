@@ -35,9 +35,11 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
             className="text-blue-400 hover:text-blue-500"
             onClick={() => {
               deleteNode()
-              editor.chain().focus().insertContentAt(editor.state.selection.from, content).run()
+              editor.chain().focus().insertContentAt(editor.state.selection.to, content).run()
             }}
           >
+            {/* issue: insert list not satisfied md format, just like 
+            '+ item'  '1. item' */}
             Accept
           </span>
           <span

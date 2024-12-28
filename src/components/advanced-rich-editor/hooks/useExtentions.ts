@@ -6,8 +6,9 @@ import AiAcceptor from "../extentions/ai-acceptor/ai-acceptor";
 
 export default function useAdvancedExtentions() {
   return [
-    AiAcceptor.configure({}),
+    AiAcceptor,
     TextStyle,
+    Color,
     Color,
     AIHighlight,
     Highlight.configure({ multicolor: true }),
