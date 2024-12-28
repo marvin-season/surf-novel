@@ -6,15 +6,16 @@ import { useCompletion } from 'ai/react'
 import { toast } from 'sonner'
 import { useCurrentEditor } from '@tiptap/react'
 import type { Props, Instance } from 'tippy.js'
+import { Magic } from '@/components/ui/icon'
+import { CrazySpinner } from '@/components/ui/icon'
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const { editor } = useCurrentEditor()
   const instanceRef = useRef<Instance<Props> | null>(null)
   const idRef = useRef<string>(Date.now().toString())
 
-  const { completion, complete, setCompletion } = useCompletion({
+  const { completion, complete, setCompletion, isLoading } = useCompletion({
     api: '/api/generate',
     onFinish: (response) => {
-      console.log(response)
       idRef.current = Date.now().toString()
       setCompletion('')
     },
@@ -29,7 +30,7 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
       toast.error(e.message)
     },
   })
-
+  console.log('isLoading', isLoading)
   // Function to hide the menu
   const hideMenu = () => {
     instanceRef.current?.hide()
@@ -59,6 +60,15 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
         },
       }}
     >
+      {isLoading && (
+        <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
+          <Magic className="mr-2 h-4 w-4 shrink-0  " />
+          AI is thinking
+          <div className="ml-2 mt-1">
+            <CrazySpinner />
+          </div>
+        </div>
+      )}
       <Command>
         <CommandGroup heading="Use AI to continue">
           <CommandList>
