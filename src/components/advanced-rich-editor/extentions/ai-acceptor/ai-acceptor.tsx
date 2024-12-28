@@ -67,36 +67,34 @@ export const AiAcceptor = Node.create({
     return {
       setAiAcceptor:
         ({ content, id }) =>
-        ({ chain, state, editor }) => {
+        ({ tr, state, dispatch }) => {
           const { doc } = state
 
-          let exists = false
+          let targetPos: number | null = null
 
-          doc.descendants((node) => {
-            if (node.type.name === this.name && node.attrs.id === id) {
-              exists = true
-              // 使用 updateAttributes 更新节点属性
-              editor.commands.updateAttributes(this.name, {
-                content,
-              })
+          // 查找目标节点的位置
+          doc.descendants((node, pos) => {
+            if (node.type.name === 'ai-acceptor' && node.attrs.id === id) {
+              targetPos = pos
               return false // 停止遍历
             }
             return true // 继续遍历
           })
 
-          // 如果节点不存在，插入新节点
-          if (!exists) {
-            editor
-              .chain()
-              .focus()
-              .insertContentAt(doc.content.size, {
-                type: 'ai-acceptor',
-                attrs: {
-                  id,
-                  content,
-                },
-              })
-              .run()
+          if (targetPos !== null) {
+            // 如果节点存在，更新其属性
+            tr.setNodeMarkup(targetPos, undefined, {
+              id,
+              content,
+            })
+          } else {
+            // 如果节点不存在，插入新节点
+            const position = state.selection.$to.pos;
+            tr.insert(position, state.schema.nodes['ai-acceptor'].create({ id, content }))
+          }
+
+          if (dispatch) {
+            dispatch(tr)
           }
 
           return true
