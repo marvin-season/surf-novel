@@ -89,5 +89,9 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
     ])
     .run() as CoreMessage[]
 
-  return messages
+  return [...messages, {
+      role: 'system',
+      content: `当使用md格式的时候，请严格使用md格式`,
+    },
+  ]
 }
