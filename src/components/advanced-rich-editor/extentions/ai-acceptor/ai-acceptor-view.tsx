@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 // 如果用户选择接受，则将ai生成的内容content替换到当前选择器
 // 如果用户选择丢弃，则将ai生成的内容丢弃，删除当前节点
 const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
-  console.log('node', node)
   const [isEditing, setIsEditing] = useState(false)
   const [content, setContent] = useState('node.attrs.content')
   useEffect(() => {

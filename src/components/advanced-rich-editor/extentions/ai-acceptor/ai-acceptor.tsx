@@ -1,6 +1,7 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import AiAcceptorView from './ai-acceptor-view'
+import { TextSelection } from '@tiptap/pm/state'
 // import { v4 as uuid } from 'uuid'
 
 // import { AiWriterView } from './components/AiWriterView'
@@ -87,10 +88,14 @@ export const AiAcceptor = Node.create({
               id,
               content,
             })
+            // 将光标移动到更新的节点
+            tr.setSelection(TextSelection.near(tr.doc.resolve(targetPos)))
           } else {
             // 如果节点不存在，插入新节点
-            const position = state.selection.$to.pos;
+            const position = state.selection.$to.pos
             tr.insert(position, state.schema.nodes['ai-acceptor'].create({ id, content }))
+            // 将光标移动到插入的新节点
+            tr.setSelection(TextSelection.near(tr.doc.resolve(position + 1)))
           }
 
           if (dispatch) {
