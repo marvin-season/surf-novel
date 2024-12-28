@@ -32,7 +32,7 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
 
         <div className="flex gap-2 text-sm cursor-pointer mt-2">
           <span
-            className="text-blue-400"
+            className="text-blue-400 hover:text-blue-500"
             onClick={() => {
               deleteNode()
               editor.chain().focus().insertContentAt(editor.state.selection.from, content).run()
@@ -41,14 +41,14 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
             Accept
           </span>
           <span
-            className="text-red-300"
+            className="text-red-300 hover:text-red-500"
             onClick={() => {
               deleteNode()
             }}
           >
             Discard
           </span>
-          <span className="text-green-400" onClick={() => setIsEditing(!isEditing)}>
+          <span className="text-green-400 hover:text-green-500" onClick={() => setIsEditing(!isEditing)}>
             {isEditing ? '完成编辑' : '编辑'}
           </span>
         </div>
