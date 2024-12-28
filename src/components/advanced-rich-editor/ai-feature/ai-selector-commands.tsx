@@ -61,6 +61,19 @@ const AISelectorCommands = ({ onSelect }: AISelectorCommandsProps) => {
       <CommandSeparator />
       <CommandGroup heading="Use AI to do more">
         <CommandList>
+          {/* continue */}
+          <CommandItem
+            onSelect={() => {
+              const slice = editor.state.selection.content()
+              const text = editor.storage.markdown.serializer.serialize(slice.content)
+              onSelect(text, 'continue')
+            }}
+            value="continue"
+            className="gap-2 px-4"
+          >
+            <StepForward className="h-4 w-4 text-purple-500" />
+            Continue
+          </CommandItem>
           {/* translate */}
           <CommandItem
             onSelect={() => {
