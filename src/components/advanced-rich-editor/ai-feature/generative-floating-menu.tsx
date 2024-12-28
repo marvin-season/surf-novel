@@ -1,13 +1,14 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useRef, useState } from 'react'
 import { EditorFloating } from '../editor-floating'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { Github, StepForward } from 'lucide-react'
 import { useCompletion } from 'ai/react'
 import { toast } from 'sonner'
 import { useCurrentEditor } from '@tiptap/react'
-
+import type { Props, Instance } from 'tippy.js'
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const { editor } = useCurrentEditor()
+  const instanceRef = useRef<Instance<Props> | null>(null)
   const { completion, complete, isLoading } = useCompletion({
     api: '/api/generate',
     onResponse: (response) => {
@@ -21,19 +22,32 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
     },
   })
 
+  // Function to hide the menu
+  const hideMenu = () => {
+    instanceRef.current?.hide()
+  }
+
   return (
-    <EditorFloating>
+    <EditorFloating
+      editor={editor}
+      shouldShow={() => true}
+      tippyOptions={{
+        onCreate: (instance) => {
+          instanceRef.current = instance
+        },
+      }}
+    >
       <div className="p-2 text-sm text-gray-400">{completion}</div>
       <Command>
         <CommandGroup heading="Use AI to continue">
           <CommandList>
             <CommandItem
-              onSelect={() => {
-                // 获取所有的文本
+              onSelect={async () => {
                 const context = editor?.storage.markdown.getMarkdown()
-                complete(context, {
+                await complete(context, {
                   body: { option: 'continue' },
                 })
+                hideMenu() // Hide the menu after completion
               }}
               value="continue"
               className="gap-2 px-4"
@@ -43,7 +57,6 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
             </CommandItem>
             <CommandItem
               onSelect={(value) => {
-                // link to github
                 window.open(value, '_blank')
               }}
               value="https://github.com/marvin-season/surf-novel"
