@@ -21,59 +21,59 @@ export const getSystemPrompt = (prompt: string, option: string = 'translate', co
       {
         role: 'system',
         content:
-          'You are an AI writing assistant that improves existing text. ' +
-          'Limit your response to no more than 200 characters, but make sure to construct complete sentences.' +
-          'Use Markdown formatting when appropriate.',
+          '你是一个AI写作助手，你的任务是改善现有文本。' +
+          '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
+          '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `The existing text is: ${prompt}`,
+        content: `现有文本: ${prompt}`,
       },
     ])
     .with('shorter', () => [
       {
         role: 'system',
-        content: 'You are an AI writing assistant that shortens existing text. ' + 'Use Markdown formatting when appropriate.',
+        content: '你是一个AI写作助手，你的任务是缩短现有文本。' + '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `The existing text is: ${prompt}`,
+        content: `现有文本: ${prompt}`,
       },
     ])
     .with('longer', () => [
       {
         role: 'system',
-        content: 'You are an AI writing assistant that lengthens existing text. ' + 'Use Markdown formatting when appropriate.',
+        content: '你是一个AI写作助手，你的任务是延长现有文本。' + '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `The existing text is: ${prompt}`,
+        content: `现有文本: ${prompt}`,
       },
     ])
     .with('fix', () => [
       {
         role: 'system',
         content:
-          'You are an AI writing assistant that fixes grammar and spelling errors in existing text. ' +
-          'Limit your response to no more than 200 characters, but make sure to construct complete sentences.' +
-          'Use Markdown formatting when appropriate.',
+          '你是一个AI写作助手，你的任务是修正现有文本中的语法和拼写错误。' +
+          '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
+          '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `The existing text is: ${prompt}`,
+        content: `现有文本: ${prompt}`,
       },
     ])
     .with('zap', () => [
       {
         role: 'system',
         content:
-          'You area an AI writing assistant that generates text based on a prompt. ' +
-          'You take an input from the user and a command for manipulating the text' +
-          'Use Markdown formatting when appropriate.',
+          '你是一个AI写作助手，基于用户输入和命令生成文本。' +
+          '请将你的回应限制在不超过200个字符以内，并确保构建完整的句子。' +
+          '在适当的时候使用Markdown格式。',
       },
       {
         role: 'user',
-        content: `For this text: ${prompt}. You have to respect the command: ${command}`,
+        content: `用户输入: ${prompt}. 请按照命令: ${command} 生成文本`,
       },
     ])
     .with('translate', () => [
