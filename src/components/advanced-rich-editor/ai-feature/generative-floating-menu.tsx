@@ -1,4 +1,4 @@
-import { ReactNode, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { EditorFloating } from '../editor-floating'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { Github, StepForward } from 'lucide-react'
@@ -9,9 +9,17 @@ import type { Props, Instance } from 'tippy.js'
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const { editor } = useCurrentEditor()
   const instanceRef = useRef<Instance<Props> | null>(null)
-  const { completion, complete, isLoading } = useCompletion({
+  const idRef = useRef<string>(Date.now().toString());
+
+  const { completion, complete, setCompletion } = useCompletion({
     api: '/api/generate',
+    onFinish: (response) => {
+      console.log(response)
+      idRef.current = Date.now().toString()
+      setCompletion('');
+    },
     onResponse: (response) => {
+      console.log(response)
       if (response.status === 429) {
         toast.error('You have reached your request limit for the day.')
         return
@@ -26,6 +34,12 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
   const hideMenu = () => {
     instanceRef.current?.hide()
   }
+
+  useEffect(() => {
+    if (completion.length > 0) {
+      editor?.chain().focus().setAiAcceptor({ content: completion, id: idRef.current }).run()
+    }
+  }, [completion])
 
   return (
     <EditorFloating
@@ -42,7 +56,6 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
         },
       }}
     >
-      <div className="p-2 text-sm text-gray-400">{completion}</div>
       <Command>
         <CommandGroup heading="Use AI to continue">
           <CommandList>
