@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { EditorFloating } from '../editor-floating'
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import { Github, StepForward } from 'lucide-react'
@@ -9,14 +9,14 @@ import type { Props, Instance } from 'tippy.js'
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const { editor } = useCurrentEditor()
   const instanceRef = useRef<Instance<Props> | null>(null)
-  const idRef = useRef<string>(Date.now().toString());
+  const idRef = useRef<string>(Date.now().toString())
 
   const { completion, complete, setCompletion } = useCompletion({
     api: '/api/generate',
     onFinish: (response) => {
       console.log(response)
       idRef.current = Date.now().toString()
-      setCompletion('');
+      setCompletion('')
     },
     onResponse: (response) => {
       console.log(response)
@@ -37,7 +37,10 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
 
   useEffect(() => {
     if (completion.length > 0) {
-      editor?.chain().focus().setAiAcceptor({ content: completion, id: idRef.current }).run()
+      // Use setTimeout to defer the call to avoid flushing synchronously
+      setTimeout(() => {
+        editor?.chain().focus().setAiAcceptor({ content: completion, id: idRef.current }).run()
+      }, 0)
     }
   }, [completion])
 
