@@ -66,10 +66,10 @@ export const AiAcceptor = Node.create({
     return {
       setAiAcceptor:
         ({ content }) =>
-        ({ chain }) =>
+        ({ chain, editor }) =>
           chain()
             .focus()
-            .insertContent({
+            .insertContentAt(editor.state.doc.content.size, {
               type: this.name,
               attrs: {
                 id: Date.now(),
