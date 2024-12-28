@@ -7,7 +7,7 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
       {
         role: 'system',
         content:
-          '你是一个AI写作助手，继续基于之前文本的上下文来延续现有文本。' +
+          '你是一个AI写作助手，继续基于之前的文本来延续现有文本。' +
           '相比起文本的开头，给予后面的字符更多的权重/优先级。' +
           '限制你的回应在不超过200个字符以内，但要确保构建完整的句子。' +
           '在适当的时候使用Markdown格式。',
