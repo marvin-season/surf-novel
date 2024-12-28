@@ -9,7 +9,7 @@ import {
   Undo2,
   Download,
   Upload,
-  Notebook,
+  ActivityIcon,
 } from "lucide-react";
 import { Editor, useCurrentEditor } from "@tiptap/react";
 import { NodeSelection } from "@tiptap/pm/state";
@@ -67,10 +67,10 @@ export default function Operator({
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={() => {
             // editor.chain().focus().setAiWriter().run();
-            editor.chain().focus().insertContent(`**hi**`).run();
+            editor.chain().focus().setAiAcceptor().run();
           }}
         >
-          <Notebook size={12} />
+          <ActivityIcon size={12} />
         </div>
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"

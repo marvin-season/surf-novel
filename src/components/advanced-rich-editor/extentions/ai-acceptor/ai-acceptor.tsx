@@ -64,8 +64,6 @@ export const AiAcceptor = Node.create({
               type: this.name,
               attrs: {
                 id: Date.now(),
-                authorId: this.options.authorId,
-                authorName: this.options.authorName,
               },
             })
             .run(),
