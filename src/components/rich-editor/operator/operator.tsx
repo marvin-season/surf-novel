@@ -66,8 +66,8 @@ export default function Operator({
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={() => {
-            editor.chain().focus().setAiAcceptor({ content: '+ aaa', id: '1' }).run();
-          // editor.chain().focus().insertContent('hahha')
+            // editor.chain().focus().setAiAcceptor({ content: '+ aaa', id: '1' }).run();
+          editor.chain().focus().insertContent('hahha1.1')
           }}
         >
           <ActivityIcon size={12} />

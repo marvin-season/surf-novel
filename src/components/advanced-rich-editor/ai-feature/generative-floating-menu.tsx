@@ -30,7 +30,6 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
       toast.error(e.message)
     },
   })
-  console.log('isLoading', isLoading)
   // Function to hide the menu
   const hideMenu = () => {
     instanceRef.current?.hide()
