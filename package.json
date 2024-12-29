@@ -11,7 +11,8 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev --name init"
+    "db:migrate": "prisma migrate dev --name init",
+    "prettier:check": "npx prettier --check"
   },
   "dependencies": {
     "@ai-sdk/azure": "^1.0.13",
@@ -83,6 +84,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
     "prisma": "^5.7.0",
     "tailwindcss": "^3.4.16",
     "typescript": "^5"
