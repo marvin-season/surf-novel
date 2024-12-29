@@ -10,10 +10,10 @@ import { useMemo } from "react";
 
 const AICompletionCommands = ({
   completion,
-  onDiscard,
+  onSelect,
 }: {
   completion: string;
-  onDiscard: () => void;
+  onSelect: () => void;
 }) => {
   const { editor } = useCurrentEditor();
 
@@ -41,6 +41,7 @@ const AICompletionCommands = ({
                   completion,
                 )
                 .run();
+              onSelect();
             }}
           >
             <Check className="h-4 w-4 text-muted-foreground" />
@@ -56,6 +57,7 @@ const AICompletionCommands = ({
                 .focus()
                 .insertContentAt(selection.to + 1, completion)
                 .run();
+              onSelect();
             }}
           >
             <TextQuote className="h-4 w-4 text-muted-foreground" />
@@ -68,7 +70,7 @@ const AICompletionCommands = ({
       <CommandGroup>
         <CommandList>
           <CommandItem
-            onSelect={onDiscard}
+            onSelect={onSelect}
             value="thrash"
             className="gap-2 px-4"
           >

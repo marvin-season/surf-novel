@@ -104,7 +104,7 @@ export default function GenerativeFloatingMenu({
         {completion && (
           <AICompletionCommands
             completion={completion}
-            onDiscard={() => {
+            onSelect={() => {
               setCompletion("");
             }}
           />

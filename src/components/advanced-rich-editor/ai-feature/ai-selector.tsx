@@ -25,7 +25,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
   }
   const [inputValue, setInputValue] = useState("");
 
-  const { completion, complete, isLoading } = useCompletion({
+  const { completion, complete, isLoading, setCompletion } = useCompletion({
     // id: "novel",
     api: "/api/generate",
     onResponse: (response) => {
@@ -86,7 +86,8 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
       </div>
       {hasCompletion ? (
         <AICompletionCommands
-          onDiscard={() => {
+          onSelect={() => {
+            setCompletion("");
             onOpenChange(false);
           }}
           completion={completion}
