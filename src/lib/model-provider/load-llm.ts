@@ -7,6 +7,8 @@ export const loadLLM = (provider: (undefined | string) = process.env.NEXT_LLM_PR
         throw new Error('Provider is not defined');
     }
 
+    console.log("使用模型：", model)
+
     switch (provider) {
         case ModelProvider.Ollama:
             return initOllamaProvider({model});

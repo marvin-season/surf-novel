@@ -87,11 +87,11 @@ export const getSystemPrompt = (prompt: string, command: string = 'translate', c
         content: `请翻译: "${prompt}"!`,
       },
     ])
-    .run() as CoreMessage[]
+    .run()
 
   return [...messages, {
       role: 'system',
       content: `使用纯文本回答，不要使用markdown格式`,
     },
-  ]
+  ] as CoreMessage[]
 }

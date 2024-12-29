@@ -6,13 +6,12 @@ import { loadLLM } from '@/lib/model-provider/load-llm';
 export async function POST(request: NextRequest) {
   const { prompt, command, context } = await request.json();
   const messages = getSystemPrompt(prompt, command, context);
-
   console.log(messages);
-  const model = loadLLM('azure', 'gpt-4o');
+  const model = loadLLM('ollama', 'llama3.1:latest');
 
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
-    messages ,
+    messages,
   };
 
   const result = streamText(modelConfig);
