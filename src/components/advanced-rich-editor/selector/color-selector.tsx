@@ -7,6 +7,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCurrentEditor } from "@tiptap/react";
+import { useState } from "react";
 export interface BubbleColorMenuItem {
   name: string;
   color: string;
@@ -91,13 +92,12 @@ const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
 ];
 
 interface ColorSelectorProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+
 }
 
-export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
+export const ColorSelector = ({}: ColorSelectorProps) => {
   const { editor } = useCurrentEditor();
-
+  const [open, onOpenChange] = useState(false);
   if (!editor) return null;
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
     editor.isActive("textStyle", { color }),

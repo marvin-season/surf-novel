@@ -20,7 +20,6 @@ export default function AdvancedRichEditorProvider({
   children?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
-  const [openColor, setOpenColor] = useState(false);
   const extentions = useAdvancedExtentions();
   return (
     <>
@@ -35,7 +34,7 @@ export default function AdvancedRichEditorProvider({
           <Separator className="h-auto" orientation="vertical" />
           <NodeSelector />
           <Separator className="h-auto" orientation="vertical" />
-          <ColorSelector open={openColor} onOpenChange={setOpenColor} />
+          <ColorSelector />
         </GenerativeBubbleMenu>
       </RichEditorProvider>
     </>
