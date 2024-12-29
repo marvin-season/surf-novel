@@ -6,7 +6,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { EditorBubbleItem } from "../editor-bubble-item";
 import { useCurrentEditor } from "@tiptap/react";
 export interface BubbleColorMenuItem {
   name: string;
@@ -135,9 +134,9 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
             Color
           </div>
           {TEXT_COLORS.map(({ name, color }) => (
-            <EditorBubbleItem
+            <div
               key={name}
-              onSelect={() => {
+              onClick={() => {
                 editor.commands.unsetColor();
                 name !== "Default" &&
                   editor
@@ -158,7 +157,7 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
                 </div>
                 <span>{name}</span>
               </div>
-            </EditorBubbleItem>
+            </div>
           ))}
         </div>
         <div>
@@ -166,9 +165,9 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
             Background
           </div>
           {HIGHLIGHT_COLORS.map(({ name, color }) => (
-            <EditorBubbleItem
+            <div
               key={name}
-              onSelect={() => {
+              onClick={() => {
                 editor.commands.unsetHighlight();
                 name !== "Default" &&
                   editor.chain().focus().setHighlight({ color }).run();
@@ -188,7 +187,7 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
               {editor.isActive("highlight", { color }) && (
                 <Check className="h-4 w-4" />
               )}
-            </EditorBubbleItem>
+            </div>
           ))}
         </div>
       </PopoverContent>

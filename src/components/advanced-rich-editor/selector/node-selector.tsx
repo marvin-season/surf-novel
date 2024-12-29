@@ -1,6 +1,5 @@
 import { Check, CheckSquare, ChevronDown, Code, Heading1, Heading2, Heading3, ListOrdered, type LucideIcon, TextIcon, TextQuote } from 'lucide-react'
 import { useCurrentEditor, useEditor } from '@tiptap/react'
-import EditorBubbleItem from '../editor-bubble-item'
 
 import { Button } from '@/components/ui/button'
 import { PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -91,13 +90,12 @@ export const NodeSelector = ({}: NodeSelectorProps) => {
       </PopoverTrigger>
       <PopoverContent sideOffset={5} align="start" className="w-48 p-1">
         {items.map((item) => (
-          <EditorBubbleItem
+          <div className="flex cursor-pointer items-center justify-between rounded-sm px-2 py-1 text-sm hover:bg-accent"
             key={item.name}
-            onSelect={(editor) => {
+            onClick={() => {
               item.command(editor)
               setOpen(false)
             }}
-            className="flex cursor-pointer items-center justify-between rounded-sm px-2 py-1 text-sm hover:bg-accent"
           >
             <div className="flex items-center space-x-2">
               <div className="rounded-sm border p-1">
@@ -106,7 +104,7 @@ export const NodeSelector = ({}: NodeSelectorProps) => {
               <span>{item.name}</span>
             </div>
             {activeItem.name === item.name && <Check className="h-4 w-4" />}
-          </EditorBubbleItem>
+          </div>
         ))}
       </PopoverContent>
     </Popover>
