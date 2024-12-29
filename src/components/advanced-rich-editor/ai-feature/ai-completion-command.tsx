@@ -21,36 +21,31 @@ const AICompletionCommands = ({
     return null;
   }
 
-    const selection = useMemo(() => {
-        return  editor.view.state.selection;
-    }, [editor]);
-
   return (
     <>
       <CommandGroup>
         <CommandList>
-            {
-                !selection?.empty && <CommandItem
-                    className="gap-2 px-4"
-                    value="replace"
-                    onSelect={() => {
-                        editor
-                            .chain()
-                            .focus()
-                            .insertContentAt(
-                                {
-                                    from: selection.from,
-                                    to: selection.to,
-                                },
-                                completion
-                            )
-                            .run();
-                    }}
-                >
-                    <Check className="h-4 w-4 text-muted-foreground" />
-                    Replace selection
-                </CommandItem>
-            }
+          <CommandItem
+            className="gap-2 px-4"
+            value="replace"
+            onSelect={() => {
+              const selection = editor?.view.state.selection;
+              editor
+                .chain()
+                .focus()
+                .insertContentAt(
+                  {
+                    from: selection.from,
+                    to: selection.to,
+                  },
+                  completion
+                )
+                .run();
+            }}
+          >
+            <Check className="h-4 w-4 text-muted-foreground" />
+            Replace selection
+          </CommandItem>
           <CommandItem
             className="gap-2 px-4"
             value="insert"
