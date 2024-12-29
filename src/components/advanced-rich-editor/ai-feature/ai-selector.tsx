@@ -11,7 +11,7 @@ import { useCurrentEditor } from "@tiptap/react";
 import AICompletionCommands from "./ai-completion-command";
 import AISelectorCommands from "./ai-selector-commands";
 import { useCompletion } from "ai/react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import AiCompleteResultPanel from "@/components/advanced-rich-editor/ai-feature/ai-completion-result-panel";
 
 interface AISelectorProps {
   open: boolean;
@@ -44,13 +44,7 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
     <Command className="w-[350px]">
       
       {hasCompletion && (
-        <div className="flex max-h-[400px]">
-          <ScrollArea>
-            <div className="prose p-2 px-4 prose-sm">
-              {completion}
-            </div>
-          </ScrollArea>
-        </div>
+          <AiCompleteResultPanel content={completion}/>
       )}
 
       {isLoading && (
