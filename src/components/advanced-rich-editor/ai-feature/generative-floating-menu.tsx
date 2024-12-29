@@ -8,6 +8,7 @@ import { useCurrentEditor } from '@tiptap/react'
 import type { Props, Instance } from 'tippy.js'
 import { Magic } from '@/components/ui/icon'
 import { CrazySpinner } from '@/components/ui/icon'
+import AiCompleteResultPanel from "./ai-completion-result-panel";
 export default function GenerativeFloatingMenu({ children }: { children?: ReactNode }) {
   const { editor } = useCurrentEditor()
   const instanceRef = useRef<Instance<Props> | null>(null)
@@ -17,7 +18,6 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
     api: '/api/generate',
     onFinish: (response) => {
       idRef.current = Date.now().toString()
-      setCompletion('')
     },
     onResponse: (response) => {
       console.log(response)
@@ -35,30 +35,22 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
     instanceRef.current?.hide()
   }
 
-  useEffect(() => {
-    if (completion.length > 0) {
-      // Use setTimeout to defer the call to avoid flushing synchronously
-      setTimeout(() => {
-        editor?.chain().focus().setAiAcceptor({ content: completion, id: idRef.current }).run()
-      }, 0)
-    }
-  }, [completion])
-
   return (
     <EditorFloating
       editor={editor}
       shouldShow={() => {
         // 未选中文本才显示
         const selection = editor?.state.selection
-        if (selection?.empty) return true
-        return false
+        return !!selection?.empty;
       }}
+      className={'max-w-[90vw]'}
       tippyOptions={{
         onCreate: (instance) => {
           instanceRef.current = instance
         },
       }}
     >
+      { completion && <AiCompleteResultPanel content={completion}  /> }
       {isLoading && (
         <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
           <Magic className="mr-2 h-4 w-4 shrink-0  " />
@@ -77,7 +69,7 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
                 await complete(context, {
                   body: { command: 'continue' },
                 })
-                hideMenu() // Hide the menu after completion
+                // hideMenu() // Hide the menu after completion
               }}
               value="continue"
               className="gap-2 px-4"

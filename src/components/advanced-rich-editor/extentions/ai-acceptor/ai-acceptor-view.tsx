@@ -10,8 +10,12 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
   const [content, setContent] = useState(node.attrs.content)
 
   useEffect(() => {
-    setContent(node.attrs.content)
-  }, [node.attrs.content])
+    if( isEditing ) {
+      setContent(node.attrs.content)
+    }
+  }, [isEditing])
+
+  console.log('content', content)
 
   return (
     <NodeViewWrapper data-drag-handle>
