@@ -1,31 +1,31 @@
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { NodeViewProps, NodeViewWrapper } from '@tiptap/react'
-import { useEffect, useState } from 'react'
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
+import { useEffect, useState } from "react";
 // 这个组件是用来展示ai生成的内容，并且可以被用户编辑，用户可以选择是否接受ai生成的内容 accept or discard,
 // 如果用户选择接受，则将ai生成的内容content替换到当前选择器
 // 如果用户选择丢弃，则将ai生成的内容丢弃，删除当前节点
 const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(node.attrs.content)
+  const [isEditing, setIsEditing] = useState(false);
+  const [content, setContent] = useState(node.attrs.content);
 
   useEffect(() => {
-    if( isEditing ) {
-      setContent(node.attrs.content)
+    if (isEditing) {
+      setContent(node.attrs.content);
     }
-  }, [isEditing])
+  }, [isEditing]);
 
-  console.log('content', content)
+  console.log("content", content);
 
   return (
     <NodeViewWrapper data-drag-handle>
-      <div className='p-2'>
+      <div className="p-2">
         {isEditing ? (
           <Textarea
             className="w-full h-20 bg-transparent focus:ring-0 font-inherit resize-none"
             value={content}
             onChange={(e) => {
-              setContent(e.target.value)
+              setContent(e.target.value);
             }}
           />
         ) : (
@@ -38,8 +38,12 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
           <span
             className="text-blue-400 hover:text-blue-500"
             onClick={() => {
-              deleteNode()
-              editor.chain().focus().insertContentAt(editor.state.selection.to, content).run()
+              deleteNode();
+              editor
+                .chain()
+                .focus()
+                .insertContentAt(editor.state.selection.to, content)
+                .run();
             }}
           >
             {/* issue: insert list not satisfied md format, just like 
@@ -49,18 +53,21 @@ const AiAcceptorView = ({ editor, node, deleteNode }: NodeViewProps) => {
           <span
             className="text-red-300 hover:text-red-500"
             onClick={() => {
-              deleteNode()
+              deleteNode();
             }}
           >
             Discard
           </span>
-          <span className="text-green-400 hover:text-green-500" onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? '完成编辑' : '编辑'}
+          <span
+            className="text-green-400 hover:text-green-500"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            {isEditing ? "完成编辑" : "编辑"}
           </span>
         </div>
       </div>
     </NodeViewWrapper>
-  )
-}
+  );
+};
 
-export default AiAcceptorView
+export default AiAcceptorView;

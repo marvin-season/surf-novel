@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from '@/contexts/theme-context';
-import { NextIntlClientProvider } from 'next-intl';
-import { ReactNode } from 'react';
+import { ThemeProvider } from "@/contexts/theme-context";
+import { NextIntlClientProvider } from "next-intl";
+import { ReactNode } from "react";
 import { getLocale, getMessages } from "next-intl/server";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "sonner";
@@ -25,15 +25,13 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body className="antialiased">
         <Toaster />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -127,7 +127,7 @@ export const removeAIHighlight = (editor: Editor) => {
   tr.removeMark(
     0,
     editor.state.doc.nodeSize - 2,
-    editor.state.schema.marks["ai-highlight"]
+    editor.state.schema.marks["ai-highlight"],
   );
   editor.view.dispatch(tr);
 };

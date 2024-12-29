@@ -4,22 +4,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 // 获取 model 列表
 export async function GET(request: NextRequest) {
-    const llmModelProvider = await prisma.lLMModelProvider.findMany({
+  const llmModelProvider = await prisma.lLMModelProvider.findMany({
+    select: {
+      id: true,
+      name: true,
+      modelListApi: true,
+      lLMModel: {
         select: {
-            id: true,
-            name: true,
-            modelListApi: true,
-            lLMModel: {
-                select: {
-                    id: true,
-                    name: true,
-                }
-            }
-        }
-    })
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
 
-
-    return NextResponse.json({
-        providers: llmModelProvider,
-    });
+  return NextResponse.json({
+    providers: llmModelProvider,
+  });
 }

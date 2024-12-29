@@ -12,13 +12,11 @@ export const NoteContext = createContext(defaultValue);
 export const NoteProvider = ({
   children,
   value,
-}: { children: React.ReactNode; value: typeof defaultValue }) => {
-
-  return (
-    <NoteContext.Provider value={value}>
-      {children}
-    </NoteContext.Provider>
-  );
+}: {
+  children: React.ReactNode;
+  value: typeof defaultValue;
+}) => {
+  return <NoteContext.Provider value={value}>{children}</NoteContext.Provider>;
 };
 
 export const useNotesContext = () => {

@@ -1,7 +1,14 @@
 "use client";
 
 import { MainLayout } from "@/components/layout/main-layout";
-import { BookMarked, Clock, LogOut, NotebookTabs, Settings, User } from "lucide-react";
+import {
+  BookMarked,
+  Clock,
+  LogOut,
+  NotebookTabs,
+  Settings,
+  User,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
@@ -63,7 +70,7 @@ export default function MainAppLayout({
 
   const renderNavItems = (
     items: typeof sidebarNavItems | typeof profileNavItems,
-    expanded: boolean
+    expanded: boolean,
   ) => {
     return items.map((item) => {
       const isActive = segment === item.href.split("/")[1];
@@ -74,7 +81,7 @@ export default function MainAppLayout({
             className={cn(
               "flex items-center rounded-lg px-3 py-2",
               "text-muted-foreground hover:text-foreground hover:bg-accent transition-colors",
-              isActive && "bg-accent text-accent-foreground"
+              isActive && "bg-accent text-accent-foreground",
             )}
           >
             {item.icon}
@@ -94,7 +101,7 @@ export default function MainAppLayout({
             <div
               className={cn(
                 "flex h-14 items-center border-b",
-                expanded ? "px-4" : "justify-center"
+                expanded ? "px-4" : "justify-center",
               )}
             >
               <BookMarked className="h-6 w-6" />
@@ -116,7 +123,7 @@ export default function MainAppLayout({
                 <div
                   className={cn(
                     "px-2 pb-2",
-                    expanded && "text-xs font-medium text-muted-foreground"
+                    expanded && "text-xs font-medium text-muted-foreground",
                   )}
                 >
                   {expanded ? user?.name || "个人" : <Separator />}
@@ -133,7 +140,7 @@ export default function MainAppLayout({
                 variant="ghost"
                 className={cn(
                   "w-full justify-start gap-3",
-                  !expanded && "justify-center"
+                  !expanded && "justify-center",
                 )}
                 onClick={handleLogout}
               >

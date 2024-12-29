@@ -1,59 +1,64 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
-import { Bell, Languages, Moon, Save, Smartphone, Zap } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
+import { Bell, Languages, Moon, Save, Smartphone, Zap } from "lucide-react";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { useTheme } from '@/contexts/theme-context';
-import { useLocale, useTranslations } from 'next-intl';
-import { setUserLocale } from '@/services/locale';
-import { Locale } from '@/i18n/config';
-import { ModelProvider } from '@/types/model-provider';
-import { useState, useEffect, useMemo } from 'react';
-import { getModelProviderList } from './action';
-import { LLMApiResponse } from '@/types/llm';
+} from "@/components/ui/select";
+import { useTheme } from "@/contexts/theme-context";
+import { useLocale, useTranslations } from "next-intl";
+import { setUserLocale } from "@/services/locale";
+import { Locale } from "@/i18n/config";
+import { ModelProvider } from "@/types/model-provider";
+import { useState, useEffect, useMemo } from "react";
+import { getModelProviderList } from "./action";
+import { LLMApiResponse } from "@/types/llm";
 
 export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
-  const t = useTranslations('Settings');
+  const t = useTranslations("Settings");
 
   const locale = useLocale();
   const handleLocaleChange = (value: Locale) => {
     setUserLocale(value);
   };
 
-  const [modelProviderList, setModelProviderList] = useState<LLMApiResponse['providers']>([]);
+  const [modelProviderList, setModelProviderList] = useState<
+    LLMApiResponse["providers"]
+  >([]);
 
   // 已选择模型提供商
-  const [modelProviderId, setModelProviderId] = useState<string>('');
+  const [modelProviderId, setModelProviderId] = useState<string>("");
   // 已选择模型
-  const [modelId, setModelId] = useState<string>('');
+  const [modelId, setModelId] = useState<string>("");
 
   useEffect(() => {
-    getModelProviderList().then(providers => {
+    getModelProviderList().then((providers) => {
       console.log(providers);
       setModelProviderList(providers);
-    })
-  }, [])
+    });
+  }, []);
 
   const models = useMemo(() => {
-    return modelProviderList.find(provider => provider.id === modelProviderId)?.lLMModel || [];
+    return (
+      modelProviderList.find((provider) => provider.id === modelProviderId)
+        ?.lLMModel || []
+    );
   }, [modelProviderList, modelProviderId]);
 
   return (
     <div className="space-y-8 p-10">
       {/* 页面标题 */}
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">{t('settings')}</h2>
-        <p className="text-muted-foreground">{t('customize_experience')}</p>
+        <h2 className="text-2xl font-bold tracking-tight">{t("settings")}</h2>
+        <p className="text-muted-foreground">{t("customize_experience")}</p>
       </div>
 
       <Separator />
@@ -63,9 +68,9 @@ export default function SettingsPage() {
         {/* 外观设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">{t('appearance')}</h3>
+            <h3 className="text-lg font-medium">{t("appearance")}</h3>
             <p className="text-sm text-muted-foreground">
-              {t('customize_appearance')}
+              {t("customize_appearance")}
             </p>
           </div>
 
@@ -74,15 +79,15 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Moon className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label htmlFor="dark-mode">{t('dark_mode')}</Label>
+                  <Label htmlFor="dark-mode">{t("dark_mode")}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    {t('comfortable_coloring')}
+                    {t("comfortable_coloring")}
                   </p>
                 </div>
               </div>
               <Switch
                 id="dark-mode"
-                checked={theme === 'dark'}
+                checked={theme === "dark"}
                 onCheckedChange={toggleTheme}
               />
             </div>
@@ -90,11 +95,11 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between space-x-2">
               <div className="flex items-center space-x-4">
                 <Languages className="h-5 w-5" />
-                <Label>{t('language')}</Label>
+                <Label>{t("language")}</Label>
               </div>
               <Select value={locale} onValueChange={handleLocaleChange}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={t('language_placeholder')} />
+                  <SelectValue placeholder={t("language_placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="zh">中文</SelectItem>
@@ -111,9 +116,9 @@ export default function SettingsPage() {
         {/* 模型设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">{'模型设置'}</h3>
+            <h3 className="text-lg font-medium">{"模型设置"}</h3>
             <p className="text-sm text-muted-foreground">
-              {'选择模型提供商，配置模型'}
+              {"选择模型提供商，配置模型"}
             </p>
           </div>
 
@@ -121,22 +126,26 @@ export default function SettingsPage() {
             {/* 模型提供商 */}
             <Select value={modelProviderId} onValueChange={setModelProviderId}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={'选择模型提供商'} />
+                <SelectValue placeholder={"选择模型提供商"} />
               </SelectTrigger>
               <SelectContent>
-                {modelProviderList.map(provider => (
-                    <SelectItem key={provider.id} value={provider.id}>{provider.name}</SelectItem>
+                {modelProviderList.map((provider) => (
+                  <SelectItem key={provider.id} value={provider.id}>
+                    {provider.name}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {/* 模型选择 */}
             <Select value={modelId} onValueChange={setModelId}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={'选择模型'} />
+                <SelectValue placeholder={"选择模型"} />
               </SelectTrigger>
               <SelectContent>
                 {models.map((model) => (
-                  <SelectItem key={model.id} value={model.id}>{model.name}</SelectItem>
+                  <SelectItem key={model.id} value={model.id}>
+                    {model.name}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -148,9 +157,9 @@ export default function SettingsPage() {
         {/* 性能设置 */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium">{t('performance')}</h3>
+            <h3 className="text-lg font-medium">{t("performance")}</h3>
             <p className="text-sm text-muted-foreground">
-              {t('optimize_performance')}
+              {t("optimize_performance")}
             </p>
           </div>
 
@@ -159,9 +168,9 @@ export default function SettingsPage() {
               <div className="flex items-center space-x-4">
                 <Zap className="h-5 w-5" />
                 <div className="space-y-0.5">
-                  <Label htmlFor="auto-save">{t('auto_save')}</Label>
+                  <Label htmlFor="auto-save">{t("auto_save")}</Label>
                   <p className="text-[0.8rem] text-muted-foreground">
-                    {t('auto_save_changes')}
+                    {t("auto_save_changes")}
                   </p>
                 </div>
               </div>

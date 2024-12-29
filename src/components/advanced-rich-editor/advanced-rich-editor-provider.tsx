@@ -8,7 +8,7 @@ import { NodeSelector } from "./selector/node-selector";
 import useAdvancedExtentions from "./hooks/useExtentions";
 import GenerativeFloatingMenu from "./ai-feature/generative-floating-menu";
 
-import './style.css'
+import "./style.css";
 
 export default function AdvancedRichEditorProvider({
   content,
@@ -33,7 +33,7 @@ export default function AdvancedRichEditorProvider({
         <GenerativeFloatingMenu></GenerativeFloatingMenu>
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
           <Separator className="h-auto" orientation="vertical" />
-          <NodeSelector/>
+          <NodeSelector />
           <Separator className="h-auto" orientation="vertical" />
           <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </GenerativeBubbleMenu>

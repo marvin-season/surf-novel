@@ -3,19 +3,18 @@ import { EditorProvider } from "@tiptap/react";
 import "./styles.css";
 import useExtentions from "./hooks/useExtentions";
 
-
 export default function RichEditorProvider({
   extensions = [],
   className,
   children,
   content,
-                                               editable
+  editable,
 }: {
   extensions?: AnyExtension[];
   className?: string;
   children?: React.ReactNode;
   content?: string;
-  editable?: (this: any, state: any) => boolean
+  editable?: (this: any, state: any) => boolean;
 }) {
   const defaultExtentions = useExtentions();
   return (

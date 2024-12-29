@@ -1,7 +1,7 @@
-import { NextRequest } from 'next/server';
-import { streamText } from 'ai';
-import { getSystemPrompt } from './prompt';
-import { loadLLM } from '@/lib/model-provider/load-llm';
+import { NextRequest } from "next/server";
+import { streamText } from "ai";
+import { getSystemPrompt } from "./prompt";
+import { loadLLM } from "@/lib/model-provider/load-llm";
 
 export async function POST(request: NextRequest) {
   const { prompt, command, context } = await request.json();

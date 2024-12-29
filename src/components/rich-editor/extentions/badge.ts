@@ -36,7 +36,8 @@ const Badge = Node.create<BadgeAttributes>({
   addOptions() {
     return {
       HTMLAttributes: {
-        style: "color: white; font-size: 0.9em; padding: 2px 3px; margin: 0 1px; border-radius: 6px; cursor: pointer;",
+        style:
+          "color: white; font-size: 0.9em; padding: 2px 3px; margin: 0 1px; border-radius: 6px; cursor: pointer;",
         "data-type": this.name,
         class: "badge",
       },
@@ -87,18 +88,18 @@ const Badge = Node.create<BadgeAttributes>({
     return {
       setBadge:
         (attributes) =>
-          ({ commands }: CommandProps) => {
-            return commands.insertContent({
-              type: this.name,
-              attrs: attributes,
-            });
-          },
+        ({ commands }: CommandProps) => {
+          return commands.insertContent({
+            type: this.name,
+            attrs: attributes,
+          });
+        },
 
       unsetBadge:
         ({ text }) =>
-          ({ commands }: CommandProps) => {
-            return commands.insertContent(text);
-          },
+        ({ commands }: CommandProps) => {
+          return commands.insertContent(text);
+        },
     };
   },
 });

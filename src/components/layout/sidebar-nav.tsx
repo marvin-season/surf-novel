@@ -1,32 +1,26 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { motion } from "framer-motion"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
-    href: string
-    title: string
-    icon?: React.ReactNode
-  }[]
+    href: string;
+    title: string;
+    icon?: React.ReactNode;
+  }[];
 }
 
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
-    <nav
-      className={cn(
-        "flex flex-col space-y-1 px-2",
-        className
-      )}
-      {...props}
-    >
+    <nav className={cn("flex flex-col space-y-1 px-2", className)} {...props}>
       {items.map((item) => {
-        const isActive = pathname === item.href
+        const isActive = pathname === item.href;
         return (
           <Link
             key={item.href}
@@ -47,15 +41,11 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
                 transition={{ duration: 0.2 }}
               />
             )}
-            {item.icon && (
-              <span className="mr-2 h-4 w-4">
-                {item.icon}
-              </span>
-            )}
+            {item.icon && <span className="mr-2 h-4 w-4">{item.icon}</span>}
             <span className="relative">{item.title}</span>
           </Link>
-        )
+        );
       })}
     </nav>
-  )
+  );
 }

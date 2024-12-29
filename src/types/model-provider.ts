@@ -1,4 +1,4 @@
 export enum ModelProvider {
-    Ollama = 'ollama',
-    Azure = 'azure',
+  Ollama = "ollama",
+  Azure = "azure",
 }

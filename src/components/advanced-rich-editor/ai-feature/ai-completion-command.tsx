@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/command";
 import { useCurrentEditor } from "@tiptap/react";
 import { Check, TextQuote, TrashIcon } from "lucide-react";
-import {useMemo} from "react";
+import { useMemo } from "react";
 
 const AICompletionCommands = ({
   completion,
@@ -15,7 +15,7 @@ const AICompletionCommands = ({
   completion: string;
   onDiscard: () => void;
 }) => {
-    const { editor } = useCurrentEditor();
+  const { editor } = useCurrentEditor();
 
   if (!editor) {
     return null;
@@ -38,7 +38,7 @@ const AICompletionCommands = ({
                     from: selection.from,
                     to: selection.to,
                   },
-                  completion
+                  completion,
                 )
                 .run();
             }}

@@ -1,6 +1,6 @@
 "use client";
 
-import {AdvancedRichEditorProvider} from "@/components/advanced-rich-editor";
+import { AdvancedRichEditorProvider } from "@/components/advanced-rich-editor";
 import { useTranslations } from "next-intl";
 
 export default function RecentPage() {

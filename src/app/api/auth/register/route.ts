@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma';
-import { hash } from 'bcryptjs';
-import { NextRequest } from 'next/server';
+import { prisma } from "@/lib/prisma";
+import { hash } from "bcryptjs";
+import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,11 +8,11 @@ export async function POST(request: NextRequest) {
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (existingUser) {
-      return new Response(JSON.stringify({ message: 'User already exists' }), {
+      return new Response(JSON.stringify({ message: "User already exists" }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         id: true,
         email: true,
         name: true,
-      }
+      },
     });
 
     return new Response(JSON.stringify(user), {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ message: 'Failed to create user' }), {
+    return new Response(JSON.stringify({ message: "Failed to create user" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

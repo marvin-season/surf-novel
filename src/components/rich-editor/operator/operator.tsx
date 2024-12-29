@@ -32,7 +32,7 @@ function handleExport(editor: Editor) {
 
 async function handleImport(
   editor: Editor,
-  event: React.ChangeEvent<HTMLInputElement>
+  event: React.ChangeEvent<HTMLInputElement>,
 ) {
   const file = event.target.files?.[0];
   if (file) {
@@ -67,7 +67,7 @@ export default function Operator({
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={() => {
             // editor.chain().focus().setAiAcceptor({ content: '+ aaa', id: '1' }).run();
-          editor.chain().focus().insertContent('hahha1.1')
+            editor.chain().focus().insertContent("hahha1.1");
           }}
         >
           <ActivityIcon size={12} />

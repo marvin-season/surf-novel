@@ -39,13 +39,10 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
     },
   });
   const hasCompletion = useMemo(() => completion.length > 0, [completion]);
-  
+
   return (
     <Command className="w-[350px]">
-      
-      {hasCompletion && (
-          <AiCompleteResultPanel content={completion}/>
-      )}
+      {hasCompletion && <AiCompleteResultPanel content={completion} />}
 
       {isLoading && (
         <div className="flex h-12 w-full items-center px-4 text-sm font-medium text-muted-foreground text-purple-500">
@@ -75,7 +72,9 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
           className="absolute right-2 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-purple-500 hover:bg-purple-900"
           onClick={() => {
             const slice = editor.state.selection.content();
-            const text = editor.storage.markdown.serializer.serialize(slice.content);
+            const text = editor.storage.markdown.serializer.serialize(
+              slice.content,
+            );
 
             complete(inputValue, {
               body: { command: "zap", context: text },
@@ -95,7 +94,9 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
       ) : (
         <>
           <AISelectorCommands
-            onSelect={(value, command) => complete(value, { body: { command } })}
+            onSelect={(value, command) =>
+              complete(value, { body: { command } })
+            }
           />
         </>
       )}

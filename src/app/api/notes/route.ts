@@ -61,7 +61,7 @@ export async function POST(request: Request) {
             email: true,
           },
         },
-      }
+      },
     });
 
     return new Response(JSON.stringify({ ...note, content }), {

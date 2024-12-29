@@ -68,7 +68,7 @@ export class CharMessageBox extends MessageBox {
 
 export const messagePingPong = async (
   message: string,
-  onMessage: (message: string) => void
+  onMessage: (message: string) => void,
 ) => {
   const messageBox = new CharMessageBox();
   messageBox.writeMessage(message);

@@ -100,11 +100,11 @@ export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
 
   if (!editor) return null;
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive("textStyle", { color })
+    editor.isActive("textStyle", { color }),
   );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive("highlight", { color })
+    editor.isActive("highlight", { color }),
   );
 
   return (

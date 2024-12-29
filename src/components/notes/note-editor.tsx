@@ -1,9 +1,9 @@
-import { useNotesContext } from '@/contexts/note-context';
-import { AdvancedRichEditorProvider } from '../advanced-rich-editor';
-import Operator from '../rich-editor/operator/operator';
-import { toast } from 'sonner';
-import { useCurrentEditor } from '@tiptap/react';
-import { useEffect } from 'react';
+import { useNotesContext } from "@/contexts/note-context";
+import { AdvancedRichEditorProvider } from "../advanced-rich-editor";
+import Operator from "../rich-editor/operator/operator";
+import { toast } from "sonner";
+import { useCurrentEditor } from "@tiptap/react";
+import { useEffect } from "react";
 
 export default function NoteEditor() {
   const { selectedNote, handleUpdateOrCreate, handleDelete } =
@@ -12,7 +12,7 @@ export default function NoteEditor() {
   if (!editor) return null;
 
   useEffect(() => {
-    editor.commands.setContent(selectedNote?.content || '');
+    editor.commands.setContent(selectedNote?.content || "");
   }, [selectedNote]);
 
   return (
@@ -26,7 +26,7 @@ export default function NoteEditor() {
             handleDelete(selectedNote.id);
             return;
           }
-          toast.error('笔记不存在');
+          toast.error("笔记不存在");
         }}
       />
     </>

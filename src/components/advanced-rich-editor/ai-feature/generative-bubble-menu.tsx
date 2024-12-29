@@ -15,7 +15,7 @@ const GenerativeBubbleMenu = ({ children, open, onOpenChange }: any) => {
   useEffect(() => {
     if (!open) removeAIHighlight(editor);
   }, [open]);
-  
+
   return (
     <EditorBubble
       tippyOptions={{

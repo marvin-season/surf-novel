@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { NoteProvider } from '@/contexts/note-context';
-import { useNotesContextState } from './hook';
-import { NoteEditor, NotesList } from '@/components/notes';
-import { NoteEditorProvider } from '@/components/notes';
+import { useTranslations } from "next-intl";
+import { NoteProvider } from "@/contexts/note-context";
+import { useNotesContextState } from "./hook";
+import { NoteEditor, NotesList } from "@/components/notes";
+import { NoteEditorProvider } from "@/components/notes";
 
 export default function NotesPage() {
-  const t = useTranslations('notes');
+  const t = useTranslations("notes");
   const value = useNotesContextState();
 
   return (

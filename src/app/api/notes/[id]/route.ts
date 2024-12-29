@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const note = await prisma.note.findUnique({
@@ -44,7 +44,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const body = await request.json();
@@ -79,7 +79,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await prisma.note.delete({
@@ -88,7 +88,7 @@ export async function DELETE(
 
     return new Response(
       JSON.stringify({ message: "Note deleted successfully" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return new Response(JSON.stringify({ message: "Failed to delete note" }), {

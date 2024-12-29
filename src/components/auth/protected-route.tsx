@@ -1,17 +1,26 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/contexts/auth-context';
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useAuth } from "@/contexts/auth-context";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect } from "react";
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export default function ProtectedRoute({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isLoading && !user && pathname !== '/login' && pathname !== '/register') {
-      router.replace('/login');
+    if (
+      !isLoading &&
+      !user &&
+      pathname !== "/login" &&
+      pathname !== "/register"
+    ) {
+      router.replace("/login");
     }
   }, [user, isLoading, router, pathname]);
 
@@ -25,7 +34,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   }
 
   // 如果没有用户且不在登录/注册页面，不渲染任何内容
-  if (!user && pathname !== '/login' && pathname !== '/register') {
+  if (!user && pathname !== "/login" && pathname !== "/register") {
     return null;
   }
 
