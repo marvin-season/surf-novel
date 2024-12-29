@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/command";
 import { useCurrentEditor } from "@tiptap/react";
 import { Check, TextQuote, TrashIcon } from "lucide-react";
+import {useMemo} from "react";
 
 const AICompletionCommands = ({
   completion,
@@ -14,36 +15,42 @@ const AICompletionCommands = ({
   completion: string;
   onDiscard: () => void;
 }) => {
-  const { editor } = useCurrentEditor();
+    const { editor } = useCurrentEditor();
+
   if (!editor) {
     return null;
   }
+
+    const selection = useMemo(() => {
+        return  editor.view.state.selection;
+    }, [editor]);
+
   return (
     <>
       <CommandGroup>
         <CommandList>
-          <CommandItem
-            className="gap-2 px-4"
-            value="replace"
-            onSelect={() => {
-              const selection = editor.view.state.selection;
-
-              editor
-                .chain()
-                .focus()
-                .insertContentAt(
-                  {
-                    from: selection.from,
-                    to: selection.to,
-                  },
-                  completion
-                )
-                .run();
-            }}
-          >
-            <Check className="h-4 w-4 text-muted-foreground" />
-            Replace selection
-          </CommandItem>
+            {
+                !selection?.empty && <CommandItem
+                    className="gap-2 px-4"
+                    value="replace"
+                    onSelect={() => {
+                        editor
+                            .chain()
+                            .focus()
+                            .insertContentAt(
+                                {
+                                    from: selection.from,
+                                    to: selection.to,
+                                },
+                                completion
+                            )
+                            .run();
+                    }}
+                >
+                    <Check className="h-4 w-4 text-muted-foreground" />
+                    Replace selection
+                </CommandItem>
+            }
           <CommandItem
             className="gap-2 px-4"
             value="insert"
