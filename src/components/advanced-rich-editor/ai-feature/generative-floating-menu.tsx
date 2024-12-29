@@ -93,7 +93,9 @@ export default function GenerativeFloatingMenu({ children }: { children?: ReactN
             </CommandGroup>
         }
         {
-          completion && <AICompletionCommands completion={completion} onDiscard={() => {}}/>
+          completion && <AICompletionCommands completion={completion} onDiscard={() => {
+            setCompletion('')
+          }}/>
         }
       </Command>
       {children}
