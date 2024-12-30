@@ -1,17 +1,16 @@
 import { createOllama } from "ollama-ai-provider";
 
 export function initOllamaProvider({
-  model = process.env.NEXT_OLLAME_LLM_MODEL,
+  model,
+  endpoint,
 }: {
   model?: string;
+  endpoint?: string;
 }) {
   if (!model) {
     throw new Error("Model is not defined");
   }
 
-  console.log("model", model);
-
-  const endpoint = process.env.NEXT_OLLAMA_ENDPOINT;
   if (!endpoint) {
     throw new Error("Endpoint is not defined");
   }
