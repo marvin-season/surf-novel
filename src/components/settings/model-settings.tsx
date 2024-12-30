@@ -5,7 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { llmApi } from "@/lib/api";
+import { useEffect, useState } from "react";
 
 const modelProviderList = [
   { id: "ollama", name: "ollama" },
@@ -15,7 +16,12 @@ const modelProviderList = [
 export default function ModelSettings() {
   const [modelProviderId, setModelProviderId] = useState<string>("");
   const [modelId, setModelId] = useState<string>("");
-  const models = [];
+  const [models, setModels] = useState<any[]>([]);
+  useEffect(() => {
+    llmApi.list().then((res: any) => {
+      setModels(res);
+    });
+  }, [modelProviderId]);
 
   return (
     <>
