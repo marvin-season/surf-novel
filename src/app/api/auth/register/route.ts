@@ -35,6 +35,18 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Create user config for default settings
+    prisma.userConfig.create({
+      data: {
+        userId: user.id,
+        settings: JSON.stringify({
+          modelProviderId: "ollama",
+          modelUrl: "http://localhost:11434",
+          modelId: "llama3.1",
+        }),
+      },
+    });
+
     return new Response(JSON.stringify(user), {
       status: 201,
       headers: { "Content-Type": "application/json" },
