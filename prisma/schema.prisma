@@ -38,3 +38,12 @@ model UserConfig {
   language String? // 语言设置
   settings String // 使用 JSON 存储所有模块化配置
 }
+
+model ProviderInfo {
+  id         String   @id @default(cuid())
+  name       String
+  description String
+  dynamic_params String // 连接参数
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

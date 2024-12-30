@@ -1,8 +1,9 @@
 # express + nodejs
 
-##  integrate with prisma + postgresql
+## integrate with prisma + postgresql
 
 ### 0. Install Postgresql With Docker (Optional)
+
 if you have a local postgresql or you want to use another database, just like sqlite
 
 ```sh
@@ -14,6 +15,7 @@ docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgr
 ```sh
 pnpm install @prisma/client
 ```
+
 ### 2. Init a Prisma Schema
 
 ```sh
@@ -41,13 +43,13 @@ npx prisma generate
 ```
 
 ```js
-import {PrismaClient} from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient({
-  log:  ["error", "info", "warn", "query"]
-})
+  log: ["error", "info", "warn", "query"],
+});
 
-export default prisma
+export default prisma;
 ```
 
 ### 6. Open the Prisma Studio
@@ -63,15 +65,25 @@ npx prisma studio
   return await prisma.tableName.findMany()
 })()
 ```
+
 ### 8. Pull the database schema from database
+
 ```shell
 npx prisma db pull
 ```
 
 ### 9. Push the database schema to database
+
 ```shell
 npx prisma db push
 ```
 
+### 10. Seed the database
+
+```shell
+npx prisma db seed
+```
+
 ## deploy model with ollama
+
 [点我查看](./doc/README.ollama.md)
