@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getModels } from "./utils";
+import { prisma } from "@/lib/prisma";
+import { getLoggedUserInfo } from "@/lib/user";
 
-const getModels = async () => {
-  const response = await fetch("http://10.3.74.135:11434/api/tags");
-  const data = await response.json();
-  return data?.models || [];
-};
 export async function GET(request: NextRequest) {
-  const models = await getModels();
-  return NextResponse.json(models);
+  const user = await getLoggedUserInfo();
+  const userConfig = await prisma.userConfig.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  const { provider, modelUrl } = JSON.parse(userConfig?.settings || "{}");
+
+  return NextResponse.json(await getModels(provider, modelUrl));
 }
