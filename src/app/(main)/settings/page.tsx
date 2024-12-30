@@ -9,18 +9,15 @@ import { PreferenceSettings, ModelSettings } from "@/components/settings";
 
 export default function SettingsPage() {
   const t = useTranslations("Settings");
-  const [userConfig, setUserConfig] = useState<UserConfig | null>(null);
+  const [userConfig, setUserConfig] = useState<
+    (UserConfig & { settings: Record<string, any> }) | null
+  >(null);
 
   useEffect(() => {
     getUserConfig().then((config) => {
       setUserConfig(config);
     });
   }, []);
-
-  const modelSettings = useMemo(() => {
-    console.log("userConfig?.settings", userConfig?.settings);
-    return userConfig?.settings || {};
-  }, [userConfig]);
 
   return (
     <div className="space-y-8 p-10">
@@ -40,8 +37,9 @@ export default function SettingsPage() {
         <Separator />
 
         {/* 模型设置 */}
-        <ModelSettings settings={modelSettings} />
-
+        {userConfig?.settings && (
+          <ModelSettings settings={userConfig.settings} />
+        )}
         <Separator />
       </div>
     </div>

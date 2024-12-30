@@ -16,10 +16,11 @@ const modelProviderList = [
 ];
 
 export default function ModelSettings({
-  settings = {},
+  settings,
 }: {
   settings: Record<string, any>;
 }) {
+  console.log("settings", settings);
   const [modelProviderId, setModelProviderId] = useState<string>(
     settings.modelProviderId || "",
   );
@@ -74,7 +75,7 @@ export default function ModelSettings({
             </SelectTrigger>
             <SelectContent>
               {models.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
+                <SelectItem key={model.name} value={model.id}>
                   {model.name}
                 </SelectItem>
               ))}
