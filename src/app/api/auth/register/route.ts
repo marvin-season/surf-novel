@@ -34,15 +34,21 @@ export async function POST(request: NextRequest) {
         name: true,
       },
     });
+    const defaultProvider = await prisma.providerInfo.findFirst({
+      where: {
+        default: true,
+      },
+    });
+
+    console.log("defaultProvider", defaultProvider);
+
     // Create user config for default settings
     const userConfig = await prisma.userConfig.create({
       data: {
         userId: user.id,
         settings: JSON.stringify({
-          modelProviderId: "ollama",
-          modelUrl:
-            process.env.NEXT_OLLAMA_ENDPOINT || "http://127.0.0.1:11434",
-          modelId: process.env.NEXT_OLLAME_LLM_MODEL || "llama3.1",
+          ...defaultProvider,
+          dynamic_params: JSON.parse(defaultProvider?.dynamic_params || "{}"),
         }),
       },
     });

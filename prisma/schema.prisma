@@ -42,6 +42,7 @@ model UserConfig {
 model ProviderInfo {
   id         String   @id @default(cuid())
   name       String
+  default    Boolean  @default(false)
   description String
   dynamic_params String // 连接参数
   createdAt  DateTime @default(now())
