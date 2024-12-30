@@ -7,7 +7,7 @@ const publicPages = ["/login", "/register"];
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const token = getStore("token");
-
+  // todo: token校验
   if (pathname === "/") {
     const loginUrl = new URL(`/login`, request.url);
     loginUrl.searchParams.set("from", request.nextUrl.pathname);
