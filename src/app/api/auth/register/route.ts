@@ -34,9 +34,8 @@ export async function POST(request: NextRequest) {
         name: true,
       },
     });
-
     // Create user config for default settings
-    prisma.userConfig.create({
+    const userConfig = await prisma.userConfig.create({
       data: {
         userId: user.id,
         settings: JSON.stringify({
@@ -52,6 +51,7 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
+    console.log(error);
     return new Response(JSON.stringify({ message: "Failed to create user" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
