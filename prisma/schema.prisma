@@ -19,54 +19,22 @@ model User {
   updatedAt  DateTime    @updatedAt
 }
 
-model UserConfig {
-  id                 String            @id @default(cuid())
-  userId             String            @unique
-  user               User              @relation(fields: [userId], references: [id])
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  llmModelProvider   LLMModelProvider? @relation(fields: [lLMModelProviderId], references: [id])
-  llmModel           LLMModel?         @relation(fields: [lLMModelId], references: [id])
-  lLMModelId         String?
-  lLMModelProviderId String?
-}
-
 model Note {
   id         String   @id @default(cuid())
   title      String
   content    String
   authorId   String
   author     User     @relation(fields: [authorId], references: [id])
-  tags       Tag[]
   isFavorite Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
-model Tag {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  notes     Note[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model LLMModelProvider {
-  id           String       @id @default(cuid())
-  name         String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  lLMModel     LLMModel[]
-  userConfig   UserConfig[]
-  modelListApi String?
-}
-
-model LLMModel {
-  id         String           @id @default(cuid())
-  name       String
-  providerId String
-  provider   LLMModelProvider @relation(fields: [providerId], references: [id])
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  UserConfig UserConfig[]
+model UserConfig {
+  id       Int     @id @default(autoincrement())
+  userId   String  @unique
+  user     User    @relation(fields: [userId], references: [id])
+  theme    String? // 主题配置
+  language String? // 语言设置
+  settings String // 使用 JSON 存储所有模块化配置
 }
