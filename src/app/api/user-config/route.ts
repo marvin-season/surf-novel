@@ -12,6 +12,10 @@ export async function GET(request: NextRequest) {
     },
   });
 
+  if (!userConfig) {
+    return NextResponse.json({});
+  }
+
   return NextResponse.json({
     ...userConfig,
     settings: JSON.parse(userConfig?.settings || "{}"),
