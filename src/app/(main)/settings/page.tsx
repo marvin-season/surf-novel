@@ -16,10 +16,10 @@ import { useTheme } from "@/contexts/theme-context";
 import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "@/services/locale";
 import { Locale } from "@/i18n/config";
-import { ModelProvider } from "@/types/model-provider";
 import { useState, useEffect, useMemo } from "react";
-import { getModelProviderList } from "./action";
+import { getUserConfig } from "./action";
 import { LLMApiResponse } from "@/types/llm";
+import { UserConfig } from "@prisma/client";
 
 export default function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
@@ -29,6 +29,8 @@ export default function SettingsPage() {
   const handleLocaleChange = (value: Locale) => {
     setUserLocale(value);
   };
+
+  const [userConfig, setUserConfig] = useState<UserConfig | null>(null);
 
   const [modelProviderList, setModelProviderList] = useState<
     LLMApiResponse["providers"]
@@ -40,9 +42,8 @@ export default function SettingsPage() {
   const [modelId, setModelId] = useState<string>("");
 
   useEffect(() => {
-    getModelProviderList().then((providers) => {
-      console.log(providers);
-      setModelProviderList(providers);
+    getUserConfig().then((config) => {
+      setUserConfig(config);
     });
   }, []);
 
