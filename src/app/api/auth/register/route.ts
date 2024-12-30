@@ -40,8 +40,9 @@ export async function POST(request: NextRequest) {
         userId: user.id,
         settings: JSON.stringify({
           modelProviderId: "ollama",
-          modelUrl: "http://localhost:11434",
-          modelId: "llama3.1",
+          modelUrl:
+            process.env.NEXT_OLLAMA_ENDPOINT || "http://127.0.0.1:11434",
+          modelId: process.env.NEXT_OLLAME_LLM_MODEL || "llama3.1",
         }),
       },
     });

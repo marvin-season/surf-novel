@@ -1,5 +1,5 @@
-export const getModels = async (url = "http://10.3.74.135:11434/api/tags") => {
-  const response = await fetch(url);
+export const getModels = async (url: string) => {
+  const response = await fetch(`${url}/api/tags`);
   const data = await response.json();
   return data?.models || [];
 };
