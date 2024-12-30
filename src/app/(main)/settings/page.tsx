@@ -1,12 +1,9 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { useLocale, useTranslations } from "next-intl";
-import { setUserLocale } from "@/services/locale";
-import { Locale } from "@/i18n/config";
-import { useState, useEffect, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
 import { getUserConfig } from "./action";
-import { LLMApiResponse } from "@/types/llm";
 import { UserConfig } from "@prisma/client";
 import { PreferenceSettings, ModelSettings } from "@/components/settings";
 
@@ -38,7 +35,7 @@ export default function SettingsPage() {
         <Separator />
 
         {/* 模型设置 */}
-        {/* <ModelSettings /> */}
+        <ModelSettings />
 
         <Separator />
       </div>

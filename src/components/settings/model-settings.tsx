@@ -5,8 +5,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+
+const modelProviderList = [
+  { id: "ollama", name: "ollama" },
+  { id: "azure", name: "azure" },
+];
 
 export default function ModelSettings() {
+  const [modelProviderId, setModelProviderId] = useState<string>("");
+  const [modelId, setModelId] = useState<string>("");
+  const models = [];
+
   return (
     <>
       <div className="space-y-6">
