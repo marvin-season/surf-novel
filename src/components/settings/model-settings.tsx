@@ -10,10 +10,7 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-const modelProviderList = [
-  { id: "ollama", name: "ollama" },
-  { id: "azure", name: "azure" },
-];
+const modelProviderList = [{ id: "ollama", name: "ollama" }];
 
 export default function ModelSettings({
   settings,
@@ -30,10 +27,15 @@ export default function ModelSettings({
   const [models, setModels] = useState<any[]>([]);
 
   useEffect(() => {
-    llmApi.list().then((res: any) => {
-      setModels(res);
-    });
-  }, [modelProviderId]);
+    llmApi
+      .list(modelUrl)
+      .then((res: any) => {
+        setModels(res);
+      })
+      .catch((err) => {
+        setModels([]);
+      });
+  }, [modelProviderId, modelUrl]);
 
   return (
     <>
@@ -72,7 +74,7 @@ export default function ModelSettings({
             </SelectTrigger>
             <SelectContent>
               {models.map((model) => (
-                <SelectItem key={model.name} value={model.id}>
+                <SelectItem key={model.name} value={model.name}>
                   {model.name}
                 </SelectItem>
               ))}

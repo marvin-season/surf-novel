@@ -21,10 +21,7 @@ export default function SettingsPage() {
   }, []);
 
   const handelSave = (settings: Record<string, any>) => {
-    console.log("settings", settings);
-    userConfigApi.save({ settings }).then((res) => {
-      console.log("res", res);
-    });
+    userConfigApi.save({ settings }).then((res) => {});
   };
 
   return (
