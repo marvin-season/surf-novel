@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const user = await getLoggedUserInfo();
   const body = await request.json();
-
   // exist
   const existUserConfig = await prisma.userConfig.findUnique({
     where: {
@@ -44,12 +43,19 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json(userConfig);
   }
+  const mergedBody = {
+    ...existUserConfig,
+    ...{
+      ...body,
+      settings: JSON.stringify(body.settings),
+    },
+  };
 
   const userConfig = await prisma.userConfig.update({
     where: {
       userId: user.id,
     },
-    data: body,
+    data: mergedBody,
   });
 
   return NextResponse.json(userConfig);

@@ -17,10 +17,11 @@ const modelProviderList = [
 
 export default function ModelSettings({
   settings,
+  onSave,
 }: {
   settings: Record<string, any>;
+  onSave: (settings: Record<string, any>) => void;
 }) {
-  console.log("settings", settings);
   const [modelProviderId, setModelProviderId] = useState<string>(
     settings.modelProviderId || "",
   );
@@ -33,10 +34,6 @@ export default function ModelSettings({
       setModels(res);
     });
   }, [modelProviderId]);
-
-  const handleSave = () => {
-    console.log("save");
-  };
 
   return (
     <>
@@ -81,7 +78,11 @@ export default function ModelSettings({
               ))}
             </SelectContent>
           </Select>
-          <Button onClick={handleSave}>保存</Button>
+          <Button
+            onClick={() => onSave({ modelProviderId, modelUrl, modelId })}
+          >
+            保存
+          </Button>
         </div>
       </div>
     </>

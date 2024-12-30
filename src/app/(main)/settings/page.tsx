@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import { getUserConfig } from "./action";
 import { UserConfig } from "@prisma/client";
 import { PreferenceSettings, ModelSettings } from "@/components/settings";
+import { userConfigApi } from "@/lib/api";
 
 export default function SettingsPage() {
   const t = useTranslations("Settings");
@@ -18,6 +19,13 @@ export default function SettingsPage() {
       setUserConfig(config);
     });
   }, []);
+
+  const handelSave = (settings: Record<string, any>) => {
+    console.log("settings", settings);
+    userConfigApi.save({ settings }).then((res) => {
+      console.log("res", res);
+    });
+  };
 
   return (
     <div className="space-y-8 p-10">
@@ -38,7 +46,7 @@ export default function SettingsPage() {
 
         {/* 模型设置 */}
         {userConfig?.settings && (
-          <ModelSettings settings={userConfig.settings} />
+          <ModelSettings settings={userConfig.settings} onSave={handelSave} />
         )}
         <Separator />
       </div>
