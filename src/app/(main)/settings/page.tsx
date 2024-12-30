@@ -2,7 +2,7 @@
 
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getUserConfig } from "./action";
 import { UserConfig } from "@prisma/client";
 import { PreferenceSettings, ModelSettings } from "@/components/settings";
@@ -16,6 +16,11 @@ export default function SettingsPage() {
       setUserConfig(config);
     });
   }, []);
+
+  const modelSettings = useMemo(() => {
+    console.log("userConfig?.settings", userConfig?.settings);
+    return userConfig?.settings || {};
+  }, [userConfig]);
 
   return (
     <div className="space-y-8 p-10">
@@ -35,7 +40,7 @@ export default function SettingsPage() {
         <Separator />
 
         {/* 模型设置 */}
-        <ModelSettings />
+        <ModelSettings settings={modelSettings} />
 
         <Separator />
       </div>

@@ -7,21 +7,35 @@ import {
 } from "@/components/ui/select";
 import { llmApi } from "@/lib/api";
 import { useEffect, useState } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 const modelProviderList = [
   { id: "ollama", name: "ollama" },
   { id: "azure", name: "azure" },
 ];
 
-export default function ModelSettings() {
-  const [modelProviderId, setModelProviderId] = useState<string>("");
-  const [modelId, setModelId] = useState<string>("");
+export default function ModelSettings({
+  settings = {},
+}: {
+  settings: Record<string, any>;
+}) {
+  const [modelProviderId, setModelProviderId] = useState<string>(
+    settings.modelProviderId || "",
+  );
+  const [modelUrl, setModelUrl] = useState<string>(settings.modelUrl || "");
+  const [modelId, setModelId] = useState<string>(settings.modelId || "");
   const [models, setModels] = useState<any[]>([]);
+
   useEffect(() => {
     llmApi.list().then((res: any) => {
       setModels(res);
     });
   }, [modelProviderId]);
+
+  const handleSave = () => {
+    console.log("save");
+  };
 
   return (
     <>
@@ -47,6 +61,12 @@ export default function ModelSettings() {
               ))}
             </SelectContent>
           </Select>
+          {/* 模型地址 */}
+          <Input
+            value={modelUrl}
+            onChange={(e) => setModelUrl(e.target.value)}
+            placeholder="模型地址"
+          />
           {/* 模型选择 */}
           <Select value={modelId} onValueChange={setModelId}>
             <SelectTrigger className="w-[180px]">
@@ -60,6 +80,7 @@ export default function ModelSettings() {
               ))}
             </SelectContent>
           </Select>
+          <Button onClick={handleSave}>保存</Button>
         </div>
       </div>
     </>
