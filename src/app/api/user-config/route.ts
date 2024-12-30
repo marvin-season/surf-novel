@@ -6,26 +6,16 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const user = await getLoggedUserInfo();
 
-  console.log(user);
-
   const userConfig = await prisma.userConfig.findUnique({
     where: {
       userId: user.id,
     },
-    select: {
-      id: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      llmModelProvider: true,
-      llmModel: true,
-    },
   });
 
-  return NextResponse.json(userConfig);
+  return NextResponse.json({
+    ...userConfig,
+    settings: JSON.parse(userConfig?.settings || "{}"),
+  });
 }
 
 // 保存 model 配置
