@@ -15,6 +15,7 @@ model User {
   password   String
   notes      Note[]
   userConfig UserConfig?
+  conversations Conversation[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 }
@@ -46,6 +47,36 @@ model ProviderInfo {
   default    Boolean  @default(false)
   description String
   dynamic_params String // 连接参数
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Conversation {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  name       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  messages   Message[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  content    String
+  role       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  attachments Attachment[]
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  messageId  String
+  message    Message  @relation(fields: [messageId], references: [id])
+  url        String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
