@@ -3,28 +3,21 @@ import { streamText } from "ai";
 import { loadLLMFromSettings } from "@/lib/model-provider/load-llm";
 import { prisma } from "@/lib/prisma";
 import { getLoggedUserInfo } from "@/lib/user";
+import { extractMessageContext, getHistoricalMessages } from "./utils";
 
 export async function POST(request: NextRequest) {
-  const { prompt, conversationId } = await request.json();
+  const { prompt, conversationId, multiTurn } = await request.json();
   const userInfo = await getLoggedUserInfo();
 
-  const currentConversation = await prisma.conversation.findUnique({
-    where: {
-      id: conversationId,
-    },
-    select: {
-      id: true,
-      name: true,
-      messages: true,
-    },
-  });
+  const historicalMessages = multiTurn
+    ? await extractMessageContext(await getHistoricalMessages(conversationId))
+    : [];
 
-  const historicalMessages = currentConversation?.messages || [];
-  console.log("historicalMessages", historicalMessages);
+  console.log("historicalMessages and ", { historicalMessages, userInfo });
 
   const userConfig = await prisma.userConfig.findUnique({
     where: {
-      userId: userInfo.id,
+      userId: userInfo.id || "cm5c1dfro0000ir1x53gvpaq1",
     },
   });
 
@@ -34,9 +27,10 @@ export async function POST(request: NextRequest) {
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
     messages: [
+      ...historicalMessages,
       {
         role: "user",
-        content: prompt,
+        content: `请依据上面的聊天记录信息回答问题：${prompt}`,
       },
     ],
   };
