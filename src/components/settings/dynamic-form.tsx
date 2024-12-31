@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 type BaseType = {
   label: string;
@@ -28,7 +29,7 @@ type SelectType = BaseType & {
 
 type DynamicFormType = {
   form: Record<string, InputType | SelectType>;
-  onSubmit: (values: any) => void;
+  onSubmit: (values: any) => Promise<void>;
 };
 
 export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
@@ -36,11 +37,14 @@ export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
   useEffect(() => {
     setDynamicForm(form);
   }, [form]);
+  const [loading, setLoading] = useState(false);
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        onSubmit(dynamicForm);
+        setLoading(true);
+        await onSubmit(dynamicForm);
+        setLoading(false);
       }}
       className="flex flex-col gap-4"
     >
@@ -97,7 +101,16 @@ export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
           </div>
         );
       })}
-      <Button type="submit">保存</Button>
+      <Button type="submit">
+        {loading ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span>保存中...</span>
+          </>
+        ) : (
+          "保存"
+        )}
+      </Button>
     </form>
   );
 }

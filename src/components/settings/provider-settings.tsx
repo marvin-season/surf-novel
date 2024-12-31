@@ -5,11 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { llmApi } from "@/lib/api";
-import { useEffect, useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import DynamicForm from "./dynamic-form";
+import { useState } from "react";
 
 export default function ProviderSettings({
   providers,
@@ -18,7 +15,7 @@ export default function ProviderSettings({
 }: {
   providers: Record<string, any>[];
   currentProvider: Record<string, any>;
-  onSave: (currentProvider: Record<string, any>) => void;
+  onSave: (currentProvider: Record<string, any>) => Promise<void>;
 }) {
   const [currentProvider, setCurrentProvider] = useState<any>(_currentProvider);
 
@@ -43,8 +40,8 @@ export default function ProviderSettings({
       </Select>
       <DynamicForm
         form={currentProvider.dynamic_params}
-        onSubmit={(values) => {
-          onSave({ ...currentProvider, dynamic_params: values });
+        onSubmit={async (values) => {
+          await onSave({ ...currentProvider, dynamic_params: values });
         }}
       />
     </>
