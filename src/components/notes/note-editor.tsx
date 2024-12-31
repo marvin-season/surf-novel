@@ -4,6 +4,7 @@ import Operator from "../rich-editor/operator/operator";
 import { toast } from "sonner";
 import { useCurrentEditor } from "@tiptap/react";
 import { useEffect } from "react";
+import { Separator } from "../ui/separator";
 
 export default function NoteEditor() {
   const { selectedNote, handleUpdateOrCreate, handleDelete } =
@@ -16,7 +17,7 @@ export default function NoteEditor() {
   }, [selectedNote]);
 
   return (
-    <>
+    <div>
       <Operator
         onSave={() => {
           handleUpdateOrCreate(editor.getJSON());
@@ -29,6 +30,7 @@ export default function NoteEditor() {
           toast.error("笔记不存在");
         }}
       />
-    </>
+      <Separator />
+    </div>
   );
 }
