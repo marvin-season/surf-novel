@@ -14,12 +14,13 @@ import type { EditorProviderProps } from "@tiptap/react";
 export default function AdvancedRichEditorProvider({
   content,
   children,
+  ...props
 }: EditorProviderProps) {
   const [open, setOpen] = useState(false);
   const extentions = useAdvancedExtentions();
   return (
     <>
-      <RichEditorProvider content={content} extensions={extentions}>
+      <RichEditorProvider content={content} extensions={extentions} {...props}>
         {children}
         <GenerativeFloatingMenu></GenerativeFloatingMenu>
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>

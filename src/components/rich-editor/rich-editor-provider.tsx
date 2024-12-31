@@ -9,6 +9,7 @@ export default function RichEditorProvider({
   content,
   editable,
   editorProps,
+  ...props
 }: EditorProviderProps) {
   const defaultExtentions = useExtentions();
   return (
@@ -23,6 +24,7 @@ export default function RichEditorProvider({
         }}
         content={content}
         extensions={[...defaultExtentions, ...extensions]}
+        {...props}
       >
         {children}
       </EditorProvider>
