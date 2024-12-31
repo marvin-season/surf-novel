@@ -16,9 +16,9 @@ export default function ProviderSettings({
   currentProvider: _currentProvider,
   onSave,
 }: {
-  providers: any[];
-  currentProvider: any;
-  onSave: (settings: Record<string, any>) => void;
+  providers: Record<string, any>[];
+  currentProvider: Record<string, any>;
+  onSave: (currentProvider: Record<string, any>) => void;
 }) {
   const [currentProvider, setCurrentProvider] = useState<any>(_currentProvider);
 
@@ -43,7 +43,9 @@ export default function ProviderSettings({
       </Select>
       <DynamicForm
         form={currentProvider.dynamic_params}
-        onSubmit={console.log}
+        onSubmit={(values) => {
+          onSave({ ...currentProvider, dynamic_params: values });
+        }}
       />
     </>
   );

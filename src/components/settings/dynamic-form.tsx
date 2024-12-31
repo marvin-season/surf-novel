@@ -6,6 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 type BaseType = {
   label: string;
@@ -30,10 +32,19 @@ type DynamicFormType = {
 };
 
 export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
-  console.log(form);
+  const [dynamicForm, setDynamicForm] = useState(form);
+  useEffect(() => {
+    setDynamicForm(form);
+  }, [form]);
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      {Object.entries(form).map(([key, value]) => {
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(dynamicForm);
+      }}
+      className="flex flex-col gap-4"
+    >
+      {Object.entries(dynamicForm).map(([key, value]) => {
         return (
           <div key={key} className="flex flex-col gap-2">
             {value.type === "string" && (
@@ -42,14 +53,34 @@ export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
                 <Input
                   type={value.type}
                   name={key}
-                  defaultValue={value.value}
+                  value={value.value}
+                  onChange={(e) => {
+                    setDynamicForm({
+                      ...dynamicForm,
+                      [key]: {
+                        ...value,
+                        value: e.target.value,
+                      },
+                    });
+                  }}
                 />
               </>
             )}
             {value.type === "select" && (
               <>
                 <span className="text-sm text-gray-500">{value.label}</span>
-                <Select defaultValue={value.value}>
+                <Select
+                  value={value.value}
+                  onValueChange={(value) => {
+                    setDynamicForm({
+                      ...dynamicForm,
+                      [key]: {
+                        ...dynamicForm[key],
+                        value: value,
+                      },
+                    });
+                  }}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={value.placeholder} />
                   </SelectTrigger>
@@ -66,6 +97,7 @@ export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
           </div>
         );
       })}
+      <Button type="submit">保存</Button>
     </form>
   );
 }

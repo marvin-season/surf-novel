@@ -30,6 +30,7 @@ export default function SettingsPage() {
   }, []);
 
   const handelSave = (settings: Record<string, any>) => {
+    console.log(settings);
     userConfigApi.save({ settings }).then((res) => {});
   };
 
