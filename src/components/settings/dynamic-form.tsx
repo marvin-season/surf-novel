@@ -27,12 +27,14 @@ type SelectType = BaseType & {
   }[];
 };
 
-type DynamicFormType = {
-  form: Record<string, InputType | SelectType>;
-  onSubmit: (values: any) => Promise<void>;
+export type DynamicParamsType = Record<string, InputType | SelectType>;
+
+type DynamicFormInterface = {
+  form: DynamicParamsType;
+  onSubmit: (values: DynamicParamsType) => Promise<void>;
 };
 
-export default function DynamicForm({ form, onSubmit }: DynamicFormType) {
+export default function DynamicForm({ form, onSubmit }: DynamicFormInterface) {
   const [dynamicForm, setDynamicForm] = useState(form);
   useEffect(() => {
     setDynamicForm(form);

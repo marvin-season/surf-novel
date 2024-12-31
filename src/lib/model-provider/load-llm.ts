@@ -1,22 +1,28 @@
 import { initOllamaProvider } from "./ollama-provider";
 import { initAzureProvider } from "./azure-provider";
 import { ModelProvider } from "@/types/model-provider";
+import { DynamicParamsType } from "@/components/settings/dynamic-form";
 
-export const loadLLM = (
-  provider?: string,
-  model?: string,
-  endpoint?: string,
+export const loadLLMFromSettings = (
+  settings: Record<string, any | DynamicParamsType>,
 ) => {
-  console.log({ provider, model, endpoint });
-  if (!provider) {
-    throw new Error("Provider is not defined");
-  }
+  const provider = settings.name;
+  const config: Record<string, any> = {};
+  Object.entries(settings.dynamic_params as DynamicParamsType).forEach(
+    ([key, value]) => {
+      config[key] = value.value;
+    },
+  );
+  console.log("config", config);
+  return createModel(provider, config);
+};
 
+export const createModel = (provider: string, config: Record<string, any>) => {
   switch (provider) {
     case ModelProvider.Ollama:
-      return initOllamaProvider({ model, endpoint });
+      return initOllamaProvider(config);
     case ModelProvider.Azure:
-      return initAzureProvider({ model });
+      return initAzureProvider(config);
     default:
       return initOllamaProvider({});
   }

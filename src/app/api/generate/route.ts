@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { streamText } from "ai";
 import { getSystemPrompt } from "./prompt";
-import { loadLLM } from "@/lib/model-provider/load-llm";
+import { loadLLMFromSettings } from "@/lib/model-provider/load-llm";
 import { prisma } from "@/lib/prisma";
 import { getLoggedUserInfo } from "@/lib/user";
 
@@ -17,11 +17,8 @@ export async function POST(request: NextRequest) {
   });
 
   const settings = JSON.parse(userConfig!.settings || "{}");
-  const model = loadLLM(
-    settings.modelProviderId,
-    settings.modelId,
-    settings.modelUrl,
-  );
+  console.log("settings", settings);
+  const model = loadLLMFromSettings(settings);
 
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
