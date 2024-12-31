@@ -7,7 +7,7 @@ export default function RichEditorProvider({
   extensions = [],
   children,
   content,
-  editable,
+  editable = true,
   editorProps,
   ...props
 }: EditorProviderProps) {
