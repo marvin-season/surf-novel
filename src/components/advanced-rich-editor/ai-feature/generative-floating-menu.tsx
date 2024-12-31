@@ -30,7 +30,6 @@ export default function GenerativeFloatingMenu({
       idRef.current = Date.now().toString();
     },
     onResponse: (response) => {
-      console.log(response);
       if (response.status === 429) {
         toast.error("You have reached your request limit for the day.");
         return;
@@ -51,7 +50,8 @@ export default function GenerativeFloatingMenu({
       shouldShow={() => {
         // 未选中文本才显示
         const selection = editor?.state.selection;
-        return !!selection?.empty;
+        // 且是否聚焦
+        return !!selection?.empty && !!editor?.isFocused;
       }}
       className={"max-w-[90vw]"}
       tippyOptions={{
