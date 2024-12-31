@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({
     ...userConfig,
-    settings: JSON.parse(userConfig?.settings || "{}"),
+    provider_settings: JSON.parse(userConfig?.provider_settings || "{}"),
   });
 }
 
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     ...existUserConfig,
     ...{
       ...body,
-      settings: JSON.stringify(body.settings),
+      provider_settings: JSON.stringify(body.provider_settings),
     },
   };
 

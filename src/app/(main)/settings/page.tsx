@@ -12,7 +12,7 @@ import providerApi from "@/lib/api/provider";
 export default function SettingsPage() {
   const t = useTranslations("Settings");
   const [userConfig, setUserConfig] = useState<
-    (UserConfig & { settings: Record<string, any> }) | null
+    (UserConfig & { provider_settings: Record<string, any> }) | null
   >(null);
 
   const [providerList, setProviderList] = useState<ProviderInfo[]>([]);
@@ -29,8 +29,8 @@ export default function SettingsPage() {
     });
   }, []);
 
-  const handelSave = async (settings: Record<string, any>) => {
-    await userConfigApi.save({ settings });
+  const handelSave = async (provider_settings: Record<string, any>) => {
+    await userConfigApi.save({ provider_settings });
   };
 
   return (
@@ -49,10 +49,10 @@ export default function SettingsPage() {
         <Separator />
 
         {/* 模型设置 */}
-        {userConfig?.settings && (
+        {userConfig?.provider_settings && (
           <ProviderSettings
             providers={providerList}
-            currentProvider={userConfig.settings}
+            currentProvider={userConfig.provider_settings}
             onSave={handelSave}
           />
         )}

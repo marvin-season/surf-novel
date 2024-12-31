@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const userConfig = await prisma.userConfig.create({
       data: {
         userId: user.id,
-        settings: JSON.stringify({
+        provider_settings: JSON.stringify({
           ...defaultProvider,
           dynamic_params: JSON.parse(defaultProvider?.dynamic_params || "{}"),
         }),

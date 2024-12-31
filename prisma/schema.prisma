@@ -36,7 +36,8 @@ model UserConfig {
   user     User    @relation(fields: [userId], references: [id])
   theme    String? // 主题配置
   language String? // 语言设置
-  settings String // 使用 JSON 存储所有模块化配置
+  settings String? @default("{}") // 使用 JSON 存储所有模块化配置
+  provider_settings String @default("{}") // 使用 JSON 存储所有模型配置
 }
 
 model ProviderInfo {
