@@ -3,8 +3,10 @@
 import { MainLayout } from "@/components/layout/main-layout";
 import {
   BookMarked,
+  Bot,
   Clock,
   LogOut,
+  MessageCircle,
   NotebookTabs,
   Settings,
   User,
@@ -24,11 +26,11 @@ const sidebarNavItems = [
     href: "/notes",
     icon: <NotebookTabs className="h-4 w-4" />,
   },
-  // {
-  //   title: "recent_edits",
-  //   href: "/recent",
-  //   icon: <Clock className="h-4 w-4" />,
-  // },
+  {
+    title: "chat_bot",
+    href: "/chat",
+    icon: <Bot className="h-4 w-4" />,
+  },
   // {
   //   title: "favorites",
   //   href: "/favorites",
