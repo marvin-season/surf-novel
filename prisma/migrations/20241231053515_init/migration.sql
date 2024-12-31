@@ -26,7 +26,8 @@ CREATE TABLE "UserConfig" (
     "userId" TEXT NOT NULL,
     "theme" TEXT,
     "language" TEXT,
-    "settings" TEXT NOT NULL,
+    "settings" TEXT DEFAULT '{}',
+    "provider_settings" TEXT NOT NULL DEFAULT '{}',
     CONSTRAINT "UserConfig_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -34,6 +35,7 @@ CREATE TABLE "UserConfig" (
 CREATE TABLE "ProviderInfo" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
+    "default" BOOLEAN NOT NULL DEFAULT false,
     "description" TEXT NOT NULL,
     "dynamic_params" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
