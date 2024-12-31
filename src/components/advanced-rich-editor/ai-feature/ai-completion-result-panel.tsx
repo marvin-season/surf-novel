@@ -8,14 +8,11 @@ export default function AiCompleteResultPanel({
   content: string;
 }) {
   return (
-    <>
-      <RichEditorProvider
-        editable={() => false}
-        className={"text-[12px] p-4 max-h-[400px]"}
-      >
+    <div className={"text-[12px] p-4 max-h-[400px]"}>
+      <RichEditorProvider editable={false}>
         <RichEditor content={content} />
       </RichEditorProvider>
-    </>
+    </div>
   );
 }
 

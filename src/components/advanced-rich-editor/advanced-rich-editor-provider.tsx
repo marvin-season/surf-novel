@@ -9,25 +9,17 @@ import useAdvancedExtentions from "./hooks/useExtentions";
 import GenerativeFloatingMenu from "./ai-feature/generative-floating-menu";
 
 import "./style.css";
+import type { EditorProviderProps } from "@tiptap/react";
 
 export default function AdvancedRichEditorProvider({
   content,
-  className,
   children,
-}: {
-  content?: string;
-  className?: string;
-  children?: React.ReactNode;
-}) {
+}: EditorProviderProps) {
   const [open, setOpen] = useState(false);
   const extentions = useAdvancedExtentions();
   return (
     <>
-      <RichEditorProvider
-        content={content}
-        className={className}
-        extensions={extentions}
-      >
+      <RichEditorProvider content={content} extensions={extentions}>
         {children}
         <GenerativeFloatingMenu></GenerativeFloatingMenu>
         <GenerativeBubbleMenu open={open} onOpenChange={setOpen}>
