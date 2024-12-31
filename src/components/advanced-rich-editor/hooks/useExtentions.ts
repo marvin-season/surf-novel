@@ -9,7 +9,6 @@ export default function useAdvancedExtentions() {
     AiAcceptor,
     TextStyle,
     Color,
-    Color,
     AIHighlight,
     Highlight.configure({ multicolor: true }),
   ];

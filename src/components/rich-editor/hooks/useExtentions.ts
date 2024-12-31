@@ -7,11 +7,15 @@ import CodeBlockHighlight from "../extentions/code-block-highlight";
 export default function useExtentions() {
   return [
     StarterKit,
-    Placeholder.configure({
-      placeholder: "Please write something ...",
-    }),
     Badge,
     Markdown,
     CodeBlockHighlight,
+    Placeholder.configure({
+      // placeholder: "Please write something ...",
+      placeholder({ node }) {
+        console.log("node", node);
+        return "hi";
+      },
+    }),
   ];
 }
