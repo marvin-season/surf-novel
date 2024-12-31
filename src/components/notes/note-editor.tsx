@@ -30,7 +30,7 @@ export default function NoteEditor() {
           toast.error("笔记不存在");
         }}
       />
-      <Separator />
+      <Separator className="my-4" />
     </div>
   );
 }
