@@ -34,17 +34,15 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-8 p-10">
+    <div>
       {/* 页面标题 */}
-      <div>
+      <div className="sticky top-0 px-10 py-5 backdrop-blur-sm">
         <h2 className="text-2xl font-bold tracking-tight">{t("settings")}</h2>
         <p className="text-muted-foreground">{t("customize_experience")}</p>
       </div>
-
       <Separator />
-
       {/* 设置选项 */}
-      <div className="space-y-10">
+      <div className="space-y-10 p-10 space-y-8">
         {/* 外观设置 */}
         <PreferenceSettings />
 
