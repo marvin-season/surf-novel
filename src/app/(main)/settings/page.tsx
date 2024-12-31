@@ -42,7 +42,7 @@ export default function SettingsPage() {
       </div>
       <Separator />
       {/* 设置选项 */}
-      <div className="space-y-10 p-10 space-y-8">
+      <div className="p-10 space-y-8">
         {/* 外观设置 */}
         <PreferenceSettings />
 
