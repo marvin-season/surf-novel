@@ -9,15 +9,15 @@ generator client {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  email      String      @unique
-  name       String?
-  password   String
-  notes      Note[]
-  userConfig UserConfig?
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String?
+  password      String
+  notes         Note[]
+  userConfig    UserConfig?
   conversations Conversation[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Note {
@@ -32,51 +32,51 @@ model Note {
 }
 
 model UserConfig {
-  id       Int     @id @default(autoincrement())
-  userId   String  @unique
-  user     User    @relation(fields: [userId], references: [id])
-  theme    String? // 主题配置
-  language String? // 语言设置
-  settings String? @default("{}") // 使用 JSON 存储所有模块化配置
-  provider_settings String @default("{}") // 使用 JSON 存储所有模型配置
+  id                Int     @id @default(autoincrement())
+  userId            String  @unique
+  user              User    @relation(fields: [userId], references: [id])
+  theme             String? // 主题配置
+  language          String? // 语言设置
+  settings          String? @default("{}") // 使用 JSON 存储所有模块化配置
+  provider_settings String  @default("{}") // 使用 JSON 存储所有模型配置
 }
 
 model ProviderInfo {
-  id         String   @id @default(cuid())
-  name       String
-  default    Boolean  @default(false)
-  description String
+  id             String   @id @default(cuid())
+  name           String
+  default        Boolean  @default(false)
+  description    String
   dynamic_params String // 连接参数
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Conversation {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  name       String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  messages   Message[]
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  messages  Message[]
 }
 
 model Message {
-  id         String   @id @default(cuid())
+  id             String       @id @default(cuid())
   conversationId String
-  conversation Conversation @relation(fields: [conversationId], references: [id])
-  content    String
-  role       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  attachments Attachment[]
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  content        String
+  role           String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  attachments    Attachment[]
 }
 
 model Attachment {
-  id         String   @id @default(cuid())
-  messageId  String
-  message    Message  @relation(fields: [messageId], references: [id])
-  url        String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id])
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
