@@ -12,34 +12,38 @@ import { Button } from "../ui/button";
 
 const modelProviderList = [{ id: "ollama", name: "ollama" }];
 
-export default function ModelSettings({
-  settings,
+export default function ProviderSettings({
+  providers,
+  currentProvider,
   onSave,
 }: {
-  settings: Record<string, any>;
+  providers: any[];
+  currentProvider: any;
   onSave: (settings: Record<string, any>) => void;
 }) {
-  const [modelProviderId, setModelProviderId] = useState<string>(
-    settings.modelProviderId || "",
-  );
-  const [modelUrl, setModelUrl] = useState<string>(settings.modelUrl || "");
-  const [modelId, setModelId] = useState<string>(settings.modelId || "");
-  const [models, setModels] = useState<any[]>([]);
+  console.log("providers", providers);
+  console.log("currentProvider", currentProvider);
+  // const [modelProviderId, setModelProviderId] = useState<string>(
+  //   settings.modelProviderId || "",
+  // );
+  // const [modelUrl, setModelUrl] = useState<string>(settings.modelUrl || "");
+  // const [modelId, setModelId] = useState<string>(settings.modelId || "");
+  // const [models, setModels] = useState<any[]>([]);
 
-  useEffect(() => {
-    llmApi
-      .list(modelUrl)
-      .then((res: any) => {
-        setModels(res);
-      })
-      .catch((err) => {
-        setModels([]);
-      });
-  }, [modelProviderId, modelUrl]);
+  // useEffect(() => {
+  //   llmApi
+  //     .list(modelUrl)
+  //     .then((res: any) => {
+  //       setModels(res);
+  //     })
+  //     .catch((err) => {
+  //       setModels([]);
+  //     });
+  // }, [modelProviderId, modelUrl]);
 
   return (
     <>
-      <div className="space-y-6">
+      {/* <div className="space-y-6">
         <div>
           <h3 className="text-lg font-medium">{"模型设置"}</h3>
           <p className="text-sm text-muted-foreground">
@@ -47,9 +51,9 @@ export default function ModelSettings({
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          {/* 模型提供商 */}
-          <Select value={modelProviderId} onValueChange={setModelProviderId}>
+        <div className="flex items-center gap-4"> */}
+      {/* 模型提供商 */}
+      {/* <Select value={modelProviderId} onValueChange={setModelProviderId}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={"选择模型提供商"} />
             </SelectTrigger>
@@ -60,15 +64,15 @@ export default function ModelSettings({
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
-          {/* 模型地址 */}
-          <Input
+          </Select> */}
+      {/* 模型地址 */}
+      {/* <Input
             value={modelUrl}
             onChange={(e) => setModelUrl(e.target.value)}
             placeholder="模型地址"
-          />
-          {/* 模型选择 */}
-          <Select value={modelId} onValueChange={setModelId}>
+          /> */}
+      {/* 模型选择 */}
+      {/* <Select value={modelId} onValueChange={setModelId}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={"选择模型"} />
             </SelectTrigger>
@@ -86,7 +90,7 @@ export default function ModelSettings({
             保存
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

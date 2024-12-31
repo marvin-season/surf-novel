@@ -4,15 +4,24 @@ import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { useState, useEffect, useMemo } from "react";
 import { getUserConfig } from "./action";
-import { UserConfig } from "@prisma/client";
-import { PreferenceSettings, ModelSettings } from "@/components/settings";
+import { ProviderInfo, UserConfig } from "@prisma/client";
+import { PreferenceSettings, ProviderSettings } from "@/components/settings";
 import { userConfigApi } from "@/lib/api";
+import providerApi from "@/lib/api/provider";
 
 export default function SettingsPage() {
   const t = useTranslations("Settings");
   const [userConfig, setUserConfig] = useState<
     (UserConfig & { settings: Record<string, any> }) | null
   >(null);
+
+  const [providerList, setProviderList] = useState<ProviderInfo[]>([]);
+
+  useEffect(() => {
+    providerApi.list<ProviderInfo[]>().then((res) => {
+      setProviderList(res);
+    });
+  }, []);
 
   useEffect(() => {
     getUserConfig().then((config) => {
@@ -43,7 +52,11 @@ export default function SettingsPage() {
 
         {/* 模型设置 */}
         {userConfig?.settings && (
-          <ModelSettings settings={userConfig.settings} onSave={handelSave} />
+          <ProviderSettings
+            providers={providerList}
+            currentProvider={userConfig.settings}
+            onSave={handelSave}
+          />
         )}
         <Separator />
       </div>
