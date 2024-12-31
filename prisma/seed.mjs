@@ -10,12 +10,14 @@ const prisma = new PrismaClient()
       description: 'ollama provider',
       dynamic_params: JSON.stringify({
         base_url: {
+          label: 'base_url',
           type: 'string',
           default: 'http://127.0.0.1:11434',
           value: 'http://127.0.0.1:11434',
           placeholder: '请输入base_url',
         },
         model: {
+          label: 'model',
           type: 'select',
           default: 'qwen2:7b',
           value: 'qwen2:7b',
@@ -32,18 +34,21 @@ const prisma = new PrismaClient()
       description: 'azure provider',
       dynamic_params: JSON.stringify({
         azure_openai_endpoint: {
+          label: 'azure_openai_endpoint',
           type: 'string',
           default: '',
           value: '',
           placeholder: '请输入azure_openai_endpoint',
         },
         azure_openai_key: {
+          label: 'azure_openai_key',
           type: 'string',
           default: '',
           value: '',
           placeholder: '请输入azure_openai_key',
         },
         open_model_pref: {
+          label: 'open_model_pref',
           type: 'select',
           default: '',
           value: '',
@@ -54,6 +59,7 @@ const prisma = new PrismaClient()
           ],
         },
         embedding_model_pref: {
+          label: 'embedding_model_pref',
           type: 'select',
           default: '',
           value: '',
