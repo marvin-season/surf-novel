@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
   });
 
   const settings = JSON.parse(userConfig!.settings || "{}");
-  console.log("settings", settings);
   const model = loadLLMFromSettings(settings);
 
   const modelConfig: Parameters<typeof streamText>[0] = {

@@ -21,6 +21,11 @@ export default function ProviderSettings({
 
   return (
     <>
+      {/* 模型设置 */}
+      <div>
+        <h3 className="text-lg font-medium">{"模型设置"}</h3>
+        <p className="text-sm text-muted-foreground">{"选择模型提供商"}</p>
+      </div>
       <Select
         value={currentProvider.id}
         onValueChange={(id) => {
