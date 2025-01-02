@@ -1,3 +1,5 @@
+"use client";
+
 import { AdvancedRichEditorProvider } from "../advanced-rich-editor";
 import NoteEditor from "./note-editor";
 
