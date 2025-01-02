@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useNotesContext } from "@/contexts/note-context";
 import { Plus, Timer, TimerIcon, User } from "lucide-react";
+import Empty from "./empty";
 
 export default function NotesList() {
   const t = useTranslations("notes");
@@ -10,6 +11,8 @@ export default function NotesList() {
 
   return (
     <>
+      {notes.length === 0 && <Empty />}
+
       {/* 笔记列表 */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {notes.map((note) => (

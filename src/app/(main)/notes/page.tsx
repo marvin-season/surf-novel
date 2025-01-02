@@ -4,7 +4,7 @@ import { NotesList } from "@/components/notes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNotesContext } from "@/contexts/note-context";
-import { Plus } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 export default function NotesPage() {
   const t = useTranslations("notes");
@@ -24,10 +24,11 @@ export default function NotesPage() {
           />
           {/* 新建笔记按钮 */}
           <Button
+            variant={"secondary"}
             onClick={() => handleSelectNote()}
-            className="flex-shrink-0 px-4 py-6 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
+            className="flex-shrink-0 px-4 py-6 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-all duration-100"
           >
-            <Plus size={20} />
+            <Pencil size={20} />
           </Button>
         </div>
         <NotesList />
