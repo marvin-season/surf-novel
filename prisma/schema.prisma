@@ -63,6 +63,9 @@ model Conversation {
 
 model Message {
   id             String       @id @default(cuid())
+  parentId       String? // 父消息 ID，可为空
+  parent         Message?     @relation("MessageToMessage", fields: [parentId], references: [id])
+  children       Message[]    @relation("MessageToMessage")
   conversationId String
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   content        String
