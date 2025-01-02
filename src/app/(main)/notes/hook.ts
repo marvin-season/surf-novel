@@ -6,18 +6,24 @@ import { Note } from "@/types/notes";
 import { useCallback, useState } from "react";
 import { getNote } from "./actions";
 import { notesApi } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export const useNotesContextState = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const router = useRouter();
+
   const [_, forceUpdate] = useState<number>();
   const handleSelectNote = useCallback(async (id?: string) => {
     if (!id) {
       setSelectedNote(null);
+      router.push(`/notes/0`);
       return;
     }
+
     const note = await getNote(id);
     note && setSelectedNote(note);
+    router.push(`/notes/${id}`);
   }, []);
 
   const handleDelete = useCallback(async (id: string) => {

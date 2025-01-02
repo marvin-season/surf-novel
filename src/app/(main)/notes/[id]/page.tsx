@@ -1,4 +1,11 @@
-export default async function Note({ params }: { params: Promise<string> }) {
-  console.log("props", await params);
-  return <>hi</>;
+"use client";
+
+import { NoteEditorContrainer } from "@/components/notes";
+export default function Note({ params }: { params: { id: string } }) {
+  console.log("props", params);
+  return (
+    <>
+      <NoteEditorContrainer />
+    </>
+  );
 }
