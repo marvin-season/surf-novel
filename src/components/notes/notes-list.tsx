@@ -34,7 +34,7 @@ export default function NotesList() {
             <div className="text-xs text-gray-500 mt-4 flex gap-4">
               <div className="flex gap-2 items-center">
                 <TimerIcon size={12} />{" "}
-                {new Date(note.updatedAt).toLocaleDateString()}
+                {new Date(note.updatedAt).toLocaleString()}
               </div>
               <div className="flex gap-2 items-center">
                 <User size={12} />{" "}

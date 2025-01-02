@@ -1,5 +1,3 @@
-"use server";
-
 import { notesApi } from "@/lib/api";
 import { Note } from "@/types/notes";
 
