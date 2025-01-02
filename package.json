@@ -8,13 +8,17 @@
     "build": "next build",
     "start": "next start --port 4000",
     "lint": "next lint",
+    
     "db:push": "prisma db push",
+    "db:pull": "prisma db pull",
+    "db:generate": "prisma generate",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev --name init",
+
     "prettier:check": "npx prettier --check ./src",
     "prettier:write": "npx prettier --write ./src",
+    
     "prepare": "husky install",
     "test": "jest"
   },
