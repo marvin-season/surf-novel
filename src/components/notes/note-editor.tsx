@@ -1,5 +1,6 @@
+"use client";
+
 import { useNotesContext } from "@/contexts/note-context";
-import { AdvancedRichEditorProvider } from "../advanced-rich-editor";
 import Operator from "../rich-editor/operator/operator";
 import { toast } from "sonner";
 import { useCurrentEditor } from "@tiptap/react";
