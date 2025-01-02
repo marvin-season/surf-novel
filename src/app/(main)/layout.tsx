@@ -3,12 +3,11 @@
 import { MainLayout } from "@/components/layout/main-layout";
 import {
   BookMarked,
-  Bot,
-  Clock,
+  BotMessageSquare,
   LogOut,
-  MessageCircle,
   NotebookTabs,
   Settings,
+  ThumbsUpIcon,
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,7 +28,7 @@ const sidebarNavItems = [
   {
     title: "chat_bot",
     href: "/chat",
-    icon: <Bot className="h-4 w-4" />,
+    icon: <BotMessageSquare className="h-4 w-4" />,
   },
   // {
   //   title: "favorites",
@@ -43,6 +42,11 @@ const profileNavItems = [
     title: "profile",
     href: "/profile",
     icon: <User className="h-4 w-4" />,
+  },
+  {
+    title: "reward",
+    href: "/reward",
+    icon: <ThumbsUpIcon className="h-4 w-4" />,
   },
   {
     title: "settings",
