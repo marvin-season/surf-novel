@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
-      return new Response(JSON.stringify({ error: "User not found" }), {
+      return new Response(JSON.stringify({ message: "User not found" }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });

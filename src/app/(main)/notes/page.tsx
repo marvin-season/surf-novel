@@ -17,7 +17,6 @@ export default function NotesPage() {
           <h1 className="text-lg font-semibold">Notes Manager</h1>
           <p className="text-sm text-gray-500">Manage your ideas efficiently</p>
         </div>
-
         <div className="flex gap-4 w-[80%] mt-8 mb-12">
           <Input
             className="shadow p-6 placeholder:text-gray-300"
@@ -28,8 +27,7 @@ export default function NotesPage() {
             onClick={() => handleSelectNote()}
             className="flex-shrink-0 px-4 py-6 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
           >
-            <Plus className="inline-block w-4 h-4 mr-2" />
-            {t("newNote")}
+            <Plus size={20} />
           </Button>
         </div>
         <NotesList />
