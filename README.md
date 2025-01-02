@@ -20,7 +20,7 @@ run the app
 pnpm run dev
 ```
 
-[prisma](./prisma.README.md)
+[prisma](./prisma/README.md)
 
 [project](./project.README.md)
 

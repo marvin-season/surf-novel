@@ -1,4 +1,4 @@
-# express + nodejs
+# prisma
 
 ## integrate with prisma + postgresql
 
@@ -22,7 +22,7 @@ pnpm install @prisma/client
 npx prisma init
 ```
 
-### 3. Migrate the database
+### 3. Migrate the database (Not recommand)
 
 ```sh
 npx prisma migrate dev --name init
@@ -66,13 +66,13 @@ npx prisma studio
 })()
 ```
 
-### 8. Pull the database schema from database
+### 8. Pull the prisma schema from database
 
 ```shell
 npx prisma db pull
 ```
 
-### 9. Push the database schema to database
+### 9. Push the prisma schema to database (recommand)
 
 ```shell
 npx prisma db push
