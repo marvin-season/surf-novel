@@ -4,14 +4,14 @@ const NoteEditorContrainer = dynamic(
   () => import("@/components/notes/note-editor-container"),
 );
 
-// Fetch the static parameters 预渲染页面
-export async function generateStaticParams() {
-  const notes = await getNotes();
-  // pre generate 10 page
-  return notes.slice(0, 10).map((note) => ({
-    id: `${note.id}`,
-  }));
-}
+// 预渲染页面 暂时无法实现 SSG 静态预选染
+// export async function generateStaticParams() {
+//   const notes = await getNotes();
+//   // pre generate 10 page
+//   return notes.slice(0, 10).map((note) => ({
+//     id: `${note.id}`,
+//   }));
+// }
 
 export default async function Note({
   params,
