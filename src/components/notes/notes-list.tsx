@@ -14,10 +14,7 @@ export default function NotesList() {
     <>
       {/* 笔记列表 */}
       <div className="w-[180px] flex-shrink-0 border-r flex flex-col bg-muted/5">
-        <div className="p-4 border-b bg-background">
-          <h2 className="text-lg font-semibold">{t("title")}</h2>
-        </div>
-        <div className="flex-1 overflow-y-auto p-2">
+        <div className="flex-1 overflow-y-auto p-2 pt-4">
           <Button
             variant={!selectedNote ? "secondary" : "ghost"}
             className={cn(
