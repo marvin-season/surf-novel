@@ -15,7 +15,7 @@ export default function NotesList() {
         {notes.map((note) => (
           <div
             key={note.id}
-            className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition border cursor-pointer"
+            className="bg-white p-4 rounded-lg shadow hover:shadow-xl transition border cursor-pointer"
             onClick={() => handleSelectNote(note.id)}
           >
             <div className="flex justify-between">
