@@ -26,16 +26,10 @@ pnpm run dev
 
 ## 格式化
 
-- prettier
-- husky
-- lint-staged
+- prettier 是用来格式化代码的。
+- husky 是用来在 git 提交时触发钩子
+- lint-staged lint-staged 是用来在 git 提交时格式化代码。
 
 ```text
-husky 和 lint-staged 是用来在提交代码时自动格式化代码的。
-
-husky 是用来在 git 提交时触发钩子，lint-staged 是用来在 git 提交时格式化代码。
-
-prettier 是用来格式化代码的。
-
 .husky/pre-commit 是用来在 git 提交时触发钩子，lint-staged 是用来在 git 提交时格式化代码。
 ```
