@@ -1,4 +1,3 @@
-import { getNotes } from "../actions";
 import dynamic from "next/dynamic";
 const NoteEditorContrainer = dynamic(
   () => import("@/components/notes/note-editor-container"),
@@ -18,7 +17,6 @@ export default async function Note({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  console.log("props", params);
   return (
     <>
       <NoteEditorContrainer />

@@ -2,8 +2,8 @@
 
 import { MainLayout } from "@/components/layout/main-layout";
 import {
-  BookMarked,
   BotMessageSquare,
+  Leaf,
   LogOut,
   NotebookTabs,
   Settings,
@@ -91,7 +91,7 @@ export default function MainAppLayout({
             )}
           >
             {item.icon}
-            {expanded && <span className="ml-3 truncate">{t(item.title)}</span>}
+            {expanded && <span className="ml-3 truncate">{item.title}</span>}
           </Link>
         </li>
       );
@@ -110,7 +110,7 @@ export default function MainAppLayout({
                 expanded ? "px-4" : "justify-center",
               )}
             >
-              <BookMarked className="h-6 w-6" />
+              <Leaf className="h-6 w-6" />
               {expanded && (
                 <h2 className="ml-3 text-lg font-semibold truncate">
                   Surf Novel
