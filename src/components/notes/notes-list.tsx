@@ -1,52 +1,48 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button } from "../ui/button";
 import { useNotesContext } from "@/contexts/note-context";
-import { cn } from "@/lib/utils";
-import { Plus } from "lucide-react";
+import { Plus, Timer, TimerIcon, User } from "lucide-react";
 
 export default function NotesList() {
   const t = useTranslations("notes");
+  const { notes, handleSelectNote } = useNotesContext();
 
-  const { notes, selectedNote, handleSelectNote } = useNotesContext();
   return (
     <>
       {/* 笔记列表 */}
-      <div className="w-[180px] flex-shrink-0 border-r flex flex-col bg-muted/5">
-        <div className="flex-1 overflow-y-auto p-2 pt-4">
-          <Button
-            variant={!selectedNote ? "secondary" : "ghost"}
-            className={cn(
-              "w-full justify-start gap-2 mb-2",
-              !selectedNote && "bg-accent",
-            )}
-            onClick={() => handleSelectNote()}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+        {notes.map((note) => (
+          <div
+            key={note.id}
+            className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition border cursor-pointer"
+            onClick={() => handleSelectNote(note.id)}
           >
-            <Plus className="h-4 w-4" />
-            {t("newNote")}
-          </Button>
-          {notes.map((note) => (
-            <Button
-              key={note.id}
-              variant={selectedNote?.id === note.id ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start text-left mb-1 h-auto py-3",
-                selectedNote?.id === note.id && "bg-accent",
-              )}
-              onClick={() => handleSelectNote(note.id)}
-            >
-              <div className="flex flex-col items-start gap-1">
-                <span className="font-medium line-clamp-1">
-                  {note.title || t("noTitle")}
+            <div className="flex justify-between">
+              <h3 className="font-medium text-sm truncate">
+                {note.title || t("noTitle")}
+              </h3>
+              <div className="flex gap-1">
+                <span className="text-[10px] text-white bg-blue-400 rounded-[4px] p-1">
+                  {"朝花夕拾"}
                 </span>
-                <span className="text-xs text-muted-foreground">
-                  {new Date(note.updatedAt).toLocaleDateString()}
+                <span className="text-[10px] text-white bg-green-400 rounded-[4px] p-1">
+                  {"刻舟求剑"}
                 </span>
               </div>
-            </Button>
-          ))}
-        </div>
+            </div>
+            <div className="text-xs text-gray-500 mt-4 flex gap-4">
+              <div className="flex gap-2 items-center">
+                <TimerIcon size={12} />{" "}
+                {new Date(note.updatedAt).toLocaleDateString()}
+              </div>
+              <div className="flex gap-2 items-center">
+                <User size={12} />{" "}
+                {new Date(note.updatedAt).toLocaleDateString()}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
