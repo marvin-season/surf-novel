@@ -6,14 +6,14 @@ import { getLoggedUserInfo } from "@/lib/user";
 import { extractMessageContext, getHistoricalMessages } from "./utils";
 
 export async function POST(request: NextRequest) {
-  const { prompt, conversationId, multiTurn } = await request.json();
+  const { conversationId, messages } = await request.json();
   const userInfo = await getLoggedUserInfo();
 
-  const historicalMessages = multiTurn
-    ? await extractMessageContext(await getHistoricalMessages(conversationId))
-    : [];
+  const historicalMessages = await extractMessageContext(
+    await getHistoricalMessages(conversationId),
+  );
 
-  console.log("historicalMessages and ", { historicalMessages, userInfo });
+  console.log("historicalMessages ", { historicalMessages, messages });
 
   const userConfig = await prisma.userConfig.findUnique({
     where: {
@@ -27,11 +27,12 @@ export async function POST(request: NextRequest) {
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
     messages: [
-      ...historicalMessages,
       {
-        role: "user",
-        content: `请依据上面的聊天记录信息回答问题：${prompt}`,
+        role: "system",
+        content: "你是一个个人聊天助手！",
       },
+      ...historicalMessages,
+      ...messages,
     ],
   };
 
