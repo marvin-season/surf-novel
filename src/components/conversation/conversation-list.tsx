@@ -12,6 +12,7 @@ export default function ({ conversations }: { conversations: Conversation[] }) {
         {conversations.map((conversation) => {
           return (
             <Link
+              key={conversation.id}
               className={`p-2 border rounded-[8px] text-sm ${conversation.id === segement ? "text-blue-500 border-blue-500" : ""}`}
               href={`/conversation/${conversation.id}`}
             >

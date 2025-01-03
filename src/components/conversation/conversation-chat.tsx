@@ -12,6 +12,7 @@ export default function ConversationChat({
 }: {
   historyMessages: Message[];
 }) {
+  console.log("historyMessages", historyMessages);
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChat({});
 

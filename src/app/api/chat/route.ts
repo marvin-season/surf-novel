@@ -3,21 +3,14 @@ import { streamText } from "ai";
 import { loadLLMFromSettings } from "@/lib/model-provider/load-llm";
 import { prisma } from "@/lib/prisma";
 import { getLoggedUserInfo } from "@/lib/user";
-import { extractMessageContext, getHistoricalMessages } from "./utils";
 
 export async function POST(request: NextRequest) {
   const { conversationId, messages } = await request.json();
   const userInfo = await getLoggedUserInfo();
 
-  const historicalMessages = await extractMessageContext(
-    await getHistoricalMessages(conversationId),
-  );
-
-  console.log("historicalMessages ", { historicalMessages, messages });
-
   const userConfig = await prisma.userConfig.findUnique({
     where: {
-      userId: userInfo.id || "cm5c1dfro0000ir1x53gvpaq1",
+      userId: userInfo.id,
     },
   });
 
@@ -26,14 +19,13 @@ export async function POST(request: NextRequest) {
 
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
-    messages: [
-      {
-        role: "system",
-        content: "你是一个个人聊天助手！",
-      },
-      ...historicalMessages,
-      ...messages,
-    ],
+    messages,
+    onFinish: (event) => {
+      // response text: event.text
+      console.log("text", event.text);
+      if (!conversationId) {
+      }
+    },
   };
 
   const result = streamText(modelConfig);

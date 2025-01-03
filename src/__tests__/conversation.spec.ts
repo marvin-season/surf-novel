@@ -29,7 +29,7 @@ describe("Conversation Unit Tests", () => {
             content: "hi",
           },
           {
-            role: "assisant",
+            role: "assistant",
             content: "Can i help you!",
           },
         ],
