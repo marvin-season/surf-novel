@@ -1,6 +1,8 @@
+"use server";
+
 import Link from "next/link";
 
-export default function ConversationPage() {
+export default async function ConversationPage() {
   return (
     <div className="flex-1 p-8 pt-6 h-full w-[60%] m-auto">
       开始你的会话吧！

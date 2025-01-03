@@ -1,3 +1,5 @@
+"use server";
+
 import ConversationChat from "@/components/conversation/conversation-chat";
 import { conversationApi } from "@/lib/api";
 import { Message } from "@prisma/client";
