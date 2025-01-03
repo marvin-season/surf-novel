@@ -20,11 +20,19 @@ export async function POST(request: NextRequest) {
   const modelConfig: Parameters<typeof streamText>[0] = {
     model,
     messages,
-    onFinish: (event) => {
+    onFinish: async (event) => {
       // response text: event.text
-      console.log("text", event.text);
-      if (!conversationId) {
-      }
+      console.log("响应结束:", event.text);
+      await prisma.message.createMany({
+        data: [
+          { ...messages.at(-1), conversationId },
+          {
+            role: "assistant",
+            content: event.text,
+            conversationId,
+          },
+        ],
+      });
     },
   };
 

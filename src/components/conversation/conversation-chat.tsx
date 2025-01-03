@@ -9,12 +9,18 @@ import { Message as AiMessage } from "ai/react";
 
 export default function ConversationChat({
   historyMessages,
+  conversationId,
 }: {
   historyMessages: Message[];
+  conversationId: string;
 }) {
-  console.log("historyMessages", historyMessages);
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
-    useChat({});
+    useChat({
+      generateId: () => "1",
+      body: {
+        conversationId: conversationId === "0" ? undefined : conversationId,
+      },
+    });
 
   useEffect(() => {
     setMessages(historyMessages as AiMessage[]);
