@@ -12,7 +12,10 @@ export default async function ChatPage({
   }>;
 }) {
   const { conversationId } = await params;
-  const messages = await conversationApi.listMessage<Message[]>(conversationId);
+  const messages =
+    conversationId === "0"
+      ? []
+      : await conversationApi.listMessage<Message[]>(conversationId);
 
   return (
     <div className="flex-1 p-8 pt-6 h-full w-[60%] m-auto">
