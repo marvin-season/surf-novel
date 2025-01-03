@@ -26,8 +26,8 @@ const sidebarNavItems = [
     icon: <NotebookTabs className="h-4 w-4" />,
   },
   {
-    title: "chat_bot",
-    href: "/chat",
+    title: "conversation",
+    href: "/conversation",
     icon: <BotMessageSquare className="h-4 w-4" />,
   },
   // {
