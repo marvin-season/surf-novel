@@ -2,7 +2,7 @@
 
 import ConversationChat from "@/components/conversation/conversation-chat";
 import { conversationApi } from "@/lib/api";
-import { Message } from "@prisma/client";
+import { Conversation, Message } from "@prisma/client";
 
 export default async function ChatPage({
   params,
@@ -12,16 +12,19 @@ export default async function ChatPage({
   }>;
 }) {
   const { conversationId } = await params;
-  const messages =
+  const conversation =
     conversationId === "0"
-      ? []
-      : await conversationApi.listMessage<Message[]>(conversationId);
+      ? await conversationApi.create<Conversation>()
+      : { id: conversationId };
+  const messages = await conversationApi.listMessage<Message[]>(
+    conversation.id,
+  );
 
   return (
     <div className="flex-1 p-8 pt-6 h-full w-[60%] m-auto">
       <ConversationChat
         historyMessages={messages}
-        conversationId={conversationId}
+        conversationId={conversation.id}
       />
     </div>
   );

@@ -8,7 +8,7 @@ export default function ({ conversations }: { conversations: Conversation[] }) {
   const segement = useSelectedLayoutSegment();
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-2">
         {conversations.map((conversation) => {
           return (
             <Link
