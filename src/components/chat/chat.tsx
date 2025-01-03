@@ -4,12 +4,21 @@ import { useChat } from "ai/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useEffect } from "react";
+import { conversationApi } from "@/lib/api";
+import { Message } from "@prisma/client";
+import { Message as AiMessage } from "ai/react";
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, setMessages } =
     useChat({});
 
   useEffect(() => {
+    conversationApi
+      .list<Message[]>("cm5g45d7p0001irom5vnhi8pe")
+      .then((message) => {
+        setMessages(message as AiMessage[]);
+      });
+
     return () => {
       setMessages((prev) => {
         console.log("messages", prev);
@@ -17,6 +26,7 @@ export default function Chat() {
       });
     };
   }, []);
+
   return (
     <div className="flex-grow flex flex-col h-full border rounded-lg p-4">
       <div className="flex-1">

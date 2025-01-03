@@ -2,7 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const { conversationId } = await request.json();
+  const conversationId = request.nextUrl.searchParams.get("conversationId");
+
+  if (!conversationId) {
+    return NextResponse.json({
+      mesage: "conversationId is required!",
+    });
+  }
 
   const messages = await prisma.message.findMany({
     where: {
@@ -19,7 +25,6 @@ export async function POST(request: NextRequest) {
     ...message,
     conversationId,
   }));
-  console.log("messages_", messages_);
   const result = await prisma.message.createMany({
     data: messages_,
   });
