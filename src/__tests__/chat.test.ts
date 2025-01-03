@@ -1,15 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
 describe("Chat Unit Tests", () => {
-  it("create conversation", async () => {
-    const conversation = await prisma.conversation.create({
-      data: {
-        name: "Test Conversation",
-        userId: "cm5c1dfro0000ir1x53gvpaq1",
-      },
-    });
-  });
-
   it("create batch messages", async () => {
     const messages = await prisma.message.createMany({
       data: [

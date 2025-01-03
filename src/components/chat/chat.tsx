@@ -1,10 +1,22 @@
+"use client";
+
 import { useChat } from "ai/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useEffect } from "react";
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({});
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+    useChat({});
 
+  useEffect(() => {
+    return () => {
+      setMessages((prev) => {
+        console.log("messages", prev);
+        return [];
+      });
+    };
+  }, []);
   return (
     <div className="flex-grow flex flex-col h-full border rounded-lg p-4">
       <div className="flex-1">

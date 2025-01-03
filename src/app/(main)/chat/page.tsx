@@ -1,6 +1,7 @@
 "use client";
 
 import Chat from "@/components/chat/chat";
+import { useEffect } from "react";
 
 export default function ChatPage() {
   return (
