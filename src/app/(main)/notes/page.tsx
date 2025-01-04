@@ -1,8 +1,4 @@
-import { NotesListHeader } from "@/components/notes";
-import dynamic from "next/dynamic";
-const NotesList = dynamic(() =>
-  import("@/components/notes").then((mod) => mod.NotesList),
-);
+import { NotesList, NotesListHeader } from "@/components/notes";
 export default function NotesPage() {
   return (
     <div className="flex-1">

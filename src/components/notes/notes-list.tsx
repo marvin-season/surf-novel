@@ -1,14 +1,33 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useNotesContext } from "@/contexts/note-context";
-import { Plus, Timer, TimerIcon, User } from "lucide-react";
+import { TimerIcon, User } from "lucide-react";
 import Empty from "./empty";
+import { useCallback, useEffect, useState } from "react";
+import { Note } from "@/types/notes";
+import { getNote, getNotes } from "@/app/(main)/notes/actions";
+import { useRouter } from "next/navigation";
 
 export default function NotesList() {
   const t = useTranslations("notes");
-  const { notes, handleSelectNote } = useNotesContext();
 
+  const [notes, setNotes] = useState<Note[]>([]);
+  const router = useRouter();
+  useEffect(() => {
+    (async () => {
+      const data = await getNotes();
+      data?.length > 0 && setNotes(data);
+    })();
+  }, []);
+  const handleSelectNote = useCallback(async (id?: string) => {
+    if (!id) {
+      router.push(`/notes/0`);
+      return;
+    }
+
+    const note = await getNote(id);
+    router.push(`/notes/${id}`);
+  }, []);
   return (
     <>
       {notes.length === 0 && <Empty />}
