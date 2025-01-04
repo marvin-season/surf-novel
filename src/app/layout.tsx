@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/contexts/theme-context";
 import { NextIntlClientProvider } from "next-intl";
 import { ReactNode } from "react";
 import { getLocale, getMessages } from "next-intl/server";
-import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -30,9 +29,7 @@ export default async function RootLayout({
       <body className="antialiased">
         <Toaster />
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <AuthProvider>{children}</AuthProvider>
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>
