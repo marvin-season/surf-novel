@@ -25,7 +25,6 @@ export default function NotesList() {
       return;
     }
 
-    const note = await getNote(id);
     router.push(`/notes/${id}`);
   }, []);
   return (
