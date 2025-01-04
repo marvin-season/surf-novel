@@ -4,11 +4,11 @@ import { Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useNotesContext } from "@/contexts/note-context";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 export default function () {
   const t = useTranslations("notes");
-  const { handleSelectNote } = useNotesContext();
+  const router = useRouter();
   return (
     <>
       <div className="text-center mb-6">
@@ -23,7 +23,9 @@ export default function () {
         {/* 新建笔记按钮 */}
         <Button
           variant={"secondary"}
-          onClick={() => handleSelectNote()}
+          onClick={() => {
+            router.push(`/notes/0`);
+          }}
           className="flex-shrink-0 px-4 py-6 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-all duration-100"
         >
           <Pencil size={20} />

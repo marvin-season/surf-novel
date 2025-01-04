@@ -20,11 +20,6 @@ export default function NotesList() {
     })();
   }, []);
   const handleSelectNote = useCallback(async (id?: string) => {
-    if (!id) {
-      router.push(`/notes/0`);
-      return;
-    }
-
     router.push(`/notes/${id}`);
   }, []);
   return (
