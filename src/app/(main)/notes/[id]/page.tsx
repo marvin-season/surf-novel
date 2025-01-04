@@ -1,7 +1,5 @@
-import dynamic from "next/dynamic";
-const NoteEditorContrainer = dynamic(
-  () => import("@/components/notes/note-editor-container"),
-);
+import NoteEditorContainer from "@/components/notes/note-editor-container";
+import { getNote } from "@/app/(main)/notes/actions";
 
 // 预渲染页面 暂时无法实现 SSG 静态预选染
 // export async function generateStaticParams() {
@@ -17,9 +15,14 @@ export default async function Note({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+  const note = await getNote(id);
+  if (!note) {
+    return <div>ERROR</div>;
+  }
   return (
     <>
-      <NoteEditorContrainer />
+      <NoteEditorContainer note={note} />
     </>
   );
 }

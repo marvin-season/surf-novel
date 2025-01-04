@@ -59,6 +59,8 @@ export const useNotesContextState = () => {
     })();
   }, [_]);
 
+  console.log(selectedNote);
+
   return {
     notes,
     setNotes,

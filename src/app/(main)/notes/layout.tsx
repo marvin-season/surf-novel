@@ -1,18 +1,16 @@
-"use client";
+"use server";
 
 import { NoteProvider } from "@/contexts/note-context";
-import { useNotesContextState } from "./hook";
-export default function NotesLayout({
+import { ReactNode } from "react";
+
+export default async function NotesLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
-  const value = useNotesContextState();
   return (
-    <NoteProvider value={value}>
-      <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
-        {children}
-      </div>
-    </NoteProvider>
+    <div className="flex h-[calc(100vh-3.5rem)] min-h-0 overflow-hidden">
+      <NoteProvider>{children}</NoteProvider>
+    </div>
   );
 }

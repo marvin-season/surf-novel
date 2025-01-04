@@ -1,3 +1,5 @@
+"use client";
+
 import { useNotesContextState } from "@/app/(main)/notes/hook";
 import { Note } from "@/types/notes";
 import { createContext, useContext, useState } from "react";
@@ -9,13 +11,9 @@ const defaultValue = {
 
 export const NoteContext = createContext(defaultValue);
 
-export const NoteProvider = ({
-  children,
-  value,
-}: {
-  children: React.ReactNode;
-  value: typeof defaultValue;
-}) => {
+export const NoteProvider = ({ children }: { children: React.ReactNode }) => {
+  const value = useNotesContextState();
+
   return <NoteContext.Provider value={value}>{children}</NoteContext.Provider>;
 };
 
