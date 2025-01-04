@@ -6,7 +6,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     authorized: async ({ request, auth }) => {
       const { pathname } = request.nextUrl;
-      if (!auth && pathname !== "/" && pathname !== "/login") {
+      if (!auth && pathname !== "/login") {
         const newUrl = new URL("/login", request.nextUrl.origin);
         return Response.redirect(newUrl);
       }
