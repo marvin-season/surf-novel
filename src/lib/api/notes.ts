@@ -1,4 +1,5 @@
 import { fetchApi } from "../fetch";
+import { serverFetchApi } from "@/lib/server-fetch";
 
 // 笔记相关
 const notes = {
@@ -23,7 +24,7 @@ const notes = {
       showSuccess: true,
       successMessage: "笔记删除成功",
     }),
-  get: <T>(id: string) => fetchApi<T>(`/notes/${id}`),
+  get: <T>(id: string) => serverFetchApi<T>(`/notes/${id}`),
 };
 
 export default notes;

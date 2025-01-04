@@ -8,7 +8,7 @@ import { Separator } from "../ui/separator";
 import { Note } from "@/types/notes";
 import { notesApi } from "@/lib/api";
 
-export default function NoteEditor({ note }: { note: Note }) {
+export default function NoteEditor({ note }: { note?: Note }) {
   const { editor } = useCurrentEditor();
   if (!editor) return null;
 
@@ -43,7 +43,7 @@ export default function NoteEditor({ note }: { note: Note }) {
           await handleUpdateOrCreate(editor.getJSON());
         }}
         onDelete={async () => {
-          if (note.id) {
+          if (note?.id) {
             await handleDelete(note.id);
             return;
           }

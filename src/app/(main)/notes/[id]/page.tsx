@@ -16,10 +16,7 @@ export default async function Note({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const note = await getNote(id);
-  if (!note) {
-    return <div>ERROR</div>;
-  }
+  const note = (await getNote(id).catch(console.log)) || undefined;
   return (
     <>
       <NoteEditorContainer note={note} />
