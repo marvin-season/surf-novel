@@ -13,7 +13,6 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
