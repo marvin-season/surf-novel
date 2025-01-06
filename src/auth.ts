@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { compare } from "bcryptjs";
+import { NextResponse } from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -59,6 +60,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.id = token.id as string; // 将 JWT 中的用户 ID 添加到会话
       session.user.email = token.email as string; // 将 JWT 中的用户邮箱添加到会话
       return session; // 返回更新后的会话对象
+    },
+    authorized({ request, auth }) {
+      const { pathname } = request.nextUrl;
+
+      // 公开路由
+      const publicRoutes = ["/", "/login"];
+      if (publicRoutes.includes(pathname)) {
+        return true; // 允许访问
+      }
+
+      // 如果用户未登录，重定向到登录页面
+      if (!auth) {
+        return NextResponse.redirect(new URL("/login", request.url));
+      }
+
+      // 允许访问受保护路由
+      return true;
     },
   },
   secret: process.env.NEXT_AUTH_SECRET,
