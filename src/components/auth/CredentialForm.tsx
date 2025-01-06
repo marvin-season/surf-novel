@@ -1,9 +1,7 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { signIn } from "@/auth";
 
 export default function () {
   return (
@@ -13,33 +11,31 @@ export default function () {
         <p className="text-sm text-muted-foreground">输入您的账户信息以继续</p>
       </div>
 
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertDescription>{"error"}</AlertDescription>
-      </Alert>
-
-      <form onSubmit={() => {}} className="space-y-4">
+      <form
+        action={async (formData) => {
+          "use server";
+          const form = Object.fromEntries(formData);
+          await signIn("credentials", { ...form, redirectTo: "/notes" });
+        }}
+        className="space-y-4"
+      >
         <div className="space-y-2">
           <Label htmlFor="email">邮箱</Label>
           <Input
+            name="email"
             id="email"
             type="email"
             placeholder="请输入邮箱"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
-            // disabled={isLoading}
             required
           />
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">密码</Label>
           <Input
+            name="password"
             id="password"
             type="password"
             placeholder="请输入密码"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
-            // disabled={isLoading}
             required
           />
         </div>
@@ -49,10 +45,9 @@ export default function () {
       </form>
 
       <div className="text-sm text-center">
-        <span className="text-muted-foreground">还没有账号？</span>{" "}
-        <Link href="/register" className="text-primary hover:underline">
-          立即注册
-        </Link>
+        <span className="text-muted-foreground">
+          登陆时会自动为您注册一个帐号
+        </span>{" "}
       </div>
     </>
   );
