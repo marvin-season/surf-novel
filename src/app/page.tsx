@@ -7,8 +7,8 @@ export default async function App() {
         className="flex flex-col gap-2 justify-center items-center"
         action={async (formData) => {
           "use server";
-          console.log("form", Object.fromEntries(formData));
-          await signIn("credentials", formData);
+          const form = Object.fromEntries(formData);
+          await signIn("credentials", { ...form, redirectTo: "/notes" });
         }}
       >
         <label>
