@@ -12,7 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       // @ts-ignore
       authorize: async (credentials) => {
-        console.log("credentials", credentials);
         return loginOrRegist(
           credentials as {
             email: string;
@@ -46,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // 如果用户未登录，重定向到登录页面
       if (!auth) {
-        console.log("pathname", pathname);
         if (pathname.startsWith("/api")) {
           return NextResponse.json(
             {

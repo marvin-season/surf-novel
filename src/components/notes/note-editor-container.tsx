@@ -9,6 +9,7 @@ export default function NoteEditorContainer({ note }: { note?: Note }) {
     <>
       <div className="flex-1 overflow-y-auto p-6">
         <AdvancedRichEditorProvider
+          immediatelyRender={false}
           slotBefore={<NoteEditor note={note} />}
         ></AdvancedRichEditorProvider>
       </div>

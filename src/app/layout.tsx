@@ -23,7 +23,6 @@ export default async function RootLayout({
   // Load messages for the current locale
   const messages = await getMessages();
   const session = await auth();
-  console.log("session", session);
   return (
     <html lang={locale}>
       <head>

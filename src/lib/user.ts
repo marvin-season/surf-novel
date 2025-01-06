@@ -27,8 +27,6 @@ export const loginOrRegist = async ({
   if (user) {
     // 验证密码
     const isValid = await compare(password, user.password);
-    console.log("user isValid", user, isValid);
-
     if (isValid) {
       return { id: user.id, email: user.email };
     }
