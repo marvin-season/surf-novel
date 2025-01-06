@@ -26,6 +26,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (user) {
           // 验证密码
           const isValid = await compare(password, user.password);
+          console.log("user isValid", user, isValid);
+
           if (isValid) {
             return { id: user.id, email: user.email };
           }
@@ -43,17 +45,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  async jwt({ token, user }) {
-    if (user) {
-      token.id = user.id; // 将用户 ID 添加到 JWT
-      token.email = user.email; // 将用户邮箱添加到 JWT
-    }
-    return token; // 返回更新后的 JWT
-  },
-  async session({ session, token }) {
-    session.user.id = token.id; // 将 JWT 中的用户 ID 添加到会话
-    session.user.email = token.email; // 将 JWT 中的用户邮箱添加到会话
-    return session; // 返回更新后的会话对象
+  callbacks: {
+    async jwt({ token, user }) {
+      console.log("jwt", token, user);
+      if (user) {
+        token.id = user.id; // 将用户 ID 添加到 JWT
+        token.email = user.email; // 将用户邮箱添加到 JWT
+      }
+      return token; // 返回更新后的 JWT
+    },
+    async session({ session, token }) {
+      console.log("session session", session, token);
+      session.user.id = token.id as string; // 将 JWT 中的用户 ID 添加到会话
+      session.user.email = token.email as string; // 将 JWT 中的用户邮箱添加到会话
+      return session; // 返回更新后的会话对象
+    },
   },
   secret: process.env.NEXT_AUTH_SECRET,
 });
