@@ -35,10 +35,25 @@ export const loginOrRegist = async ({
   } else {
     // 注册新用户
     const hashedPassword = await hash(password, 12);
+    const defaultProvider = await prisma.providerInfo.findFirst({
+      where: {
+        default: true,
+      },
+    });
     const newUser = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
+        userConfig: {
+          create: {
+            provider_settings: JSON.stringify({
+              ...defaultProvider,
+              dynamic_params: JSON.parse(
+                defaultProvider?.dynamic_params || "{}",
+              ),
+            }),
+          },
+        },
       },
     });
     return { id: newUser.id, email: newUser.email };
