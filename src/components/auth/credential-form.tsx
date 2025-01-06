@@ -46,7 +46,7 @@ export default function () {
 
       <div className="text-sm text-center">
         <span className="text-muted-foreground">
-          登陆时会自动为您注册一个帐号
+          如果您没有帐号，系统会自动为您注册一个新帐号
         </span>{" "}
       </div>
     </>

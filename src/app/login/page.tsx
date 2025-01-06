@@ -1,4 +1,4 @@
-import CredentialForm from "@/components/auth/CredentialForm";
+import CredentialForm from "@/components/auth/credential-form";
 
 export default function LoginPage() {
   return (
