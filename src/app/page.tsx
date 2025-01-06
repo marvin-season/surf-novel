@@ -1,5 +1,11 @@
-// import SignOutServer from "@/components/auth/sign-out-server";
+import TopBar from "@/components/index/topbar";
+import Welcome from "@/components/index/welcome";
 
 export default async function App() {
-  return <div className="">index page</div>;
+  return (
+    <div className="h-[100dvh]">
+      <TopBar />
+      <Welcome />
+    </div>
+  );
 }
