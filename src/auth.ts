@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { loginOrRegist } from "@/lib/user";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
