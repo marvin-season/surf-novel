@@ -12,6 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
+      // @ts-ignore
       authorize: async (credentials) => {
         console.log("credentials", credentials);
 
@@ -72,6 +73,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // 如果用户未登录，重定向到登录页面
       if (!auth) {
+        console.log("pathname", pathname);
+        if (pathname.startsWith("/api")) {
+          return NextResponse.json(
+            {
+              message: "UnAuth",
+            },
+            { status: 401 },
+          );
+        }
         return NextResponse.redirect(new URL("/login", request.url));
       }
 
