@@ -49,7 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("jwt", token, user);
       if (user) {
         token.id = user.id; // 将用户 ID 添加到 JWT
         token.email = user.email; // 将用户邮箱添加到 JWT
@@ -57,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token; // 返回更新后的 JWT
     },
     async session({ session, token }) {
-      console.log("session session", session, token);
       session.user.id = token.id as string; // 将 JWT 中的用户 ID 添加到会话
       session.user.email = token.email as string; // 将 JWT 中的用户邮箱添加到会话
       return session; // 返回更新后的会话对象
