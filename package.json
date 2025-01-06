@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate && pnpm db:push && pnpm db:generate && pnpm db:seed",
     "setup": "pnpm install && pnpm db:push && pnpm db:generate && pnpm db:seed",
     "dev": "next dev --turbopack --port 4000",
     "build": "next build",
