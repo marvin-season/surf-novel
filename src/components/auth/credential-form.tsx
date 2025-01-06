@@ -40,7 +40,7 @@ export default function () {
           />
         </div>
         <Button type="submit" className="w-full" disabled={false}>
-          {/*{isLoading ? "登录中..." : "登录"}*/}
+          {"登录"}
         </Button>
       </form>
 
