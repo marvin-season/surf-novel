@@ -1,12 +1,12 @@
-import { fetchApi } from "../fetch";
+import { serverFetchApi } from "../server-fetch";
 
 // conversation 相关
 const conversation = {
-  list: <T>() => fetchApi<T>(`/conversation`),
+  list: <T>() => serverFetchApi<T>(`/conversation`),
   listMessage: <T>(conversationId: string) =>
-    fetchApi<T>(`/message?conversationId=${conversationId}`),
+    serverFetchApi<T>(`/message?conversationId=${conversationId}`),
   create: <T>() =>
-    fetchApi<T>("/conversation", {
+    serverFetchApi<T>("/conversation", {
       method: "POST",
     }),
 };
