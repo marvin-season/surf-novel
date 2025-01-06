@@ -19,6 +19,8 @@ import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 
+import SignOut from "@/components/auth/sign-out";
+
 const sidebarNavItems = [
   {
     title: "my_notes",
@@ -137,17 +139,7 @@ export default function MainAppLayout({ children }: { children: ReactNode }) {
 
           {/* 退出登录按钮 */}
           <div className="p-2 border-t">
-            <Button
-              variant="ghost"
-              className={cn(
-                "w-full justify-start gap-3",
-                !expanded && "justify-center",
-              )}
-              onClick={handleLogout}
-            >
-              <LogOut className="h-4 w-4" />
-              {expanded && <span>{t("logout")}</span>}
-            </Button>
+            <SignOut />
           </div>
         </div>
       )}
