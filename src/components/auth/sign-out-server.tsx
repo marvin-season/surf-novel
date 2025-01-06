@@ -1,7 +1,7 @@
 import { signOut } from "@/auth";
 
 import { Button } from "@/components/ui/button";
-export default async function SignOut() {
+export default async function SignOutServer() {
   return (
     <form
       action={async (formData) => {
