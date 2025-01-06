@@ -1,11 +1,11 @@
 "use server";
 
-import { getStore } from "@/lib/store";
+import { auth } from "@/auth";
 
 export const getLoggedUserInfo = async () => {
-  const user = JSON.parse((await getStore("user")) || "{}");
-  if (!user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-  return user;
+  const session = await auth();
+  return session!.user as {
+    email: string;
+    id: string;
+  };
 };
