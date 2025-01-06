@@ -3,7 +3,7 @@
 import { logout } from "@/app/action";
 import { Button } from "@/components/ui/button";
 
-export default async function SignOutClient() {
+export default function SignOutClient() {
   return (
     <Button
       onClick={async () => {
