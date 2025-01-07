@@ -65,15 +65,6 @@ export default function Operator({
       <div className="flex p-2 gap-2 justify-end">
         <div
           className="cursor-pointer rounded-sm bg-slate-50 p-1"
-          onClick={() => {
-            // editor.chain().focus().setAiAcceptor({ content: '+ aaa', id: '1' }).run();
-            editor.chain().focus().insertContent("hahha1.1");
-          }}
-        >
-          <ActivityIcon size={12} />
-        </div>
-        <div
-          className="cursor-pointer rounded-sm bg-slate-50 p-1"
           onClick={onDelete}
         >
           <Trash2 size={12} />
