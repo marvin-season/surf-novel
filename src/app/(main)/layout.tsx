@@ -59,15 +59,6 @@ const profileNavItems = [
 export default function MainAppLayout({ children }: { children: ReactNode }) {
   const segment = useSelectedLayoutSegment();
   const router = useRouter();
-  const t = useTranslations("SideBar");
-
-  const handleLogout = async () => {
-    try {
-      router.replace("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
 
   const renderNavItems = (
     items: typeof sidebarNavItems | typeof profileNavItems,
@@ -101,6 +92,9 @@ export default function MainAppLayout({ children }: { children: ReactNode }) {
         <div className="flex h-full flex-col">
           {/* 标题 */}
           <div
+            onClick={() => {
+              router.push("/");
+            }}
             className={cn(
               "flex h-14 items-center border-b",
               expanded ? "px-4" : "justify-center",
