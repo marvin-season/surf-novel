@@ -1,32 +1,32 @@
 import { createAzure } from "@ai-sdk/azure";
 
 export function initAzureProvider({
-  model,
-  apiKey,
-  baseURL,
+  open_model_pref,
+  azure_openai_key,
+  azure_openai_endpoint,
 }: {
-  model?: string;
-  apiKey?: string;
-  baseURL?: string;
+  open_model_pref?: string;
+  azure_openai_key?: string;
+  azure_openai_endpoint?: string;
 }) {
-  const __model = process.env.NEXT_OPEN_MODEL_PREF || model;
-  const __apiKey = process.env.NEXT_AZURE_OPENAI_KEY || apiKey;
-  const __baseURL =
+  const model = process.env.NEXT_OPEN_MODEL_PREF || open_model_pref;
+  const apiKey = process.env.NEXT_AZURE_OPENAI_KEY || azure_openai_key;
+  const baseURL =
     `${process.env.NEXT_AZURE_OPENAI_ENDPOINT}/openai/deployments/` ||
-    `${baseURL}/openai/deployments/`;
-  if (!__model) {
+    `${azure_openai_endpoint}/openai/deployments/`;
+  if (!model) {
     throw new Error("Model is not defined");
   }
-  if (!__apiKey) {
+  if (!apiKey) {
     throw new Error("API Key is not defined");
   }
-  if (!__baseURL) {
+  if (!baseURL) {
     throw new Error("Base URL is not defined");
   }
   const azure = createAzure({
-    baseURL: __baseURL,
-    apiKey: __apiKey,
+    baseURL,
+    apiKey,
   });
 
-  return azure(__model);
+  return azure(model);
 }
