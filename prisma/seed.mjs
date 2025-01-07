@@ -71,6 +71,36 @@ const prisma = new PrismaClient()
         },
       }),
     },
+    {
+      name: 'deepseek',
+      description: 'deepseek provider',
+      dynamic_params: JSON.stringify({
+        deepseek_baseurl: {
+          label: 'deepseek_baseurl',
+          type: 'string',
+          default: '',
+          value: '',
+          placeholder: '请输入 deepseek_baseurl',
+        },
+        deepseek_api_key: {
+          label: 'deepseek_api_key',
+          type: 'string',
+          default: '',
+          value: '',
+          placeholder: '请输入 deepseek_api_key',
+        },
+        open_model_pref: {
+          label: 'deepseek_model_id',
+          type: 'select',
+          default: '',
+          value: '',
+          placeholder: '请输入部署的模型名称',
+          options: [
+            { name: 'deepseek-chat', value: 'deepseek-chat' },
+          ],
+        },
+      }),
+    },
   ]
   // init provider config
   try {
