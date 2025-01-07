@@ -7,10 +7,12 @@ import { useCallback, useEffect } from "react";
 import { Separator } from "../ui/separator";
 import { Note } from "@/types/notes";
 import { notesApi } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export default function NoteEditor({ note }: { note?: Note }) {
   const { editor } = useCurrentEditor();
   if (!editor) return null;
+  const router = useRouter();
 
   useEffect(() => {
     editor.commands.setContent(note?.content || "");
@@ -19,10 +21,12 @@ export default function NoteEditor({ note }: { note?: Note }) {
   const handleUpdateOrCreate = useCallback(
     async (content: any, title = "未命名") => {
       if (!note) {
-        const note = await notesApi.create<Note>({
+        const newNote = await notesApi.create<Note>({
           title,
           content,
         });
+
+        router.replace(`/notes/${newNote.id}`);
       } else {
         await notesApi.update(note.id, {
           content,
