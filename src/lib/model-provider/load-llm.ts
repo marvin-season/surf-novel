@@ -14,6 +14,7 @@ export const loadLLMFromSettings = (
       config[key] = value.value;
     },
   );
+  console.log("user config: ", config);
   const model = createModel(provider, config);
   console.log("model", model);
   return model;

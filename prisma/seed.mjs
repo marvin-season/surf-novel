@@ -58,17 +58,6 @@ const prisma = new PrismaClient()
             { name: 'gpt-4o', value: 'gpt-4o' },
           ],
         },
-        embedding_model_pref: {
-          label: 'embedding_model_pref',
-          type: 'select',
-          default: '',
-          value: '',
-          placeholder: '请输入embedding模型名称',
-          options: [
-            { name: 'text-embedding-ada-002', value: 'text-embedding-ada-002' },
-            { name: 'text-embedding-3-small', value: 'text-embedding-3-small' },
-          ],
-        },
       }),
     },
     {
@@ -89,7 +78,7 @@ const prisma = new PrismaClient()
           value: '',
           placeholder: '请输入 deepseek_api_key',
         },
-        open_model_pref: {
+        deepseek_model_id: {
           label: 'deepseek_model_id',
           type: 'select',
           default: '',

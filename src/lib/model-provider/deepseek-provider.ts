@@ -1,30 +1,30 @@
 import { createDeepSeek } from "@ai-sdk/deepseek";
 
 export function initDeepSeek({
-  model,
-  apiKey,
-  baseURL,
+  deepseek_model_id,
+  deepseek_api_key,
+  deepseek_baseurl,
 }: {
-  model?: string;
-  apiKey?: string;
-  baseURL?: string;
+  deepseek_model_id?: string;
+  deepseek_api_key?: string;
+  deepseek_baseurl?: string;
 }) {
-  const __model = process.env.NEXT_DEEPSEEK_MODEL_ID || model;
-  const __apiKey = process.env.NEXT_DEEPSEEK_API_KEY || apiKey;
-  const __baseURL = `${process.env.NEXT_DEEPSEEK_BASE_URL}` || `${baseURL}`;
-  if (!__model) {
+  const model = process.env.NEXT_DEEPSEEK_MODEL_ID || deepseek_model_id;
+  const apiKey = process.env.NEXT_DEEPSEEK_API_KEY || deepseek_api_key;
+  const baseURL = process.env.NEXT_DEEPSEEK_BASE_URL || deepseek_baseurl;
+  if (!model) {
     throw new Error("Model is not defined");
   }
-  if (!__apiKey) {
+  if (!apiKey) {
     throw new Error("API Key is not defined");
   }
-  if (!__baseURL) {
+  if (!baseURL) {
     throw new Error("Base URL is not defined");
   }
   const deepseek = createDeepSeek({
-    baseURL: __baseURL,
-    apiKey: __apiKey,
+    baseURL,
+    apiKey,
   });
 
-  return deepseek(__model);
+  return deepseek(model);
 }
