@@ -8,7 +8,7 @@ setup database and dependencies
 pnpm run setup
 ```
 
-**copy .env.example to .env.local and add your own env**, just like this:
+**copy .env.example to .env and add your own env**, just like this:
 
 ```txt
 NEXT_PUBLIC_API_URL=http://localhost:4000/api
