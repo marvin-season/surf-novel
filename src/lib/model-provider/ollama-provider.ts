@@ -15,8 +15,8 @@ export function initOllamaProvider({
     throw new Error("Endpoint is not defined");
   }
   const ollama = createOllama({
-    baseURL: `${base_url}/api`,
+    baseURL: `${process.env.NEXT_OLLAMA_ENDPOINT || base_url}/api`,
   });
 
-  return ollama(model);
+  return ollama(process.env.NEXT_OLLAME_LLM_MODEL || model);
 }
