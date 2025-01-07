@@ -68,3 +68,9 @@ surf-novel/
 
 - Node.js >= 18
 - PostgreSQL >= 14
+
+## 模型支持
+
+- azure
+- ollama
+- deepseek
