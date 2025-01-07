@@ -5,7 +5,7 @@
 setup database and dependencies
 
 ```sh
-pnpm run setup
+pnpm run install
 ```
 
 **copy .env.example to .env and add your own env**, just like this:
