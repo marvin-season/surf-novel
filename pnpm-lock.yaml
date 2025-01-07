@@ -11,6 +11,9 @@ importers:
       '@ai-sdk/azure':
         specifier: ^1.0.13
         version: 1.0.13(zod@3.24.1)
+      '@ai-sdk/deepseek':
+        specifier: ^0.0.1
+        version: 0.0.1(zod@3.24.1)
       '@formatjs/intl-localematcher':
         specifier: ^0.5.9
         version: 0.5.9
@@ -263,6 +266,18 @@ packages:
 
   '@ai-sdk/azure@1.0.13':
     resolution: {integrity: sha512-yLzjGANoCUAB8Q0KBfcBIYiiU81reSkbzl/yBdYuLH34x2Lob9RUUSXMGIPdk6XW5dyJYYF9jZdER/EbVD3Jhg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
+  '@ai-sdk/deepseek@0.0.1':
+    resolution: {integrity: sha512-jkF4wM7Kkdwh2Mk7l06+WTJNN0+JsrSUxlkfbcqfdqJPoyrkqY4RSFk1Vf5t33P0LRRFzYozB5uIUJ5/3QpaWg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
+  '@ai-sdk/openai-compatible@0.0.13':
+    resolution: {integrity: sha512-fuauXYKac6PBuf8m52tWcWQW0UCScEkwTaOyr00TcPeK3dd8nPP+ZJzSYE5QhFg7rwi9EH3ahIFqSX1biXhdkQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -4008,6 +4023,19 @@ snapshots:
   '@ai-sdk/azure@1.0.13(zod@3.24.1)':
     dependencies:
       '@ai-sdk/openai': 1.0.11(zod@3.24.1)
+      '@ai-sdk/provider': 1.0.3
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
+      zod: 3.24.1
+
+  '@ai-sdk/deepseek@0.0.1(zod@3.24.1)':
+    dependencies:
+      '@ai-sdk/openai-compatible': 0.0.13(zod@3.24.1)
+      '@ai-sdk/provider': 1.0.3
+      '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
+      zod: 3.24.1
+
+  '@ai-sdk/openai-compatible@0.0.13(zod@3.24.1)':
+    dependencies:
       '@ai-sdk/provider': 1.0.3
       '@ai-sdk/provider-utils': 2.0.5(zod@3.24.1)
       zod: 3.24.1

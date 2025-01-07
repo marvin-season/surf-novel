@@ -2,6 +2,7 @@ import { initOllamaProvider } from "./ollama-provider";
 import { initAzureProvider } from "./azure-provider";
 import { ModelProvider } from "@/types/model-provider";
 import { DynamicParamsType } from "@/components/settings/dynamic-form";
+import { initDeepSeek } from "./deepseek-provider";
 
 export const loadLLMFromSettings = (
   settings: Record<string, any | DynamicParamsType>,
@@ -24,6 +25,8 @@ export const createModel = (provider: string, config: Record<string, any>) => {
       return initOllamaProvider(config);
     case ModelProvider.Azure:
       return initAzureProvider(config);
+    case ModelProvider.DeepSeek:
+      return initDeepSeek(config);
     default:
       return initOllamaProvider({});
   }
