@@ -53,7 +53,7 @@ export default function GenerativeFloatingMenu({
         // 且是否聚焦
         return !!selection?.empty && !!editor?.isFocused;
       }}
-      className={"max-w-[90vw]"}
+      className={"max-w-[90vw] bg-white"}
       tippyOptions={{
         onCreate: (instance) => {
           instanceRef.current = instance;
