@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   surf-novel:
     container_name: surf-novel
@@ -13,13 +15,30 @@ services:
     restart: always
     ports:
       - 3000:3000
+    environment:
+      POSTGRES_PRISMA_URL: postgresql://postgres:postgres@postgres:5432/surf_novel_db
+    depends_on:
+      - postgres
     networks:
       - surf_novel_network
 
-  # Add more containers below (nginx, postgres, etc.)
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: surf_novel_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - surf_novel_network
 
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
+volumes:
+  postgres_data:
+
 networks:
   surf_novel_network:
     external: true

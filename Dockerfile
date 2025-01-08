@@ -9,7 +9,7 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json pnpm-lock.yaml* ./
 # Omit --production flag for TypeScript devDependencies
-RUN npm i -g pnpm && pnpm i
+RUN npm i -g pnpm && npm config set registry https://registry.npmmirror.com && pnpm i
 
 COPY src ./src
 COPY public ./public
@@ -34,12 +34,7 @@ ENV POSTGRES_PRISMA_URL=${POSTGRES_PRISMA_URL}
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 # Build Next.js based on the preferred package manager
-RUN \
-  if [ -f yarn.lock ]; then yarn build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm build; \
-  else npm run build; \
-  fi
+RUN pnpm build
 
 # Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
 
