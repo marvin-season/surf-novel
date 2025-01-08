@@ -1,0 +1,25 @@
+services:
+  surf-novel:
+    container_name: surf-novel
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+        NEXT_AUTH_SECRET: ${NEXT_AUTH_SECRET}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        POSTGRES_PRISMA_URL: ${POSTGRES_PRISMA_URL}
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - surf_novel_network
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  surf_novel_network:
+    external: true

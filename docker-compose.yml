@@ -1,7 +1,0 @@
-services:
-  surf-novel-production:
-    build:
-      dockerfile: ./Dockerfile
-    image: surf-novel-production
-    ports:
-      - "3003:3000"
