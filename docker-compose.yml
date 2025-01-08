@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: surf_novel_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - surf_novel_network
   surf-novel:
     container_name: surf-novel
     build:
@@ -19,20 +32,6 @@ services:
       POSTGRES_PRISMA_URL: postgresql://postgres:postgres@postgres:5432/surf_novel_db
     depends_on:
       - postgres
-    networks:
-      - surf_novel_network
-
-  postgres:
-    container_name: postgres
-    image: postgres:14
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: surf_novel_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     networks:
       - surf_novel_network
 

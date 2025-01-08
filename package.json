@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "postinstall": "pnpm run setup",
-    "setup": "prisma generate && pnpm db:push && pnpm db:generate && pnpm db:seed",
+    "docker-setup": "prisma generate",
+    "setup": "prisma generate && prisma db push && prisma db seed",
     "dev": "next dev --turbopack --port 4000",
     "build": "next build",
     "start": "next start --port 4000",
