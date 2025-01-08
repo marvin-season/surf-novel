@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"  # 暴露 80 端口
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf  # 挂载 Nginx 配置文件
+    depends_on:
+      - surf-novel
+    networks:
+      - surf_novel_network
   surf-novel:
     container_name: surf-novel
     build:
