@@ -9,10 +9,12 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json pnpm-lock.yaml* ./
 COPY prisma ./prisma
-COPY node_modules ./node_modules
-RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm run docker-setup
+# RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm run docker-setup
 # Omit --production flag for TypeScript devDependencies
-# RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm i
+RUN npm config set registry https://registry.npmmirror.com \
+    && npm i -g pnpm \
+    && pnpm i \
+    && pnpm prisma-setup
 
 COPY src ./src
 COPY public ./public
