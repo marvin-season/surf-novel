@@ -14,6 +14,12 @@ services:
       - 5432:5432
     networks:
       - surf_novel_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d surf_novel_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      
   surf-novel:
     container_name: surf-novel
     build:
