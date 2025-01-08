@@ -2,7 +2,7 @@ services:
   surf-novel:
     container_name: surf-novel
     build:
-      context: ../
+      context: ./
       dockerfile: Dockerfile
       args:
         ENV_VARIABLE: ${ENV_VARIABLE}
