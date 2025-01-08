@@ -46,4 +46,3 @@ next-env.d.ts
 # prisma
 *.db
 dev.*
-prisma/migrations/**
