@@ -25,11 +25,9 @@ COPY .env ./.env
 # RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm run docker-setup
 # Omit --production flag for TypeScript devDependencies
 RUN npm config set registry https://registry.npmmirror.com \
-&& npm i -g pnpm \
-&& pnpm i
-
-# 生成 Prisma 客户端（不需要数据库连接）
-RUN pnpm prisma generate
+    && npm i -g pnpm \
+    && pnpm i \
+    && pnpm prisma-setup
 
 COPY src ./src
 COPY public ./public
@@ -72,14 +70,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# 复制 Prisma 客户端和 schema
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/prisma ./prisma
-
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 # Note: Don't expose ports here, Compose will handle that for us
 
-# 在容器启动时运行数据库迁移
-CMD ["sh", "-c", "pnpm prisma migrate deploy && node server.js"]
+CMD ["node", "server.js"]
