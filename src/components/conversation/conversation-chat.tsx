@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import { useEffect } from "react";
 import { Message } from "@prisma/client";
 import { Message as AiMessage } from "ai/react";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 export default function ConversationChat({
   historyMessages,
@@ -35,10 +36,15 @@ export default function ConversationChat({
   return (
     <div className="flex-grow flex flex-col h-full border rounded-lg p-4">
       <div className="flex-1">
-        {messages.map((message) => (
-          <div key={message.id}>
-            {message.role === "user" ? "User: " : "AI: "}
-            {message.content}
+        {messages.map((message, index) => (
+          <div
+            key={message.id || index}
+            className={`gap-2  ${message.role === "user" ? "flex flex-row-reverse text-blue-400" : "flex"}`}
+          >
+            <div className="flex-shrink-0">
+              {message.role === "user" ? <ArrowUp /> : <ArrowDown />}
+            </div>
+            <div>{message.content}</div>
           </div>
         ))}
       </div>
