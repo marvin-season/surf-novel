@@ -1,0 +1,8 @@
+.next
+.husky
+.vercel
+.swc
+.prettierrc
+.prettierrc.ignore
+jest.config.ts
+*.md

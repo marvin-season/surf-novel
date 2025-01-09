@@ -18,10 +18,12 @@ ENV POSTGRES_PRISMA_URL=${POSTGRES_PRISMA_URL}
 
 RUN echo POSTGRES_PRISMA_URL: ${POSTGRES_PRISMA_URL}
 
+# copy all
+COPY . .
 # Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* ./
-COPY prisma ./prisma
-COPY .env ./.env
+# COPY package.json pnpm-lock.yaml* ./
+# COPY prisma ./prisma
+# COPY .env ./.env
 # RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm run docker-setup
 # Omit --production flag for TypeScript devDependencies
 RUN npm config set registry https://registry.npmmirror.com \
@@ -29,11 +31,11 @@ RUN npm config set registry https://registry.npmmirror.com \
     && pnpm i \
     && pnpm prisma-setup
 
-COPY src ./src
-COPY locales ./locales
-COPY public ./public
-COPY next.config.ts .
-COPY tsconfig.json .
+# COPY src ./src
+# COPY locales ./locales
+# COPY public ./public
+# COPY next.config.ts .
+# COPY tsconfig.json .
 
 
 
