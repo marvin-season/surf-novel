@@ -10,13 +10,17 @@ export default function AiCompleteResultPanel({
 }) {
   return (
     <div className={"p-4 max-h-72 overflow-scroll"}>
-      <RichEditorProvider editable={false}>
-        <RichEditor content={content} />
-      </RichEditorProvider>
+      <RichContent content={content} />
     </div>
   );
 }
-
+export const RichContent = ({ content }: { content: string }) => {
+  return (
+    <RichEditorProvider editable={false}>
+      <RichEditor content={content} />
+    </RichEditorProvider>
+  );
+};
 const RichEditor = ({ content }: { content: string }) => {
   const { editor } = useCurrentEditor();
   useEffect(() => {
