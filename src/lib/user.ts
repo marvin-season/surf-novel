@@ -30,6 +30,7 @@ export const loginOrRegist = async ({
     if (isValid) {
       return { id: user.id, email: user.email };
     }
+    return null;
   } else {
     // 注册新用户
     const hashedPassword = await hash(password, 12);
