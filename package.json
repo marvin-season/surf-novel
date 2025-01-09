@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prisma-setup": "prisma generate && prisma migrate deploy && prisma db seed",
-    "dev-setup": "prisma generate && prisma db push && prisma db seed",
+    "postinstall": "pnpm run prisma-setup",
+    "prisma-setup": "prisma generate && prisma db push && prisma db seed",
     "dev": "next dev --turbopack --port 4000",
     "build": "next build",
     "start": "next start --port 4000",

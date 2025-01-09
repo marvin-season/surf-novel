@@ -1,6 +1,6 @@
 // This is your Prisma schema file
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
 }
 
