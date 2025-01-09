@@ -27,8 +27,9 @@ COPY . .
 # RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm && pnpm run docker-setup
 # Omit --production flag for TypeScript devDependencies
 RUN npm config set registry https://registry.npmmirror.com \
-    && npm i -g pnpm \
-    && pnpm i
+&& npm i -g pnpm \
+&& pnpm i \
+&& pnpm prisma-setup
 
 # COPY src ./src
 # COPY locales ./locales
