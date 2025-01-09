@@ -4,7 +4,6 @@ import Welcome from "@/components/index/welcome";
 export default async function App() {
   return (
     <div className="h-[100dvh]">
-      <TopBar />
       <Welcome />
     </div>
   );

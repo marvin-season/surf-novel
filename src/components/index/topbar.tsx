@@ -1,7 +1,15 @@
 import { auth } from "@/auth";
-import { Notebook, NotebookPen, User2Icon } from "lucide-react";
+import { Menu, User2Icon } from "lucide-react";
 import Link from "next/link";
-
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetDescription,
+  SheetTitle,
+} from "../ui/sheet";
+import { SideBar } from "../layout/side-bar";
 export default async function TopBar() {
   const session = await auth();
   console.log("session", session);
@@ -9,9 +17,18 @@ export default async function TopBar() {
   return (
     <div className="flex justify-between py-4 px-8 border-b sticky top-0 z-10 backdrop-blur-sm mb-4 gap-4">
       {session?.user ? (
-        <Link href={"/notes"} className="rounded-[8px] text-sm">
-          <NotebookPen size={16} />
-        </Link>
+        <Sheet>
+          <SheetTrigger>
+            <Menu size={20} />
+          </SheetTrigger>
+          <SheetContent side={"left"} className="w-[300px]">
+            <SheetHeader>
+              <SheetTitle></SheetTitle>
+              <SheetDescription></SheetDescription>
+            </SheetHeader>
+            <SideBar />
+          </SheetContent>
+        </Sheet>
       ) : (
         <Link
           href="/login"

@@ -40,7 +40,7 @@ import { AdvancedRichEditorProvider } from "@/components/advanced-rich-editor";
 
 export default function Welcome() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pb-16">
       <div className="w-[80%]">
         <AdvancedRichEditorProvider
           content={welcome}

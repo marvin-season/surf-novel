@@ -7,6 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import TopBar from "@/components/index/topbar";
 
 export const metadata: Metadata = {
   title: "Surf Novel",
@@ -32,7 +33,10 @@ export default async function RootLayout({
         <Toaster />
         <NextIntlClientProvider messages={messages}>
           <SessionProvider basePath={"/auth"} session={session}>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              <TopBar />
+              {children}
+            </ThemeProvider>
           </SessionProvider>
         </NextIntlClientProvider>
       </body>

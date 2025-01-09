@@ -11,7 +11,6 @@ import {
   SheetTitle,
 } from "../ui/sheet";
 import { SideBar } from "./side-bar";
-import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 
 interface MainLayoutProps {
