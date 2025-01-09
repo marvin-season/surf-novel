@@ -30,6 +30,7 @@ RUN npm config set registry https://registry.npmmirror.com \
     && pnpm prisma-setup
 
 COPY src ./src
+COPY locales ./locales
 COPY public ./public
 COPY next.config.ts .
 COPY tsconfig.json .
