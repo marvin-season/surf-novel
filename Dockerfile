@@ -28,8 +28,7 @@ COPY . .
 # Omit --production flag for TypeScript devDependencies
 RUN npm config set registry https://registry.npmmirror.com \
     && npm i -g pnpm \
-    && pnpm i \
-    && pnpm prisma-setup
+    && pnpm i
 
 # COPY src ./src
 # COPY locales ./locales
