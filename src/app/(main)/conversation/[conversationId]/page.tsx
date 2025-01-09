@@ -21,7 +21,7 @@ export default async function ChatPage({
   );
 
   return (
-    <div className="flex-1 p-8 pt-6 h-full w-[60%] m-auto">
+    <div className="flex-1 p-2 h-full">
       <ConversationChat
         historyMessages={messages}
         conversationId={conversation.id}

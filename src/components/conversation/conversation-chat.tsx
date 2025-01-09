@@ -45,7 +45,13 @@ export default function ConversationChat({
 
       <form className="flex gap-2" onSubmit={handleSubmit}>
         <Input name="prompt" value={input} onChange={handleInputChange} />
-        <Button type="submit">Submit</Button>
+        <Button
+          variant={"outline"}
+          className="hover:text-blue-500 hover:border-blue-500"
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
