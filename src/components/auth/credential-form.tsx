@@ -1,7 +1,10 @@
+"use client";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { signIn } from "@/auth";
+import { loginOrRegistAction } from "@/app/action";
+import { toast } from "sonner";
 
 export default function () {
   return (
@@ -13,9 +16,13 @@ export default function () {
 
       <form
         action={async (formData) => {
-          "use server";
           const form = Object.fromEntries(formData);
-          await signIn("credentials", { ...form, redirectTo: "/notes" });
+          try {
+            const result = await loginOrRegistAction(form);
+            console.log("result", result);
+          } catch (e) {
+            toast.error("登陆失败");
+          }
         }}
         className="space-y-4"
       >

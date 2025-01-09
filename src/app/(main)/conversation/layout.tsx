@@ -43,9 +43,6 @@ export default async function ConversationLayout({
           <Separator orientation={"vertical"} />
         </div>
         <div className="flex-1">{children}</div>
-        <div className="flex justify-center my-2">
-          <span className="text-sm text-gray-500">{"engined by aisdk!"}</span>
-        </div>
       </div>
     </>
   );
